@@ -1,0 +1,173 @@
+/* Extra small devices (phones) */
+@media only screen and (max-width: 575.98px) {
+    /* Your CSS for extra small screens here */
+    .AvatarMainPic{
+        width: 100%;
+    }
+
+  }
+  
+  /* Small devices (tablets and larger phones) */
+  @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+    /* Your CSS for small screens here */
+    .AvatarMainPic{
+        width: 100%;
+    }
+  }
+  
+  /* Medium devices (tablets and small desktops) */
+  @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+    /* Your CSS for medium screens here */
+    .AvatarMainPic{
+        width: 100%;
+    }
+  }
+  
+  /* Large devices (desktops) */
+  @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+    /* Your CSS for large screens here */
+    .AvatarMainPic{
+        width: 60%;
+    }
+
+  }
+  
+  /* Extra large devices (large desktops) */
+  @media only screen and (min-width: 1200px) {
+    .AvatarMainPic{
+        width: 40%;
+    }
+    /* Your CSS for extra large screens here */
+  }
+
+
+
+
+
+
+
+.tealBG {
+    background-color: #2c3e50;
+}
+
+.bold-text {
+    font-weight: 900;
+}
+
+.bigerText {
+    font-size: 45px;
+}
+
+.DarktealBG {
+    background-color: #18222c;
+
+}
+
+.Camera {
+    width: 100%;
+    /* white-space: normal; */
+    /* Allow text to wrap to the next line */
+    /* word-wrap: break-word; */
+    /* Break long words if necessary */
+
+}
+
+.GreenishBG {
+    background-color: #1ABC9C;
+
+}
+
+.tall {
+    min-height: 40vh;
+}
+
+.whiteLine {
+    background-color: #fff;
+    height: 4px;
+    width: 85px;
+}
+
+.DarkLine {
+    background-color: #2c3e50;
+    height: 4px;
+    width: 85px;
+}
+
+.MainSection {
+    color: #fff;
+}
+
+.bigga {
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.bigga-5 {
+    font-size: 6em;
+    font-weight: 900;
+}
+
+.FooterList li {
+    padding: 6px 11px;
+    margin: 0 5px;
+    border: #fff 2px solid;
+    border-radius: 50%;
+}
+
+.selected {
+    background-color: #1ABC9C !important;
+    border-radius: 8px;
+    color: #fff !important;
+}
+
+.portfolioComponent {
+    color: #2c3e50;
+}
+
+.PortOverlay:hover {
+    opacity: 100%;
+    transition: all 0.7s;
+}
+
+.PortOverlay {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    opacity: 0%;
+    background-color: #1ABC9C;
+}
+
+.imgDiv {
+    position: relative;
+    overflow: hidden;
+}
+
+.AboutSection {
+    background-color: #1ABC9C;
+    color: #fff;
+}
+
+.myPadding {
+    padding-bottom: 12em;
+}
+
+.navbar-nav .nav-link.active {
+    background-color: #1ABC9C;
+    border-radius: 0.6rem;
+}
+
+.myForm label {
+    color: #1ABC9C;
+}
+
+#userNameLbl,
+#userAgeLbl,
+#userEmailLbl,
+#userPasswordLbl {
+    display: none;
+}
+
+.block {
+    height: 20px;
+    margin-bottom: 10px;
+}
