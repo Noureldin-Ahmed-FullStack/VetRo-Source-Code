@@ -28,7 +28,7 @@ useEffect(() => {
         // Handle the shake event here
         console.log('Device shaken!');
         change()
-        alert("Device shaken!");
+        // alert("Device shaken!");
       }
     };
 
