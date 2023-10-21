@@ -27,8 +27,8 @@ useEffect(() => {
       if (totalAcceleration > shakeThreshold) {
         // Handle the shake event here
         console.log('Device shaken!');
-        alert("Device shaken!");
         change()
+        alert("Device shaken!");
       }
     };
 
