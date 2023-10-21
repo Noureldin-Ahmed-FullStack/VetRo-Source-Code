@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
 // import * as fab from '@fortawesome/free-brands-svg-icons';
 import CameraComponent from './CameraComponent'
+import Shake from './Shake'
 
 export default function Main() {
   const [dataFromChild, setDataFromChild] = useState(avatarImg);
@@ -22,6 +23,7 @@ export default function Main() {
         <h1 className='bigga'>Welcome to VetRo</h1>
         <div className=''>
         <CameraComponent sendDataToParent={handleDataFromChild}/>
+        <Shake />
         </div>
         <div className="starArea d-flex justify-content-center my-3 align-items-center ">
           <div className="whiteLine"></div>
