@@ -3,14 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 export default function Shake() {
     var [IsShaken, setIsShaken] = useState("false");
-    function change() {        
-        if (IsShaken == "true") {
-            setIsShaken("false")        
-            alert(IsShaken);    
-        }else{
-            setIsShaken("true")          
-            alert(IsShaken);    
-        }
+    function change() {
+      setIsShaken((prevIsShaken) => (prevIsShaken === "true" ? "false" : "true"));
     }
 useEffect(() => {
     const handleShake = (event) => {
@@ -27,13 +21,7 @@ useEffect(() => {
       if (totalAcceleration > shakeThreshold) {
         // Handle the shake event here
         console.log('Device shaken!');
-        if (IsShaken == "true") {
-          setIsShaken("false")        
-          alert(IsShaken);    
-      }else{
-          setIsShaken("true")          
-          alert(IsShaken);    
-      }
+        change()
         // alert("Device shaken!");
       }
     };
