@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import '../MyCss/MyCustomStylesheet.css'
 import { Link, NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import VetRoBot from './VetRoBot'
 
 
 export default class NavbarComponent extends Component {
@@ -25,6 +27,9 @@ export default class NavbarComponent extends Component {
                             <NavLink className="nav-link" to="about">ABOUT</NavLink>
                             <NavLink className="nav-link" to="portfolio">PORTFOLIO</NavLink>
                             <NavLink className="nav-link" to="contact" >CONTACT</NavLink>
+                            <NavLink className="nav-link" to="SignIn" >SignIn</NavLink>
+
+
                         </div>
                     </div>
                 </div>

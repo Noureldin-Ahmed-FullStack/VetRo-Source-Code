@@ -11,7 +11,9 @@ export default function Layout() {
   return (
     <>
       <NavbarComponent />
+      <div className='GreenishBG'>
       <Outlet />
+      </div>
       <Footer />
 
     </>

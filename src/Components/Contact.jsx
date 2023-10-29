@@ -3,6 +3,7 @@ import '../MyCss/MyCustomStylesheet.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
 import $ from 'jquery';
+import VetRoBot from './VetRoBot';
 
 
 
@@ -40,13 +41,14 @@ export default function Contact() {
     return (
 
         <div>
-            <h2 className='text-center mt-5 mb-1'>CONTACT SECTION</h2>
+            <h2 className='text-center pt-5 mb-1'>CONTACT SECTION</h2>
             <div className="starArea d-flex justify-content-center my-3 align-items-center ">
                 <div className="DarkLine"></div>
                 <FontAwesomeIcon className='px-3' icon={fa.faStar} />
                 <div className="DarkLine"></div>
             </div>
-            <div className='d-flex justify-content-center my-4'>
+            <div className='d-flex justify-content-center py-4'>
+
                 <form className='w-50 myForm'>
                     <div className="py-1">
                         <div className="block">
@@ -74,6 +76,7 @@ export default function Contact() {
                     </div>
                 </form>
             </div>
+
         </div>
     )
 }
