@@ -78,7 +78,7 @@
 }
 
 .tall {
-    min-height: 40vh;
+    min-height: 100vh;
 }
 
 .whiteLine {
@@ -172,8 +172,18 @@
     margin-bottom: 10px;
 }
 
-#botpress-web-chat-button {
-    position: absolute;
-    top: 10px; /* Adjust the top value as needed to position the button */
-    right: 10px; /* Adjust the right value as needed to position the button */
+.bp-widget-widget {
+    bottom: -10px !important;
+    left: 50% !important;
+    transform: translateX(-66%) !important;
   }
+  .bp-widget-web {
+    z-index: 2000 !important;
+  }
+  #bp-web-widget{
+    /* width: 57px !important; */
+  }
+  
+.BigIcon{
+    font-size: 1.6rem;
+}

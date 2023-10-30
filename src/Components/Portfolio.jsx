@@ -8,7 +8,7 @@ import * as fab from '@fortawesome/free-brands-svg-icons';
 
 export default function Portfolio() {
     return (
-        <div className='portfolioComponent text-center my-4'>
+        <div className='portfolioComponent text-center py-4'>
             <h1>PORTFOLIO COMPONENT</h1>
             <div className="starArea d-flex justify-content-center my-3 align-items-center ">
                 <div className="DarkLine"></div>

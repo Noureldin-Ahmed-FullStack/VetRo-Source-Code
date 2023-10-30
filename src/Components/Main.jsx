@@ -23,10 +23,13 @@ export default function Main() {
       <div className='w-100 justify-content-center d-flex'>
         <div className='w-50 '>
           <img id='imageDisplay' className='AvatarMainPic my-3' src={dataFromChild} alt='avatar' />
-          <h1 className='bigga'>Welcome to VetRo</h1>
-          <div className=''>
+          <h1 className='bigga my-2 mb-3'>Welcome to VetRo</h1>
+          <div className='py-3'>
             <CameraComponent sendDataToParent={handleDataFromChild} />
-            <Shake />
+            <div className='py-2'>
+              <Shake />
+            </div>
+
           </div>
           <div className="starArea d-flex justify-content-center my-3 align-items-center ">
             <div className="whiteLine"></div>
