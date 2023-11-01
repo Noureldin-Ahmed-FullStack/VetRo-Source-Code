@@ -18,7 +18,7 @@ export default function Main() {
   };
   return (
 
-    <div className='tall myWidth GreenishBG d-flex justify-content-center align-items-center MainSection text-center'>
+    <div className='d-flex justify-content-center align-items-center MainSection text-center'>
 
       <div className='w-100 justify-content-center d-flex'>
         <div className='w-50 '>
@@ -37,7 +37,6 @@ export default function Main() {
             <div className="whiteLine"></div>
           </div>
           <p>Your Expert Veterinary assitant</p>
-          <VetRoBot />
 
         </div>
       </div>

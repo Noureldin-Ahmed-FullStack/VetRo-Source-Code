@@ -10,10 +10,11 @@ import SignIn from './Components/SignIn';
 import VetRoBot from './Components/VetRoBot';
 import { RouterProvider, createHashRouter } from "react-router-dom"
 import PageMissing from './Components/PageMissing';
+import MyContextProvider from './Components/ContextProvider';
 
 
 function App() {
- 
+
   let Routes = createHashRouter([
     {
       path: '/', element: <Layout />, children: [
@@ -31,14 +32,12 @@ function App() {
 
   ])
   return (
-    <div className='myWidth'>
-      {/* <NavbarComponent /> */}
-      {/* <Main /> */}
-     
+    <MyContextProvider>
+      <div className='myWidth'>
         <RouterProvider router={Routes} />
-      {/* <Portfolio /> */}
-      {/* <About /> */}
-    </div>
+        <VetRoBot />
+      </div>
+    </MyContextProvider>
   );
 }
 

@@ -171,9 +171,23 @@
     height: 20px;
     margin-bottom: 10px;
 }
-
+.MySignIN{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 3rem;
+    border: 1px solid #C3C3C3;
+}
+.MyLogo img{
+    width: 2rem;
+}
+.circle-round{
+    border-radius: 50%;
+    width: 2.7rem;
+}
 .bp-widget-widget {
-    bottom: -10px !important;
+    bottom: -20px !important;
     left: 50% !important;
     transform: translateX(-66%) !important;
   }
