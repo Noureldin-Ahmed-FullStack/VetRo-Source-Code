@@ -30,8 +30,6 @@ export default function ProfileComponent() {
                                         <div className="col-sm-6 col-md-5 About ">
                                             <div>
                                                 <img id="img" src={user.photoURL} className="img-fluid rounded b-shadow-a w-100" alt />
-
-
                                             </div>
                                         </div>
                                         <div className="col-sm-6 col-md-7 About">
