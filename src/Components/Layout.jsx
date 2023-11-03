@@ -6,14 +6,15 @@ import { MyContext } from './ContextProvider'
 
 
 export default function Layout() {
-  let {profilePhotoURL, setprofilePhotoURL} = useContext(MyContext)
+  let { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext)
 
   useEffect(() => {
-    console.log(profilePhotoURL);
     const UserData = localStorage.getItem('UserData')
-    const UserDataParsed = JSON.parse(UserData);
-    setprofilePhotoURL(UserDataParsed.pPhotoUrl)
-    console.log(profilePhotoURL);
+    if (UserData != null) {
+      const UserDataParsed = JSON.parse(UserData);
+      setprofilePhotoURL(UserDataParsed.pPhotoUrl)
+    }
+
 
   })
 
@@ -24,7 +25,6 @@ export default function Layout() {
       </div>
       <NavbarComponent />
       {/* <Footer /> */}
-
     </>
   )
 }

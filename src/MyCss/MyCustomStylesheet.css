@@ -177,7 +177,11 @@
     justify-content: center;
     background-color: #fff;
     border-radius: 3rem;
-    border: 1px solid #C3C3C3;
+    border: 2px solid #C3C3C3;
+}
+.MySignIN:hover{
+    border: 2px solid #828282;
+    transition: border 0.2s;
 }
 .MyLogo img{
     width: 2rem;

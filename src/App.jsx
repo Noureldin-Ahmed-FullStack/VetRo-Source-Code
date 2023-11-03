@@ -11,6 +11,7 @@ import VetRoBot from './Components/VetRoBot';
 import { RouterProvider, createHashRouter } from "react-router-dom"
 import PageMissing from './Components/PageMissing';
 import MyContextProvider from './Components/ContextProvider';
+import ProfileComponent from './Components/ProfileComponent';
 
 
 function App() {
