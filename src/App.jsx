@@ -1,7 +1,7 @@
 import './App.css';
-import About from './Components/About';
 import './MyCss/MyCustomStylesheet.css'
 import 'font-awesome/css/font-awesome.min.css';
+import About from './Components/About';
 import Contact from './Components/Contact';
 import Layout from './Components/Layout';
 import Main from './Components/Main';
@@ -12,6 +12,12 @@ import { RouterProvider, createHashRouter } from "react-router-dom"
 import PageMissing from './Components/PageMissing';
 import MyContextProvider from './Components/ContextProvider';
 import ProfileComponent from './Components/ProfileComponent';
+import Chat from './Components/Chat';
+import Room from './Components/Room';
+
+import { useContext } from 'react';
+import { UseFirebaseAuth } from './Components/UseFirebaseAuth';
+// import { MyContext } from './ContextProvider'
 
 
 function App() {
@@ -24,6 +30,8 @@ function App() {
         { path: "SignIn", element: <SignIn /> },
         { path: "VetRoBot", element: <VetRoBot /> },
         { path: "portfolio", element: <Portfolio /> },
+        { path: "chat", element: <Chat /> },
+        { path: "room", element: <Room /> },
         { path: "about", element: <About /> },
         { path: "contact", element: <Contact /> },
         { path: "*", element: <PageMissing /> },

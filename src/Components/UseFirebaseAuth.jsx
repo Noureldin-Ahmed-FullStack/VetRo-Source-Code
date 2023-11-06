@@ -10,14 +10,18 @@ const authentic = getAuth(app);
 export function UseFirebaseAuth() {
   const [user, setUser] = useState(null);
   const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
+  const { myAuth, setMyAuth } = useContext(MyContext);
 
   useEffect(() => {
+    
     const unsubscribe = onAuthStateChanged(authentic, (user) => {
       if (user) {
         setUser(user);
         setprofilePhotoURL(user.photoURL)
+        setMyAuth("true")
       } else {
         setUser(null);
+        setMyAuth("false")
       }
     });
 

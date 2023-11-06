@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, {useContext} from 'react'
 import '../MyCss/MyCustomStylesheet.css'
 import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MyContext } from './ContextProvider'
-import VetRoBot from './VetRoBot'
 import * as fa from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
@@ -27,7 +26,7 @@ export default function NavbarComponent() {
         <Link className="nav-link" to=""><FontAwesomeIcon className='BigIcon px-2' icon={fa.faHouse} /></Link>
         <NavLink className="nav-link" to="about"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
         <div className='px-3'> </div>
-        <NavLink className="nav-link" to="Portfolio" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
+        <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
         <NavLink className="" to="SignIn" >
           {/* <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> */}
           <img className='circle-round' src={profilePhotoURL} alt="" />

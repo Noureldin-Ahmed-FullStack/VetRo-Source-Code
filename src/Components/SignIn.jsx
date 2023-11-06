@@ -1,14 +1,15 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, provider, app } from '../Firebase/firebase';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+// import { auth, provider, app, db } from '../Firebase/firebase';
 import { MyContext } from './ContextProvider'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
-import React, { useState, useEffect, useContext } from 'react'
+// import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ProfileComponent from './ProfileComponent';
 
 
 export default function SignIn() {
-    const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
+    const { userObj, setUserObj } = useContext(MyContext);
     const { user, signInWithGoogle, signOutUser } = UseFirebaseAuth();
     // const HandleSubmit = (e) => {
     //     e.preventDefault()
@@ -76,12 +77,13 @@ export default function SignIn() {
 
 
 
-
     return (
         <div className="container GreenishBG">
             <div className="row justify-content-center">
+            
                 {user ? (
                     <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
+                        {setUserObj(user)}
                         {/* <div className='row'>
                             <div className="col-md-4">
                                 <img src={user.photoURL} style={{ width: "100%" }} />
