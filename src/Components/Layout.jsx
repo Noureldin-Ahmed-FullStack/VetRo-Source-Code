@@ -4,17 +4,24 @@ import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
 import { MyContext } from './ContextProvider'
 
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Firebase/firebase';
 
 export default function Layout() {
   let { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext)
+  const { userObj, setUserObj } = useContext(MyContext);
+  let { myAuth ,setMyAuth } = useContext(MyContext)
 
-  useEffect(() => {
-    const UserData = localStorage.getItem('UserData')
-    if (UserData != null) {
-      const UserDataParsed = JSON.parse(UserData);
-      setprofilePhotoURL(UserDataParsed.pPhotoUrl)
+  onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser != null) {
+      setUserObj(currentUser)
+      setMyAuth("Logged in")
+      console.log(userObj);
+      if (userObj !== null && userObj.photoURL) {
+        setprofilePhotoURL(userObj.photoURL);
+      }
+      // setprofilePhotoURL(userObj.photoURL)
     }
-
 
   })
 

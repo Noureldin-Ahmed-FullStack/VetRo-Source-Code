@@ -10,18 +10,21 @@ import SignIn from './Components/SignIn';
 import VetRoBot from './Components/VetRoBot';
 import { RouterProvider, createHashRouter } from "react-router-dom"
 import PageMissing from './Components/PageMissing';
-import MyContextProvider from './Components/ContextProvider';
+import MyContextProvider, { MyContext } from './Components/ContextProvider';
 import ProfileComponent from './Components/ProfileComponent';
 import Chat from './Components/Chat';
 import Room from './Components/Room';
 
-import { useContext } from 'react';
-import { UseFirebaseAuth } from './Components/UseFirebaseAuth';
-// import { MyContext } from './ContextProvider'
 
 
 function App() {
+  // const [user, setUser] = useState()
+  // const { userObj, setUserObj } = useContext(MyContext);
 
+  // onAuthStateChanged(auth, (currentUser)=>{
+  //   setUser(currentUser)
+  //   console.log(user);
+  // })
   let Routes = createHashRouter([
     {
       path: '/', element: <Layout />, children: [
@@ -44,7 +47,6 @@ function App() {
     <MyContextProvider>
       <div className='myWidth'>
         <RouterProvider router={Routes} />
-        <VetRoBot />
       </div>
     </MyContextProvider>
   );

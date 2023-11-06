@@ -4,75 +4,14 @@
 import { MyContext } from './ContextProvider'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 // import React, { useState, useEffect, useContext } from 'react'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import ProfileComponent from './ProfileComponent';
 
 
 export default function SignIn() {
     const { userObj, setUserObj } = useContext(MyContext);
     const { user, signInWithGoogle, signOutUser } = UseFirebaseAuth();
-    // const HandleSubmit = (e) => {
-    //     e.preventDefault()
-    //     const Username = e.target[0].value;
-    //     const email = e.target[1].value;
-    //     const password = e.target[2].value;
-    //     console.log(Username, email, password);
-
-    //     createUserWithEmailAndPassword(auth, email, password)
-    //         .then((userCredential) => {
-    //             // Signed up 
-    //             const user = userCredential.user;
-
-    //             console.log(user);
-    //             // ...
-    //         })
-    //         .catch((error) => {
-    //             const errorCode = error.code;
-    //             const errorMessage = error.message;
-    //             // ..
-    //         });
-    // }
-    // const [userName, setUserName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [profilePhoto, setprofilePhoto] = useState('');
-    // const HandlesignInWithPopup = () => {
-    //     signInWithPopup(auth, provider)
-    //     .then((data) => {
-    //         const userCarton = {
-    //             uName: data.user.displayName,
-    //             uEmail: data.user.email,
-    //             pPhotoUrl: data.user.photoURL,
-    //         }
-    //         setUserName(userCarton.uName);
-    //         setEmail(userCarton.uEmail);
-    //         setprofilePhoto(userCarton.pPhotoUrl);
-    //         console.log(userCarton);
-    //         console.log(userName, email, profilePhoto);
-    //         localStorage.setItem("UserData", JSON.stringify(userCarton));
-    //         // localStorage.setItem("userName", userName)
-    //         // localStorage.setItem("email", email)
-    //         // localStorage.setItem("profilePhoto", profilePhoto)
-    //     }).catch((error)=>{
-    //         console.log(error);
-    //     })
-    // }
-    // useEffect(() => {
-    //     const UserData = localStorage.getItem('UserData')
-    //     if (UserData != null) {
-    //         const UserDataParsed = JSON.parse(UserData);
-    //         setUserName(UserDataParsed.uName)
-    //         setEmail(UserDataParsed.uEmail)
-    //         setprofilePhoto(UserDataParsed.pPhotoUrl)
-    //         setprofilePhotoURL(profilePhoto)
-
-    //     }
-
-    //     // console.log(profilePhotoURL);
-    //     // setPfp(profilePhoto)
-    //     // console.log(UserData.uName);
-    //     // console.log(userName , email , profilePhoto);
-    //     // console.log(profilePhotoURL);
-    // })
+  
 
 
 
@@ -84,14 +23,7 @@ export default function SignIn() {
                 {user ? (
                     <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
                         {setUserObj(user)}
-                        {/* <div className='row'>
-                            <div className="col-md-4">
-                                <img src={user.photoURL} style={{ width: "100%" }} />
-                            </div>
-                            <div className="col-md-8">
-                            </div>
-                            </div>
-                        <button onClick={signOutUser}>Sign Out</button> */}
+                       
                         <ProfileComponent />
                     </div>
                 ) : (

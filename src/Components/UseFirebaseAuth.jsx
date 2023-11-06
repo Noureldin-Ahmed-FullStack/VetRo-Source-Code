@@ -11,6 +11,7 @@ export function UseFirebaseAuth() {
   const [user, setUser] = useState(null);
   const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
   const { myAuth, setMyAuth } = useContext(MyContext);
+  const { userObj, setUserObj } = useContext(MyContext);
 
   useEffect(() => {
     
@@ -18,10 +19,10 @@ export function UseFirebaseAuth() {
       if (user) {
         setUser(user);
         setprofilePhotoURL(user.photoURL)
-        setMyAuth("true")
+        setMyAuth("Logged in")
       } else {
         setUser(null);
-        setMyAuth("false")
+        setMyAuth("Not Logged in")
       }
     });
 
@@ -41,6 +42,7 @@ export function UseFirebaseAuth() {
     try {
       await signOut(authentic);
       await setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png")
+      await setUserObj(null)
     } catch (error) {
       console.error(error);
     }

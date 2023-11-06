@@ -6,6 +6,7 @@ import { MyContext } from './ContextProvider'
 import * as fa from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
+import VetRoBot from './VetRoBot'
 
 
 export default function NavbarComponent() {
@@ -25,7 +26,8 @@ export default function NavbarComponent() {
 
         <Link className="nav-link" to=""><FontAwesomeIcon className='BigIcon px-2' icon={fa.faHouse} /></Link>
         <NavLink className="nav-link" to="about"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
-        <div className='px-3'> </div>
+       
+        <div className='px-3'> <VetRoBot /> </div>
         <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
         <NavLink className="" to="SignIn" >
           {/* <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> */}

@@ -26,7 +26,7 @@ export default function Chat(props) {
 
 
     return (
-
+        
         <form className='bg-warning p-4 rounded-4 w-50 ' onSubmit={handleSubmit}>
             <input 
             placeholder='Enter message' 
@@ -37,9 +37,6 @@ export default function Chat(props) {
             />
             <button type='submit' className='btn btn-primary my-3 w-25'>send</button>
         </form>
-
-
-
-
+       
     )
 }
