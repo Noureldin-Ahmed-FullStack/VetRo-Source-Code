@@ -17,17 +17,17 @@ export default function Room() {
         <div className='tall d-flex align-items-center'>
             <div className='container d-flex justify-content-center'>
                 {userObj ? (
-                    <div className='w-100 d-flex justify-content-center flower'>
+                    <div className='w-100 d-flex justify-content-center '>
                         {room ?
                             <Chat room={room} />
                             :
-                            <form className='bg-warning p-4 rounded-4 w-50 ' onSubmit={handleSubmit}>
-                                <div className="row w-100">
-                                    <div className="col-md-10">
+                            <form className='bg-warning p-4 rounded-4 w-100 ' onSubmit={handleSubmit}>
+                                <div className="row w-100 gx-1">
+                                    <div className="col-9">
                                         <input ref={roomInputRef} placeholder='Enter room name' className='form-control w-100' type="text" />
                                     </div>
-                                    <div className="col-md-2">
-                                        <button type='submit' onClick={() => setRoom(roomInputRef.current.value)} className='btn btn-primary'>send</button>
+                                    <div className="col-3">
+                                        <button type='submit' onClick={() => setRoom(roomInputRef.current.value)} className='btn btn-primary w-100'>send</button>
 
                                     </div>
                                 </div>

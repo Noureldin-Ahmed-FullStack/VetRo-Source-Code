@@ -207,9 +207,15 @@
 }
 .flower{
     overflow-y: auto;
+    height: 60vh;
 }
-.chatBubblePhoto{    
+.MechatBubblePhoto{    
     border-radius: 50%;
     width: 2.7rem;
     margin-right: 1rem;
+}
+.OtherchatBubblePhoto{    
+    border-radius: 50%;
+    width: 2.7rem;
+    margin-left: 1rem;
 }
