@@ -11,20 +11,13 @@ import VetRoBot from './Components/VetRoBot';
 import { RouterProvider, createHashRouter } from "react-router-dom"
 import PageMissing from './Components/PageMissing';
 import MyContextProvider, { MyContext } from './Components/ContextProvider';
-import ProfileComponent from './Components/ProfileComponent';
 import Chat from './Components/Chat';
 import Room from './Components/Room';
 
 
 
 function App() {
-  // const [user, setUser] = useState()
-  // const { userObj, setUserObj } = useContext(MyContext);
-
-  // onAuthStateChanged(auth, (currentUser)=>{
-  //   setUser(currentUser)
-  //   console.log(user);
-  // })
+  
   let Routes = createHashRouter([
     {
       path: '/', element: <Layout />, children: [

@@ -1,11 +1,15 @@
 import React from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
+import { app , auth } from '../Firebase/firebase';
+
 export default function ProfileComponent() {
     // const userObj = props.userData;
     // let [userObj, setuserObj] = useState();
-    const { user, signInWithGoogle, signOutUser } = UseFirebaseAuth();
-
+    const {  signOutUser } = UseFirebaseAuth();
+    const [user] = useAuthState(auth)
     // useEffect(() => {
     //     if (user) {
     //         console.log('User is authenticated.');

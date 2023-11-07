@@ -3,27 +3,50 @@ import NavbarComponent from './NavbarComponent'
 import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
 import { MyContext } from './ContextProvider'
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../Firebase/firebase';
+import { app, auth } from '../Firebase/firebase';
 
 export default function Layout() {
   let { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext)
   const { userObj, setUserObj } = useContext(MyContext);
-  let { myAuth ,setMyAuth } = useContext(MyContext)
+  let { myAuth, setMyAuth } = useContext(MyContext)
+  const [user] = useAuthState(auth)
 
-  onAuthStateChanged(auth, (currentUser) => {
-    if (currentUser != null) {
-      setUserObj(currentUser)
+  useEffect(() => {
+    if (user) {
+      setUserObj(user);
       setMyAuth("Logged in")
-      console.log(userObj);
-      if (userObj !== null && userObj.photoURL) {
-        setprofilePhotoURL(userObj.photoURL);
-      }
-      // setprofilePhotoURL(userObj.photoURL)
+      setprofilePhotoURL(user.photoURL);
+    } else {
+      setUserObj(null);
+      setprofilePhotoURL(null);
     }
+  }, [user]);
 
-  })
+
+  // if (user) {
+  //   setUserObj(user)
+  //   if (userObj !== null && userObj.photoURL) {
+  //     setMyAuth("Logged in")
+  //     setprofilePhotoURL(userObj.photoURL);
+  //   }
+  //   // setprofilePhotoURL(userObj.photoURL)
+  // }
+  // }
+  // onAuthStateChanged(auth, (currentUser) => {
+  //   if (currentUser != null) {
+  //     setUserObj(currentUser)
+  //     setMyAuth("Logged in")
+  //     console.log(userObj);
+  //     if (userObj !== null && userObj.photoURL) {
+  //       setprofilePhotoURL(userObj.photoURL);
+  //     }
+  //     // setprofilePhotoURL(userObj.photoURL)
+  //   }
+
+  // })
 
   return (
     <>

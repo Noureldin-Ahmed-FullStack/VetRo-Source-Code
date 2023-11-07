@@ -13,21 +13,21 @@ export function UseFirebaseAuth() {
   const { myAuth, setMyAuth } = useContext(MyContext);
   const { userObj, setUserObj } = useContext(MyContext);
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    const unsubscribe = onAuthStateChanged(authentic, (user) => {
-      if (user) {
-        setUser(user);
-        setprofilePhotoURL(user.photoURL)
-        setMyAuth("Logged in")
-      } else {
-        setUser(null);
-        setMyAuth("Not Logged in")
-      }
-    });
+  //   const unsubscribe = onAuthStateChanged(authentic, (user) => {
+  //     if (user) {
+  //       setUser(user);
+  //       setprofilePhotoURL(user.photoURL)
+  //       setMyAuth("Logged in")
+  //     } else {
+  //       setUser(null);
+  //       setMyAuth("Not Logged in")
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
