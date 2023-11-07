@@ -205,3 +205,11 @@
 .BigIcon{
     font-size: 1.6rem;
 }
+.flower{
+    overflow-y: auto;
+}
+.chatBubblePhoto{    
+    border-radius: 50%;
+    width: 2.7rem;
+    margin-right: 1rem;
+}

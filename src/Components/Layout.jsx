@@ -20,8 +20,9 @@ export default function Layout() {
       setMyAuth("Logged in")
       setprofilePhotoURL(user.photoURL);
     } else {
+      setMyAuth("Not Logged in")
       setUserObj(null);
-      setprofilePhotoURL(null);
+      setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png");
     }
   }, [user]);
 

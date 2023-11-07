@@ -10,7 +10,7 @@ import ProfileComponent from './ProfileComponent';
 
 export default function SignIn() {
     const { userObj, setUserObj } = useContext(MyContext);
-    const { user, signInWithGoogle, signOutUser } = UseFirebaseAuth();
+    const { signInWithGoogle, signOutUser } = UseFirebaseAuth();
   
 
 
@@ -20,10 +20,8 @@ export default function SignIn() {
         <div className="container GreenishBG">
             <div className="row justify-content-center">
             
-                {user ? (
-                    <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
-                        {setUserObj(user)}
-                       
+                {userObj ? (
+                    <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">                       
                         <ProfileComponent />
                     </div>
                 ) : (
