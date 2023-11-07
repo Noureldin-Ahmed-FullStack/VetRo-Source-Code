@@ -77,14 +77,14 @@ export default function Chat(props) {
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
                 <div>{messages.map((messages) => (
                      messages.senderId === userObj.uid ? (
-                    <div key={messages.id}  className='d-flex align-items-center my-2'>
+                    <div key={messages.id}  className='d-flex align-items-center my-2 justify-content-end'>
+                        <h6 className='MechatBubble'>{messages.text}</h6>
                         <span><img className='MechatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
-                        <h6 className='bg-success'>{messages.text}</h6>
                     </div>
                      ) : (
-                        <div key={messages.id}  className='d-flex align-items-center my-2 justify-content-end'>
-                        <h6 className='bg-danger'>{messages.text}</h6>
+                        <div key={messages.id}  className='d-flex align-items-center my-2 '>
                         <span><img className='OtherchatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
+                        <h6 className='OtherchatBubble'>{messages.text}</h6>
                       </div>
                     )
                 ))}
