@@ -2,8 +2,10 @@
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithPopup } from 'firebase/auth';
 import { useContext, useEffect, useState } from 'react';
 import { MyContext } from './ContextProvider'
-import { auth, provider, app } from '../Firebase/firebase';
-
+import { auth, provider, app, db } from '../Firebase/firebase';
+import { InsertUserData } from './InsertToUsers';
+import { addDoc, collection, doc } from 'firebase/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const authentic = getAuth(app);
 
@@ -12,9 +14,28 @@ export function UseFirebaseAuth() {
   const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
   const { myAuth, setMyAuth } = useContext(MyContext);
   const { userObj, setUserObj } = useContext(MyContext);
+  const usersRef = collection(db, "Users")
+  const petRef = collection(db, "Pets")
+  const petDocumentRef = doc(petRef, "1");
+
+  const InsertUserData = () => {
+    auth.onAuthStateChanged((trig) => {
+      console.log(trig);
+      addDoc(usersRef, {
+        uid: trig.uid,
+        userName: trig.displayName,
+        userPFP: trig.photoURL,
+        pets: null,
+      })
+    })
+
+
+
+  }
+
 
   // useEffect(() => {
-    
+
   //   const unsubscribe = onAuthStateChanged(authentic, (user) => {
   //     if (user) {
   //       setUser(user);
@@ -33,6 +54,9 @@ export function UseFirebaseAuth() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(authentic, provider);
+      setUserObj(authentic)
+
+      InsertUserData()
     } catch (error) {
       console.error(error);
     }

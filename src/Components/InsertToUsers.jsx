@@ -6,25 +6,22 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { MyContext } from './ContextProvider';
 
 
-
+export function InsertUserData(){
+  const { userObj } = useContext(MyContext);
+  if (userObj) {
+   console.log(userObj);
+  }
+  
+}
 
 export default function InsertToUsers() {
 
-  const usersRef = collection(db, "Users")
-  const { userObj, setUserObj } = useContext(MyContext);
- const InsertUserData = async () =>{
-       if (userObj) {
-        console.log(userObj);
-       }
-        // await addDoc(usersRef, {
-        //     // userID: 
-        // }
-        // )
-    }
+  // const usersRef = collection(db, "Users")
+  // const { userObj, setUserObj } = useContext(MyContext);
+    
   return (
     <div>InsertToUsers</div>
   )
 }
-
 
    

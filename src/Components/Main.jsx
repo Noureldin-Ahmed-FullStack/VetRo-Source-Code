@@ -8,6 +8,7 @@ import CameraComponent from './CameraComponent'
 import Shake from './Shake'
 import VetRoBot from './VetRoBot'
 import { MyContext } from './ContextProvider'
+import Pets from './Pets'
 
 export default function Main() {
   let { myAuth } = useContext(MyContext)
@@ -32,6 +33,7 @@ export default function Main() {
             <CameraComponent sendDataToParent={handleDataFromChild} />
             <div className='py-2'>
               <Shake />
+              <Pets />
             </div>
 
           </div>

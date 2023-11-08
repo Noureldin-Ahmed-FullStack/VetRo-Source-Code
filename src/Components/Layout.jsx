@@ -19,6 +19,7 @@ export default function Layout() {
       setUserObj(user);
       setMyAuth("Logged in")
       setprofilePhotoURL(user.photoURL);
+      console.log(user);
     } else {
       setMyAuth("Not Logged in")
       setUserObj(null);
