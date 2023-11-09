@@ -33,7 +33,7 @@ export default function Main() {
             <CameraComponent sendDataToParent={handleDataFromChild} />
             <div className='py-2'>
               <Shake />
-              <Pets />
+              {/* <Pets /> */}
             </div>
 
           </div>

@@ -14,24 +14,24 @@ export function UseFirebaseAuth() {
   const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
   const { myAuth, setMyAuth } = useContext(MyContext);
   const { userObj, setUserObj } = useContext(MyContext);
-  const usersRef = collection(db, "Users")
-  const petRef = collection(db, "Pets")
-  const petDocumentRef = doc(petRef, "1");
+  // const usersRef = collection(db, "Users")
+  // const petRef = collection(db, "Pets")
+  // const petDocumentRef = doc(petRef, "1");
 
-  const InsertUserData = () => {
-    auth.onAuthStateChanged((trig) => {
-      console.log(trig);
-      addDoc(usersRef, {
-        uid: trig.uid,
-        userName: trig.displayName,
-        userPFP: trig.photoURL,
-        pets: null,
-      })
-    })
+  // const InsertUserData = () => {
+  //   auth.onAuthStateChanged((trig) => {
+  //     console.log(trig);
+  //     addDoc(usersRef, {
+  //       uid: trig.uid,
+  //       userName: trig.displayName,
+  //       userPFP: trig.photoURL,
+  //       pets: null,
+  //     })
+  //   })
 
 
 
-  }
+  // }
 
 
   // useEffect(() => {
@@ -56,7 +56,7 @@ export function UseFirebaseAuth() {
       await signInWithPopup(authentic, provider);
       setUserObj(authentic)
 
-      InsertUserData()
+      // InsertUserData()
     } catch (error) {
       console.error(error);
     }
