@@ -4,34 +4,43 @@ import { useContext, useEffect, useState } from 'react';
 import { MyContext } from './ContextProvider'
 import { auth, provider, app, db } from '../Firebase/firebase';
 import { InsertUserData } from './InsertToUsers';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, query, where } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 const authentic = getAuth(app);
 
 export function UseFirebaseAuth() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);  
   const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
   const { myAuth, setMyAuth } = useContext(MyContext);
   const { userObj, setUserObj } = useContext(MyContext);
-  // const usersRef = collection(db, "Users")
+  const usersRef = collection(db, "Users");
   // const petRef = collection(db, "Pets")
   // const petDocumentRef = doc(petRef, "1");
 
-  // const InsertUserData = () => {
-  //   auth.onAuthStateChanged((trig) => {
-  //     console.log(trig);
-  //     addDoc(usersRef, {
-  //       uid: trig.uid,
-  //       userName: trig.displayName,
-  //       userPFP: trig.photoURL,
-  //       pets: null,
-  //     })
-  //   })
+  
 
+      /*save data of user in db (passant) */
+  const InsertUserData = () => {  
+    console.log(userObj);
+    auth.onAuthStateChanged(async(trig) => {
+      if(trig){
+      const m = trig.email;
+      const emailExistsQuery = query(usersRef, where('email', '==', m));
+      const emailExistsResult = await getDocs(emailExistsQuery);
+      if (emailExistsResult.empty) {
+        addDoc(usersRef, {
+      uid: trig.uid,
+      userName: trig.displayName,
+      email:trig.email,
+      userPFP: trig.photoURL,
+      pets: null,
+    });
+  }
+}
+  });
+}
 
-
-  // }
 
 
   // useEffect(() => {
@@ -49,14 +58,14 @@ export function UseFirebaseAuth() {
 
   //   return () => unsubscribe();
   // }, []);
-
+/////////////////
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(authentic, provider);
       setUserObj(authentic)
 
-      // InsertUserData()
+      InsertUserData()
     } catch (error) {
       console.error(error);
     }
