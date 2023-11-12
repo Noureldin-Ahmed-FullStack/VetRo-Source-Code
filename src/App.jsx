@@ -13,6 +13,7 @@ import PageMissing from './Components/PageMissing';
 import MyContextProvider, { MyContext } from './Components/ContextProvider';
 import Chat from './Components/Chat';
 import Room from './Components/Room';
+import Pets from './Components/Pets';
 
 
 
@@ -30,7 +31,9 @@ function App() {
         { path: "room", element: <Room /> },
         { path: "about", element: <About /> },
         { path: "contact", element: <Contact /> },
+        { path: "SignIn/pets", element: <Pets /> },
         { path: "*", element: <PageMissing /> },
+
       ]
     },
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
+import { Link } from 'react-router-dom'
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
@@ -90,30 +91,13 @@ export default function ProfileComponent() {
                                         </p>
                                         <div className="title-box-2">
                                             <h5 className="title-left lul-title">
-                                                Education
+                                                Pets
                                             </h5>
                                         </div>
-                                        <p className="lead text-left">
-                                            <span className="makeBold">University: </span>
-                                            High Institute of Culture and Science [Undergrade], Bachelor of Science in Computer Science, [2024].
-                                        </p>
-                                        <div className="title-box-2">
-                                            <h5 className="title-left lul-title">
-                                                Courses done:
-                                            </h5>
+                                        <div>
+                                        <Link className="btn btn-info my-2" to="Pets">Add Pet</Link>
+
                                         </div>
-                                        <p className="lead">
-                                            Russian Culture Center: Web Developing Diploma
-                                        </p>
-                                        <div className="title-box-2">
-                                            <h5 className="title-left lul-title">
-                                                Courses in progress:
-                                            </h5>
-                                        </div>
-                                        <p className="lead lol">
-                                            Route Center: <a target="_blank" href="https://drive.google.com/file/d/10Gaw1bTCEkAmWiZolVl1mQXwldf5uKyB/view?usp=sharing">Full-Stack
-                                                Diploma</a>
-                                        </p>
                                         <button id="cvBtn" className="btn btn-warning text-light MyOrangeBg w-100">Download CV</button>
                                         <button onClick={signOutUser} className="btn btn-warning text-light MyOrangeBg w-100 mt-4">Sign Out</button>
                                     </div>
