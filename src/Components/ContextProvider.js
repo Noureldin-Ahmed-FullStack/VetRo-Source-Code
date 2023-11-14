@@ -18,6 +18,8 @@ export default function MyContextProvider(props) {
         setMyAuth("Logged in");
         setPending(false)
         console.log(currentUser);
+      }else if(currentUser===null){
+        setPending(false)
       }
     });
 
