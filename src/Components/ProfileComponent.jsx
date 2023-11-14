@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
 import { app , auth } from '../Firebase/firebase';
+import { MyContext } from './ContextProvider';
 
 export default function ProfileComponent() {
     // const userObj = props.userData;
     // let [userObj, setuserObj] = useState();
     const {  signOutUser } = UseFirebaseAuth();
-    const [user] = useAuthState(auth)
+    const { userObj, setUserObj } = useContext(MyContext);
     // useEffect(() => {
     //     if (user) {
     //         console.log('User is authenticated.');
@@ -26,7 +27,7 @@ export default function ProfileComponent() {
     return (
         <div className='container'>
             <div className="row">
-                {user ? (
+                {userObj ? (
                     <div className="col-sm-12">
                         <div className="box-shadow-full">
                             <div className="row">
@@ -34,17 +35,17 @@ export default function ProfileComponent() {
                                     <div className="row">
                                         <div className="col-sm-6 col-md-5 About ">
                                             <div>
-                                                <img id="img" src={user.photoURL} className="img-fluid rounded b-shadow-a w-100" alt />
+                                                <img id="img" src={userObj.photoURL} className="img-fluid rounded b-shadow-a w-100" alt />
                                             </div>
                                         </div>
                                         <div className="col-sm-6 col-md-7 About">
                                             <div className="about-info my-2">
-                                                <p><span style={{ fontWeight: 'bolder' }} className="title-s">Name: </span> <span>{user.displayName}</span></p>
+                                                <p><span style={{ fontWeight: 'bolder' }} className="title-s">Name: </span> <span>{userObj.displayName}</span></p>
                                                 
                                                 <p className="lol"><span style={{ fontWeight: 'bolder' }} className="title-s">Email: </span>
-                                                    <a className href="mailto: noureldin2662002@gmail.com">{user.email}</a>
+                                                    <a className href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
                                                 </p>
-                                                <p><span style={{ fontWeight: 'bolder' }} className="title-s">Phone: </span> <a href="tel:+201116074576">{user.phonNumber}</a></p>
+                                                <p><span style={{ fontWeight: 'bolder' }} className="title-s">Phone: </span> <a href="tel:+201116074576">{userObj.phonNumber}</a></p>
                                             </div>
                                         </div>
                                     </div>

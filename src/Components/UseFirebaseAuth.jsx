@@ -11,8 +11,8 @@ const authentic = getAuth(app);
 
 export function UseFirebaseAuth() {
   const [user, setUser] = useState(null);  
-  const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
-  const { myAuth, setMyAuth } = useContext(MyContext);
+  // const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
+  // const { myAuth, setMyAuth } = useContext(MyContext);
   const { userObj, setUserObj } = useContext(MyContext);
   const usersRef = collection(db, "Users");
   // const petRef = collection(db, "Pets")
@@ -63,7 +63,7 @@ export function UseFirebaseAuth() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(authentic, provider);
-      setUserObj(authentic)
+      // setUserObj(authentic)
 
       InsertUserData()
     } catch (error) {
@@ -74,7 +74,7 @@ export function UseFirebaseAuth() {
   const signOutUser = async () => {
     try {
       await signOut(authentic);
-      await setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png")
+      // await setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png") 
       await setUserObj(null)
     } catch (error) {
       console.error(error);
