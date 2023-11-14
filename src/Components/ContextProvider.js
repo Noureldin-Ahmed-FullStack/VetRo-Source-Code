@@ -8,21 +8,22 @@ export let MyContext = createContext();
 
 export default function MyContextProvider(props) {
   // let [profilePhotoURL, setprofilePhotoURL] = useState('https://ssniper.sirv.com/Images/3.png');
-  const [userObj, setUserObj] = useState({});
+  const [userObj, setUserObj] = useState();
   const [pending, setPending] = useState(true);
-  var [myAuth, setMyAuth] = useState("false"); 
+  var [myAuth, setMyAuth] = useState("false");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
         setUserObj(currentUser);
         setMyAuth("Logged in");
+        setPending(false)
         console.log(currentUser);
       }
     });
-  
+
     // Cleanup function for useEffect
     return () => unsubscribe();
-  }, [auth, setMyAuth]);
+  }, [auth, setMyAuth ,setPending]);
   //  onAuthStateChanged(auth, (currentUser) => { 
   //   if (currentUser != null) {
   //     setUserObj(currentUser)
@@ -35,13 +36,19 @@ export default function MyContextProvider(props) {
     setUserObj,
     myAuth,
     setMyAuth,
+    pending,
+    setPending,
   };
   // if (userObj === null) {
-  //   return <p>Loading...</p>;
+  //   return (
+  //     <div className='tall bg-danger'>
+  //       <p>Loading...</p>
+  //     </div>
+  //   )
   // }
   return (
-  <MyContext.Provider value={contextValue}>
-    {props.children}
-  </MyContext.Provider>
+    <MyContext.Provider value={contextValue}>
+      {props.children}
+    </MyContext.Provider>
   )
 }
