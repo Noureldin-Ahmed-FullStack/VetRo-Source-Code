@@ -80,7 +80,7 @@ export default function DoctorProfile() {
                         </h5>
                     </div>
                     <div>
-                        <Link className="btn btn-info my-2" to="Pets">Add Pet</Link>
+                        <Link className="btn btn-info my-2" to="Clinic">Add Clinic</Link>
 
                     </div>
                     <button id="cvBtn" className="btn btn-warning text-light MyOrangeBg w-100">Download CV</button>
