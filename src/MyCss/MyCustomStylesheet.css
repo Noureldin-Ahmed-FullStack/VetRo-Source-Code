@@ -205,8 +205,28 @@
     /* width: 57px !important; */
   }
   
+.box{
+    background-color: #1ABC9C;
+    min-height: 60vh;
+}
+.choice h3{
+    color: #ffffffbb;
+    transition: all 0.3s;
+}
 .BigIcon{
     font-size: 1.6rem;
+}
+.BiggerIcon{
+    font-size: 3.6rem;
+    color: #ffffffbb;
+    transition: all 0.3s;
+}
+.box:hover{
+    cursor: pointer;
+}
+.box:hover .BiggerIcon{
+    font-size: 4rem;
+    color: #ffffff;
 }
 .flower{
     overflow-y: auto;

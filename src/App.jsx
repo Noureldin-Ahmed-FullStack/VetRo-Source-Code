@@ -14,6 +14,7 @@ import MyContextProvider, { MyContext } from './Components/ContextProvider';
 import Chat from './Components/Chat';
 import Room from './Components/Room';
 import Pets from './Components/Pets';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -41,6 +42,7 @@ function App() {
   ])
   return (
     <MyContextProvider>
+      <ToastContainer />
       <div className='myWidth'>
         <RouterProvider router={Routes} />
       </div>

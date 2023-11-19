@@ -6,12 +6,14 @@ import { UseFirebaseAuth } from './UseFirebaseAuth'
 // import React, { useState, useEffect, useContext } from 'react'
 import React, { useContext } from 'react'
 import ProfileComponent from './ProfileComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as fa from '@fortawesome/free-solid-svg-icons'
 
 
 export default function SignIn() {
     const { userObj, setUserObj } = useContext(MyContext);
-    const { signInWithGoogle, signOutUser } = UseFirebaseAuth();
-  
+    const { signInWithGoogle, signInWithGoogleAsDoctor } = UseFirebaseAuth();
+
 
 
 
@@ -19,9 +21,9 @@ export default function SignIn() {
     return (
         <div className="container GreenishBG">
             <div className="row justify-content-center">
-            
+
                 {userObj ? (
-                    <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">                       
+                    <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
                         <ProfileComponent />
                     </div>
                 ) : (
@@ -31,7 +33,24 @@ export default function SignIn() {
                                 Sign In
                             </div>
                             <div className="card-body">
-                                {/* <form onSubmit={HandleSubmit}> */}
+                                <div className="row justify-content-between">
+                                    <div className="col-6 hov">
+                                        <div onClick={() =>signInWithGoogle(false)} className="box d-flex justify-content-center align-items-center">
+                                            <div className='choice'>
+                                                <FontAwesomeIcon className='BiggerIcon w-100' icon={fa.faUser} />
+                                                <h3 className='w-100'>Normal User</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-6 hov">
+                                        <div onClick={() =>signInWithGoogle(true)} className="box d-flex justify-content-center align-items-center">
+                                            <div className='choice'>
+                                                <FontAwesomeIcon className='BiggerIcon w-100' icon={fa.faUserDoctor} />
+                                                <h3 className='w-100'>Doctor</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <form >
                                     <div className="form-group py-2">
                                         <label htmlFor="Username">Username</label>
