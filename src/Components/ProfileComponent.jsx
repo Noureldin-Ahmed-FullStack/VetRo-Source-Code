@@ -1,27 +1,34 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
-import { app , auth } from '../Firebase/firebase';
+import { app, auth, db } from '../Firebase/firebase';
 import { MyContext } from './ContextProvider';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function ProfileComponent() {
     // const userObj = props.userData;
     // let [userObj, setuserObj] = useState();
-    const {  signOutUser } = UseFirebaseAuth();
+    const { signOutUser } = UseFirebaseAuth();
     const { userObj, setUserObj } = useContext(MyContext);
-    // useEffect(() => {
-    //     if (user) {
-    //         console.log('User is authenticated.');
-    //         setuserObj(user);
-    //         console.log(userObj);
-    //     } else {
-    //         console.log('User is not authenticated.');
-    //     }
-    // }, [user]);
+    const { UserDBData, setUserDBData } = useContext(MyContext);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const documentRef = doc(db, 'Users', userObj.uid);
+                const docSnapshot = await getDoc(documentRef);
+                console.log(docSnapshot.data());
+                setUserDBData(docSnapshot.data());
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+    
+        fetchData();
+    }, [userObj.uid]);
 
 
     return (
@@ -41,7 +48,7 @@ export default function ProfileComponent() {
                                         <div className="col-sm-6 col-md-7 About">
                                             <div className="about-info my-2">
                                                 <p><span style={{ fontWeight: 'bolder' }} className="title-s">Name: </span> <span>{userObj.displayName}</span></p>
-                                                
+
                                                 <p className="lol"><span style={{ fontWeight: 'bolder' }} className="title-s">Email: </span>
                                                     <a className href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
                                                 </p>
@@ -96,7 +103,7 @@ export default function ProfileComponent() {
                                             </h5>
                                         </div>
                                         <div>
-                                        <Link className="btn btn-info my-2" to="Pets">Add Pet</Link>
+                                            <Link className="btn btn-info my-2" to="Pets">Add Pet</Link>
 
                                         </div>
                                         <button id="cvBtn" className="btn btn-warning text-light MyOrangeBg w-100">Download CV</button>

@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { MyContext } from './ContextProvider'
 import { auth, provider, app, db } from '../Firebase/firebase';
 import { InsertUserData } from './InsertToUsers';
-import { addDoc, collection, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,8 +16,9 @@ export function UseFirebaseAuth() {
   // const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
   // const { myAuth, setMyAuth } = useContext(MyContext);
   const { userObj, setUserObj } = useContext(MyContext);
+  const { UserDBData, setUserDBData } = useContext(MyContext);
   const usersRef = collection(db, "Users");
-  const doctorsRef = collection(db, "Doctors");
+  // const doctorsRef = collection(db, "Doctors");
   // const petRef = collection(db, "Pets")
   // const petDocumentRef = doc(petRef, "1");
 
@@ -27,12 +28,14 @@ export function UseFirebaseAuth() {
     console.log(userObj);
     auth.onAuthStateChanged(async (trig) => {
       if (trig) {
-        const m = trig.email;
-        const UserEmailExistsQuery = query(usersRef, where('email', '==', m));
-        const DocEmailExistsQuery = query(doctorsRef, where('email', '==', m));
-        const UserEmailExistsResult = await getDocs(UserEmailExistsQuery);
-        const DocEmailExistsResult = await getDocs(DocEmailExistsQuery);
-        if (UserEmailExistsResult.empty && DocEmailExistsResult.empty) {
+        // const m = trig.email;
+        // const UserEmailExistsQuery = query(usersRef, where('email', '==', m));
+        // const DocEmailExistsQuery = query(doctorsRef, where('email', '==', m));
+        // const UserEmailExistsResult = await getDocs(UserEmailExistsQuery);
+        // const DocEmailExistsResult = await getDocs(DocEmailExistsQuery);
+        const documentRef = doc(db, 'Users', trig.uid);
+        const docSnapshot = await getDoc(documentRef);
+        if (!docSnapshot.exists()) {
           const userDoc = doc(usersRef, trig.uid);
           setDoc(userDoc, {
             uid: trig.uid,
@@ -40,20 +43,35 @@ export function UseFirebaseAuth() {
             email: trig.email,
             userPFP: trig.photoURL,
             pets: null,
+            isDoctor: false,
+
           }
           );
-        }else if(!DocEmailExistsResult.empty){
-          // toast("you are a Doctor silly!")
-          toast.warn("you are a Doctor silly!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+        } else if (docSnapshot.exists()) {
+          const isDoc = docSnapshot.data().isDoctor
+          if (!isDoc) {
+            toast.success("Welcome!", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
             });
+          } else {
+            toast.warn("you already have an accout as a Doctor", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
         }
       }
     });
@@ -63,38 +81,70 @@ export function UseFirebaseAuth() {
     console.log(userObj);
     auth.onAuthStateChanged(async (trig) => {
       if (trig) {
-        const m = trig.email;
-        const UserEmailExistsQuery = query(usersRef, where('email', '==', m));
-        const DocEmailExistsQuery = query(doctorsRef, where('email', '==', m));
-        const UserEmailExistsResult = await getDocs(UserEmailExistsQuery);
-        const DocEmailExistsResult = await getDocs(DocEmailExistsQuery);
+        // const m = trig.email;
+        // const UserEmailExistsQuery = query(usersRef, where('email', '==', m));
+        // const DocEmailExistsQuery = query(doctorsRef, where('email', '==', m));
+        // const UserEmailExistsResult = await getDocs(UserEmailExistsQuery);
 
-        if (UserEmailExistsResult.empty && DocEmailExistsResult.empty) {
-          const DoctorDoc = doc(doctorsRef, trig.uid);
-          setDoc(DoctorDoc, {
+        const documentRef = doc(db, 'Users', trig.uid);
+        const docSnapshot = await getDoc(documentRef);
+        // console.log(docSnapshot.exists());
+        // const DocEmailExistsResult = await getDocs(DocEmailExistsQuery);
+
+        if (!docSnapshot.exists()) {
+          const userDoc = doc(usersRef, trig.uid);
+          // const DoctorDoc = doc(doctorsRef, trig.uid);
+          // setDoc(DoctorDoc, {
+          //   uid: trig.uid,
+          //   DoctorName: trig.displayName,
+          //   availableFrom: null,
+          //   availableTill: null,
+          //   clinics: null,
+          // });
+
+          setDoc(userDoc, {
             uid: trig.uid,
-            userName: trig.displayName,
-            phoneNumber: null,
+            DoctorName: trig.displayName,
             availableFrom: null,
             availableTill: null,
+            clinics: null,
+            phoneNumber: null,
             email: trig.email,
             userPFP: trig.photoURL,
-            clinics: null,
+            isDoctor: true
+          })
+
+        } else if (docSnapshot.exists()) {
+          const isDoc = docSnapshot.data().isDoctor
+
+          if (isDoc) {
+            toast.success("Welcome!", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+
+          } else {
+            toast.warn("you already have an accout as a user", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+
           }
-          );
-        }else if(!UserEmailExistsResult.empty){
           // console.log("you are a user silly!")
           // toast("you are a user silly!")
-          toast.warn('you are a user silly!', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
+
         }
       }
     });
@@ -126,7 +176,7 @@ export function UseFirebaseAuth() {
     }
   }
 
- 
+
   /////////////////
   const signInWithGoogle = async (isDoctor) => {
     const provider = new GoogleAuthProvider();
@@ -135,7 +185,7 @@ export function UseFirebaseAuth() {
       // setUserObj(authentic)
       if (isDoctor) {
         InsertDocData()
-      }else{
+      } else {
         InsertUserData()
       }
     } catch (error) {
