@@ -15,6 +15,7 @@ import Chat from './Components/Chat';
 import Room from './Components/Room';
 import Pets from './Components/Pets';
 import { ToastContainer } from 'react-toastify';
+import AddClinic from './Components/AddClinic';
 
 
 
@@ -33,6 +34,7 @@ function App() {
         { path: "about", element: <About /> },
         { path: "contact", element: <Contact /> },
         { path: "SignIn/pets", element: <Pets /> },
+        { path: "SignIn/clinic", element: <AddClinic/>},
         { path: "*", element: <PageMissing /> },
 
       ]
