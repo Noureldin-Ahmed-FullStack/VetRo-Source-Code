@@ -9,6 +9,7 @@ export default function AddClinic() {
     const [phone, setPhone] = useState("");
     const [location, setLocation] = useState("");
     const [price, setPrice] = useState("");
+    const [Day, setDay] = useState("");
     const [availableFrom, setAvailableFrom] = useState("");
     const [availableTo, setAvailableTo] = useState("");
 
@@ -20,6 +21,7 @@ export default function AddClinic() {
             phone,
             location,
             price,
+            Day,
             availableFrom,
             availableTo,
         };
@@ -31,7 +33,8 @@ export default function AddClinic() {
         setName("");
         setPhone("");
         setLocation("");
-        setPrice("")
+        setPrice("");
+        setDay("");
         setAvailableFrom("");
         setAvailableTo("");
         })
@@ -75,6 +78,13 @@ export default function AddClinic() {
         <div className="col-lg-12">
         <input type="text" className="form-control" name='price'  value={price}
             onChange={(event) => setPrice(event.target.value)} />
+        </div>
+        </div>
+        <div class="mb-3 ">
+        <label for="" > Day</label>
+        <div className="col-lg-12">
+        <input type="text" className="form-control" name='Day'  value={Day}
+            onChange={(event) => setDay(event.target.value)} />
         </div>
         </div>
 
