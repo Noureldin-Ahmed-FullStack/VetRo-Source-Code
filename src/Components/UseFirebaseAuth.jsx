@@ -9,30 +9,23 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const authentic = getAuth(app);
 
 export function UseFirebaseAuth() {
   const [user, setUser] = useState(null);
-  // const { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext);
-  // const { myAuth, setMyAuth } = useContext(MyContext);
+  
   const { userObj, setUserObj } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
   const usersRef = collection(db, "Users");
-  // const doctorsRef = collection(db, "Doctors");
-  // const petRef = collection(db, "Pets")
-  // const petDocumentRef = doc(petRef, "1");
+ 
 
 
   /*save data of user in db (passant) */
   const InsertUserData = () => {
     console.log(userObj);
     auth.onAuthStateChanged(async (trig) => {
-      if (trig) {
-        // const m = trig.email;
-        // const UserEmailExistsQuery = query(usersRef, where('email', '==', m));
-        // const DocEmailExistsQuery = query(doctorsRef, where('email', '==', m));
-        // const UserEmailExistsResult = await getDocs(UserEmailExistsQuery);
-        // const DocEmailExistsResult = await getDocs(DocEmailExistsQuery);
+      if (trig) {        
         const documentRef = doc(db, 'Users', trig.uid);
         const docSnapshot = await getDoc(documentRef);
         if (!docSnapshot.exists()) {
@@ -81,33 +74,19 @@ export function UseFirebaseAuth() {
     console.log(userObj);
     auth.onAuthStateChanged(async (trig) => {
       if (trig) {
-        // const m = trig.email;
-        // const UserEmailExistsQuery = query(usersRef, where('email', '==', m));
-        // const DocEmailExistsQuery = query(doctorsRef, where('email', '==', m));
-        // const UserEmailExistsResult = await getDocs(UserEmailExistsQuery);
-
         const documentRef = doc(db, 'Users', trig.uid);
         const docSnapshot = await getDoc(documentRef);
-        // console.log(docSnapshot.exists());
-        // const DocEmailExistsResult = await getDocs(DocEmailExistsQuery);
+        
 
         if (!docSnapshot.exists()) {
           const userDoc = doc(usersRef, trig.uid);
-          // const DoctorDoc = doc(doctorsRef, trig.uid);
-          // setDoc(DoctorDoc, {
-          //   uid: trig.uid,
-          //   DoctorName: trig.displayName,
-          //   availableFrom: null,
-          //   availableTill: null,
-          //   clinics: null,
-          // });
 
           setDoc(userDoc, {
             uid: trig.uid,
             DoctorName: trig.displayName,
             availableFrom: null,
             availableTill: null,
-            clinics: null,
+            clinics:null,
             phoneNumber: null,
             email: trig.email,
             userPFP: trig.photoURL,

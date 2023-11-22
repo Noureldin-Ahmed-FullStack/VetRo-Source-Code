@@ -1,8 +1,10 @@
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from './ContextProvider';
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../Firebase/firebase';
 
 export default function DoctorProfile() {
   
@@ -10,6 +12,24 @@ export default function DoctorProfile() {
     const { signOutUser } = UseFirebaseAuth();
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+
+/*For Clinic data */
+    const [clinicData, setClinicData] = useState([]);
+        useEffect(() => {
+            const fetchClinicData = async () => {
+            const response = collection(db, 'Clinics');
+            const data = await getDocs(response);
+            const clinicDataArray = data.docs.map(doc => doc.data());
+            setClinicData(clinicDataArray);
+            };
+            fetchClinicData();
+        }, []);
+    
+
+
+
+
+
   return (
     
     <div className="col-sm-12">
@@ -34,7 +54,22 @@ export default function DoctorProfile() {
                     </div>
                 </div>
                 <div className="skill-mf my-2 wow bounceInUp" data-wow-offset={150} style={{ visibility: 'visible', animationName: 'bounceInUp' }}>
-                    <p className="title-s lul-title">Skills</p>
+                    <h4>clinic details:</h4>
+                    {
+                    clinicData.map((Clinics, index) => (
+                            <div key={index}>
+                            <p>Name:{Clinics.name}</p>
+                            <p>Phone: {Clinics.phone}</p>
+                            <p>Location: {Clinics.location}</p>
+                            <p>Price: {Clinics.price}</p>
+                            <p>Day: {Clinics.Day}</p>
+                            <p>Available From: {Clinics.availableFrom}</p>
+                            <p>Available To: {Clinics.availableTo}</p>
+                            </div>
+                        ))
+                        }
+
+                    {/* <p className="title-s lul-title">Skills</p>
                     <ul>
                         <li>Programming Languages: JavaScript, C#</li>
                         <li>Web Technologies: ASP.NET, HTML, CSS, Bootstrap, React (in progress)</li>
@@ -52,11 +87,11 @@ export default function DoctorProfile() {
                         <div className="progress">
                             <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '100%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>100%</div>
                         </div>
-                    </ul>
+                    </ul> 
                     <span>ReactJS [Inprogress]</span> <span className="pull-right" />
                     <div className="progress">
                         <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '9%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>9%</div>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
             <div className="col-md-1" />
