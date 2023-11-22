@@ -33,6 +33,8 @@ function App() {
         { path: "contact", element: <Contact /> },
         { path: "SignIn/pets", element: <Pets /> },
         { path: "*", element: <PageMissing /> },
+        
+
 
       ]
     },
