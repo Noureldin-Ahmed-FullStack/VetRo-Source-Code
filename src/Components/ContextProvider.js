@@ -9,6 +9,7 @@ export let MyContext = createContext();
 export default function MyContextProvider(props) {
   // let [profilePhotoURL, setprofilePhotoURL] = useState('https://ssniper.sirv.com/Images/3.png');
   const [userObj, setUserObj] = useState();
+  const [UserDBData, setUserDBData] = useState();
   const [pending, setPending] = useState(true);
   var [myAuth, setMyAuth] = useState("false");
   useEffect(() => {
@@ -40,6 +41,8 @@ export default function MyContextProvider(props) {
     setMyAuth,
     pending,
     setPending,
+    UserDBData,
+    setUserDBData,
   };
   // if (userObj === null) {
   //   return (
