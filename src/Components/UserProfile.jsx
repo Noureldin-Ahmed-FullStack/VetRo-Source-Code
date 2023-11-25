@@ -19,6 +19,8 @@ export default function UserProfile() {
                     <div className="col-sm-6 col-md-5 About ">
                         <div>
                             <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
+                            {/* {console.log(UserDBData.pets[0].petRef._key.path.segments[6])} */}
+                            {/* {console.log(UserDBData.pets[0])} */}
                         </div>
                     </div>
                     <div className="col-sm-6 col-md-7 About">
