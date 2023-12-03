@@ -20,7 +20,7 @@ export default function UserProfile() {
     
     setNewName(event.target.value);
 };
-
+ 
 const handleUpdateClick = () => {
     const auth = getAuth();
     const user = auth.currentUser;

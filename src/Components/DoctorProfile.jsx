@@ -9,7 +9,7 @@ import { db } from '../Firebase/firebase';
 //----
 import { doc, updateDoc } from "firebase/firestore"; 
 import { getAuth ,updateProfile,onAuthStateChanged} from "firebase/auth";
-
+ 
 export default function DoctorProfile() {
   
     
