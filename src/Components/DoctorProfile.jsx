@@ -6,12 +6,58 @@ import { Link } from 'react-router-dom'
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 
+//----
+import { doc, updateDoc } from "firebase/firestore"; 
+import { getAuth ,updateProfile,onAuthStateChanged} from "firebase/auth";
+
 export default function DoctorProfile() {
   
     
     const { signOutUser } = UseFirebaseAuth();
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+    const [newName, setNewName] = useState('');
+
+    //---------UserName_edit--------------------------
+   const handleNameChange = (event) => {
+    
+    setNewName(event.target.value);
+};
+
+const handleUpdateClick = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    //display in profil
+    onAuthStateChanged(auth, (user) => {
+     if (user) {
+       // User is signed in
+       const uid = user.uid;
+       // ...
+     } else {
+       // User is signed out
+       // ...
+     }
+   });
+
+     updateProfile(auth.currentUser, {
+       displayName: newName,
+     });
+   
+
+//save in firestore
+    if (user) {
+        const userRef = doc(db, "Users", user.uid);
+       
+        updateDoc(userRef, { DoctorName: newName })
+        .then(() => {
+          console.log("Name updated in Firestore");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+};
 
 /*For Clinic data */
     const [clinicData, setClinicData] = useState([]);
@@ -42,6 +88,12 @@ export default function DoctorProfile() {
                             <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
                         </div>
                     </div>
+                    <div>
+           {/* update name*/}
+           <input type="text" value={newName} onChange={handleNameChange} />
+           <button onClick={handleUpdateClick}>Update Name</button>
+           {/* ...  */}
+         </div>
                     <div className="col-sm-6 col-md-7 About">
                         <div className="about-info my-2">
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Doctor Name: </span> <span>{userObj.displayName}</span></p>
