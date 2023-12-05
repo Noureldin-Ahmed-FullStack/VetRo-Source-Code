@@ -18,9 +18,7 @@ export default function AddClinic() {
     const usersRef = doc(db, "Users",userObj.uid);
     const clinicRef = doc(db, "Clinics", "clinicID");
    
-    // await updateDoc(usersRef, {
-    //     clinic: clinicRef,
-    // });
+   
     
     const handleSubmit = (async (event) => {
         event.preventDefault();
@@ -100,7 +98,7 @@ export default function AddClinic() {
         <div class="mb-3 ">
         <label for="" > Day</label>
         <div className="col-lg-12">
-        <input type="text" className="form-control" name='Day'  value={Day}
+        <input type="day" className="form-control" name='Day'  value={Day}
             onChange={(event) => setDay(event.target.value)} />
         </div>
         </div>
