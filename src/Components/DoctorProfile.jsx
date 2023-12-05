@@ -3,31 +3,37 @@ import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from './ContextProvider';
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
+
 
 export default function DoctorProfile() {
   
     
-    const { signOutUser } = UseFirebaseAuth();
+    const { signOutUser } = UseFirebaseAuth(); 
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
 
-/*For Clinic data */
-    const [clinicData, setClinicData] = useState([]);
-        useEffect(() => {
-            const fetchClinicData = async () => {
-            const response = collection(db, 'Clinics');
-            const data = await getDocs(response);
-            const clinicDataArray = data.docs.map(doc => doc.data());
-            setClinicData(clinicDataArray);
-            };
-            fetchClinicData();
-        }, []);
-    
 
 
 
+  /*For Clinic data */
+  const [clinicData, setClinicData] = useState([]);
+  const usersRef = doc(db, "Users", userObj.uid);
+  const fetchClinicData = async () => {
+  try {
+    const response = collection(db, 'Clinics');
+    const q = query(response, where("DoctorId", "==", usersRef.id)); // Assuming userId property in Clinics collection
+    const data = await getDocs(q);
+    const clinicDataArray = data.docs.map(doc => doc.data());
+    setClinicData(clinicDataArray);
+  } catch (error) {
+    console.error("Error fetching clinic data:", error);
+  }
+  };
+  useEffect(() => {
+    fetchClinicData();
+  }, [usersRef]);
 
 
   return (
@@ -42,6 +48,9 @@ export default function DoctorProfile() {
                             <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
                         </div>
                     </div>
+                    <div>
+          
+         </div>
                     <div className="col-sm-6 col-md-7 About">
                         <div className="about-info my-2">
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Doctor Name: </span> <span>{userObj.displayName}</span></p>
@@ -54,44 +63,23 @@ export default function DoctorProfile() {
                     </div>
                 </div>
                 <div className="skill-mf my-2 wow bounceInUp" data-wow-offset={150} style={{ visibility: 'visible', animationName: 'bounceInUp' }}>
+                  {/*display data of clinics*/}
                     <h4>clinic details:</h4>
                     {
-                    clinicData.map((Clinics, index) => (
-                            <div key={index}>
-                            <p>Name:{Clinics.name}</p>
-                            <p>Phone: {Clinics.phone}</p>
-                            <p>Location: {Clinics.location}</p>
-                            <p>Price: {Clinics.price}</p>
-                            <p>Day: {Clinics.Day}</p>
-                            <p>Available From: {Clinics.availableFrom}</p>
-                            <p>Available To: {Clinics.availableTo}</p>
-                            </div>
-                        ))
-                        }
+                    clinicData.map((clinic, index) => (
+                      <div key={index}>
+                        <p>Name: {clinic.name}</p>
+                        <p>Phone: {clinic.phone}</p>
+                        <p>Location: {clinic.location}</p>
+                        <p>Price: {clinic.price}</p>
+                        <p>Day: {clinic.Day}</p>
+                        <p>Available From: {clinic.availableFrom}</p>
+                        <p>Available To: {clinic.availableTo}</p>
+                      </div>
+                    ))
+                    }
 
-                    {/* <p className="title-s lul-title">Skills</p>
-                    <ul>
-                        <li>Programming Languages: JavaScript, C#</li>
-                        <li>Web Technologies: ASP.NET, HTML, CSS, Bootstrap, React (in progress)</li>
-                        <li>Databases: MS SQL</li>
-                        <li>Version Control: Git</li>
-                        <li>Problem Solving and Analytical Skills</li>
-                        <li>Strong Communication and Teamwork Skills</li>
-                        <li>Attention to Detail and Time Management</li>
-                        <li>Languages : Arabic (Native speaker)
-                            <div className="progress">
-                                <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '100%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>100%</div>
-                            </div>
-                            and English (Fluent Speaker)
-                        </li>
-                        <div className="progress">
-                            <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '100%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>100%</div>
-                        </div>
-                    </ul> 
-                    <span>ReactJS [Inprogress]</span> <span className="pull-right" />
-                    <div className="progress">
-                        <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '9%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>9%</div>
-                    </div>*/}
+                    
                 </div>
             </div>
             <div className="col-md-1" />
@@ -124,12 +112,7 @@ export default function DoctorProfile() {
             </div>
         </div>
     </div>
-    {/* <p>User is authenticated:</p>
-                                <p>Name: {user.displayName}</p>
-                                <p>Email: {user.email}</p>
-                                {user.photoURL && (
-                                    <img src={user.photoURL} alt="Profile" />
-                                )} */}
+    
 </div>
   )
 }
