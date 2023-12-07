@@ -23,9 +23,7 @@ export default function SignIn() {
             <div className="row justify-content-center">
 
                 {userObj ? (
-                    <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
                         <ProfileComponent />
-                    </div>
                 ) : (
                     <div className="col-md-6">
                         <div style={{ border: "#fff" }} className="card my-5">

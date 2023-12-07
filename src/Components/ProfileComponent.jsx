@@ -20,42 +20,6 @@ export default function ProfileComponent() {
     const [loading, setLoading] = useState(true);
 
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const documentRef = doc(db, 'Users', userObj.uid);
-    //             const docSnapshot = await getDoc(documentRef);
-    //             console.log(docSnapshot.data());
-    //             setUserDBData(docSnapshot.data());
-    //         } catch (error) {
-    //             console.error("Error fetching data:", error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, [userObj.uid]);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const documentRef = doc(db, 'Users', userObj.uid);
-    //             const docSnapshot = await getDoc(documentRef);
-    //             const userData = docSnapshot.data();
-    //             console.log(userData);
-    //             setUserDBData(userData);
-    //         } catch (error) {
-    //             console.error("Error fetching data:", error);
-    //         } finally {
-    //             setLoading(false); // Set loading state to false when data fetching is complete
-    //         }
-    //     };
-
-    //     if (!UserDBData) {
-    //         // Fetch data conditionally when userDBData is null
-    //         fetchData();
-    //     }
-    // }, [UserDBData, userObj.uid]);
-
     const fetchData = async (userId) => {
         try {
             const documentRef = doc(db, 'Users', userId);
@@ -88,6 +52,7 @@ export default function ProfileComponent() {
     }
 
     return (
+        <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
         <div className='container'>
             <div className="row">
                 {UserDBData ? (
@@ -97,13 +62,13 @@ export default function ProfileComponent() {
                         <UserProfile />
                     )
                 ) : (
-                    <>
-                    
+                    <>                    
                         <Loading />
                     </>
                 )}
 
             </div>
+        </div>
         </div>
 
     )
