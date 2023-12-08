@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { MyContext } from './ContextProvider';
 
 export default function DoctorHome() {
-    
+
     const { UserDBData, setUserDBData } = useContext(MyContext);
     return (
         <div className='d-flex justify-content-center align-items-center MainSection text-center'>
@@ -12,7 +12,15 @@ export default function DoctorHome() {
                     {/* <img id='imageDisplay' className='AvatarMainPic my-3' src={dataFromChild} alt='avatar' /> */}
                     <h1 className='bigga my-2 mb-3'>Welcome to VetRo</h1>
                     <h2>Doctor</h2>
-                    <h2>{UserDBData.isDoctor.toString()}</h2>
+                    {UserDBData ? (
+                        <>
+                            <h2>{UserDBData.isDoctor.toString()}</h2>
+                            <h2>{UserDBData.email.toString()}</h2>
+                        </>
+                    ) : (
+                        <h2>null</h2>
+                    )
+                    }
                     <button className='btn btn-danger'>Post</button>
 
                     <div className='py-3'>

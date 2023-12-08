@@ -12,6 +12,7 @@ export default function MyContextProvider(props) {
   const [userObj, setUserObj] = useState();
   const [UserDBData, setUserDBData] = useState();
   const [pending, setPending] = useState(true);
+  var [isOpen, setIsOpen] = useState(false)
   var [myAuth, setMyAuth] = useState("false");
 
   const fetchData = async (userId) => {
@@ -54,6 +55,8 @@ export default function MyContextProvider(props) {
     setPending,
     UserDBData,
     setUserDBData,
+    isOpen,
+    setIsOpen,
   };
  
   return (
