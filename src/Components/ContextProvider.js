@@ -12,7 +12,6 @@ export default function MyContextProvider(props) {
   const [userObj, setUserObj] = useState();
   const [UserDBData, setUserDBData] = useState();
   const [pending, setPending] = useState(true);
-  var [isOpen, setIsOpen] = useState(false)
   var [myAuth, setMyAuth] = useState("false");
 
   const fetchData = async (userId) => {
@@ -20,7 +19,7 @@ export default function MyContextProvider(props) {
         const documentRef = doc(db, 'Users', userId);
         const docSnapshot = await getDoc(documentRef);
         const userData = docSnapshot.data();
-        console.log(userData);
+        // console.log(userData);
         setUserDBData(userData);
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,7 +35,7 @@ export default function MyContextProvider(props) {
         fetchData(currentUser.uid)
         setMyAuth("Logged in");
         setPending(false)
-        console.log(currentUser);
+        // console.log(currentUser);
       }else if(currentUser===null){
         setPending(false)
       }
@@ -55,8 +54,6 @@ export default function MyContextProvider(props) {
     setPending,
     UserDBData,
     setUserDBData,
-    isOpen,
-    setIsOpen,
   };
  
   return (
