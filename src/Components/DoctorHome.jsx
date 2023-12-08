@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from './ContextProvider';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 
 export default function DoctorHome() {
@@ -12,7 +12,9 @@ export default function DoctorHome() {
         const fetchCollection = async () => {
             // const queryMessages = query(PostsRef)
             try {
-                const querySnapshot = await getDocs(PostsRef);
+                const querywithTime = query(PostsRef, orderBy('createdAt', 'desc'))
+                // const querySnapshot = await getDocs(PostsRef);
+                const querySnapshot = await getDocs(querywithTime);
                 const fetchedItems = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
