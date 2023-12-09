@@ -5,38 +5,84 @@ import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
 import { db } from '../Firebase/firebase';
 //----
-import { doc, updateDoc } from "firebase/firestore"; 
+import { doc, updateDoc, getDoc,setDoc } from "firebase/firestore"; 
 import { getAuth ,updateProfile,onAuthStateChanged} from "firebase/auth";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 
 export default function UserProfile() {
     
-    const { signOutUser } = UseFirebaseAuth();
+    const { signOutUser } = UseFirebaseAuth(); 
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
     const [newName, setNewName] = useState('');
- 
-      //---------UserName_edit--------------------------
-   const handleNameChange = (event) => {
     
+    
+    
+    
+    
+
+   //-----------image edit-------------
+   const [imgUrl, setImgUrl] = useState();
+   const [progresspercent, setProgresspercent] = useState(0);
+  
+   const handleSubmit = (e) => {
+     e.preventDefault()
+     const file = e.target[0]?.files[0]
+     if (!file) return;
+     const storage=getStorage();
+     //reference where the file will be stored in Storage.
+     const storageRef = ref(storage, `profilImage/${file.name}`);
+     //uploading the file to Storage.
+     const uploadTask = uploadBytesResumable(storageRef, file);
+  
+     uploadTask.on("state_changed",
+     //--
+ (snapshot) => {
+     //calculated as a percentage of the total bytes transferred
+  const progress =
+    Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  setProgresspercent(progress);
+ },
+ (error) => {
+  console.error("Upload error:", error);
+ },
+ () => {
+ 
+  getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    console.log("Download URL:", downloadURL);
+    setImgUrl(downloadURL);
+    //-------
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userRef = doc(db, "Users", user.uid);
+ //update profile picture in the Firestore.
+  updateDoc(userRef, {userPFP: downloadURL })
+    updateProfile(auth.currentUser, {  photoURL: `${imgUrl}` })
+      .then(() => {
+        console.log("Profile updated successfully");
+      })
+      .catch((error) => {
+        console.error("Update profile error:", error);
+      });
+  });
+ }
+);
+   }
+
+ 
+
+      //---------UserName_edit--------------------------
+      
+   const handleNameChange = (event) => {
     setNewName(event.target.value);
 };
- 
+
 const handleUpdateClick = () => {
     const auth = getAuth();
     const user = auth.currentUser;
 
     //display in profil
-    onAuthStateChanged(auth, (user) => {
-     if (user) {
-       // User is signed in
-       const uid = user.uid;
-       // ...
-     } else {
-       // User is signed out
-       // ...
-     }
-   });
-
      updateProfile(auth.currentUser, {
        displayName: newName,
      });
@@ -46,7 +92,7 @@ const handleUpdateClick = () => {
     if (user) {
         const userRef = doc(db, "Users", user.uid);
        
-        updateDoc(userRef, { UserName: newName })
+        updateDoc(userRef, {userName: newName })
         .then(() => {
           console.log("Name updated in Firestore");
         })
@@ -69,13 +115,25 @@ const handleUpdateClick = () => {
                             {/* {console.log(UserDBData.pets[0])} */}
                         </div>
                         
+                {/* update image*/}
+                        <div className="App">
+             <form onSubmit={handleSubmit} className='form'>
+              <input type='file' />
+             <button type='submit'>Upload</button>
+              </form>
+          
+    
+   </div>
                     </div>
-                    <div>
-                     {/* update name*/}
+
+
+            {/* update name*/}
            <input type="text" value={newName} onChange={handleNameChange} />
            <button onClick={handleUpdateClick}>Update Name</button>
            {/* ...  */}
-         </div>
+        
+
+         
                     <div className="col-sm-6 col-md-7 About">
                         <div className="about-info my-2">
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Name: </span> <span>{userObj.displayName}</span></p>

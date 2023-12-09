@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { db } from '../Firebase/firebase';
 import { MyContext } from './ContextProvider';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function Chat(props) {
     const { userObj, setUserObj } = useContext(MyContext);
@@ -72,6 +73,38 @@ export default function Chat(props) {
     };
     // key={message.id} 
 
+
+    //-------------uploadImage---------
+    const handlleSubmit = (e) => {
+        e.preventDefault()
+        const file = e.target[0]?.files[0]
+        if (!file) return;
+        const storage=getStorage();
+        //reference where the file will be stored in Storage.
+        const storageRef = ref(storage, `chat/${file.name}`);
+        //uploading the file to Storage.
+        const uploadTask = uploadBytesResumable(storageRef, file);
+     
+        uploadTask.on("state_changed",
+        //--
+    (snapshot) => {
+        //calculated as a percentage of the total bytes transferred
+     const progress =
+       Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+     setProgresspercent(progress);
+    },
+    (error) => {
+     console.error("Upload error:", error);
+    },
+    () => {
+    
+     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+       console.log("Download URL:", downloadURL);
+       setImgUrl(downloadURL);
+     })}
+   
+        )}
+
     return (
         <div className=' w-100 '>
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
@@ -108,6 +141,14 @@ export default function Chat(props) {
                 </div>
 
             </form>
+                {/* -----------update image-----------*/}
+                <div className="col-3">
+              <form onSubmit={handlleSubmit} className='form'>
+                   <input type='file' />
+                  
+              </form>
+                  
+    </div>
         </div>
 
 
