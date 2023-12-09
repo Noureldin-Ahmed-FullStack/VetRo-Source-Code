@@ -28,13 +28,15 @@ export function UseFirebaseAuth() {
       if (trig) {        
         const documentRef = doc(db, 'Users', trig.uid);
         const docSnapshot = await getDoc(documentRef);
+
         if (!docSnapshot.exists()) {
           const userDoc = doc(usersRef, trig.uid);
           setDoc(userDoc, {
             uid: trig.uid,
             userName: trig.displayName,
             email: trig.email,
-            userPFP: trig.photoURL,
+           userPFP: trig.photoURL,
+          
             pets: null,
             isDoctor: false,
 
@@ -87,10 +89,11 @@ export function UseFirebaseAuth() {
             availableFrom: null,
             availableTill: null,
             clinics:null,
-            phoneNumber: null,
+            phoneNumber:null,
             email: trig.email,
             userPFP: trig.photoURL,
-            isDoctor: true
+            isDoctor: true,
+          
           })
 
         } else if (docSnapshot.exists()) {
