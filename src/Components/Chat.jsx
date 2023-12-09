@@ -72,7 +72,7 @@ export default function Chat(props) {
 
     };
     // key={message.id} 
-
+ 
 
     //-------------uploadImage---------
     const handlleSubmit = (e) => {
