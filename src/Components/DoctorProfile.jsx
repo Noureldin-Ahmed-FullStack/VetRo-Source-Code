@@ -64,17 +64,17 @@ export default function DoctorProfile() {
                 </div>
                 <div className="skill-mf my-2 wow bounceInUp" data-wow-offset={150} style={{ visibility: 'visible', animationName: 'bounceInUp' }}>
                   {/*display data of clinics*/}
-                    <h4>clinic details:</h4>
+                    <h4>Clinic Details:</h4>
                     {
                     clinicData.map((clinic, index) => (
                       <div key={index}>
-                        <p>Name: {clinic.name}</p>
-                        <p>Phone: {clinic.phone}</p>
-                        <p>Location: {clinic.location}</p>
-                        <p>Price: {clinic.price}</p>
-                        <p>Day: {clinic.Day}</p>
-                        <p>Available From: {clinic.availableFrom}</p>
-                        <p>Available To: {clinic.availableTo}</p>
+                        <p><b>Name:</b> {clinic.name}</p>
+                        <p><b>Phone:</b> {clinic.phone}</p>
+                        <p><b>Location:</b> {clinic.location}</p>
+                        <p><b>Price:</b> {clinic.price}</p>
+                        <p><b>Day:</b> {clinic.Day}</p>
+                        <p><b>Available From:</b> {clinic.availableFrom}</p>
+                        <p><b>Available To:</b> {clinic.availableTo}</p>
                       </div>
                     ))
                     }
