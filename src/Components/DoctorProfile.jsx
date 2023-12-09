@@ -54,7 +54,7 @@ const auth = getAuth()
    const handleSubmit = (e) => {
      e.preventDefault()
      const file = e.target[0]?.files[0]
-     if (!file) return; 
+     if (!file) return;  
      const storage=getStorage();
      //reference where the file will be stored in Storage.
      const storageRef = ref(storage, `profilImage/${file.name}`);

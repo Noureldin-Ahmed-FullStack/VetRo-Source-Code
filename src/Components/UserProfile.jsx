@@ -37,7 +37,7 @@ export default function UserProfile() {
      const uploadTask = uploadBytesResumable(storageRef, file);
   
      uploadTask.on("state_changed",
-     //-- 
+     //--  
  (snapshot) => {
      //calculated as a percentage of the total bytes transferred
   const progress =

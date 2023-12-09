@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { browserLocalPersistence, getAuth, GoogleAuthProvider, setPersistence } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import 'firebase/storage'; 
+import 'firebase/storage';  
 
 
 const firebaseConfig = {
