@@ -36,45 +36,6 @@ function CameraComponent({ sendDataToParent }) {
       sendData(imageUrl)
     }
   };
-  useEffect(() => {
-    // Code to run after the DOM elements have loaded
-    // Code to run after the component mounts
-    // This is similar to componentDidMount
-    // console.log("update");
-    // const inputBtn = document.getElementById('CamBtn');
-    // const inputElement = document.querySelector('#Cam');
-    // const imageDisplay = document.getElementById('imageDisplay');
-    // console.log(inputElement);
-    // inputBtn.addEventListener('click', function() {
-    //   inputElement.click();
-    // });
-
-
-    return () => {
-      // Code to run when the component unmounts
-      // This is similar to componentWillUnmount
-      // inputBtn.addEventListener('click', function () {
-      //   inputElement.click();
-      // });
-      // inputElement.addEventListener('change', function (event) {
-      //   const selectedFile = event.target.files[0];
-      //   console.log(selectedFile)
-      //   if (selectedFile) {
-      //     const reader = new FileReader();
-
-      //     reader.onload = function (e) {
-      //       const imageDataUrl = e.target.result;
-
-      //       // Set the src attribute of the img element to the selected image
-      //       imageDisplay.src = imageDataUrl;
-      //     };
-
-      //     reader.readAsDataURL(selectedFile);
-      //   }
-      // })
-
-    };
-  }, []); // The empty dependency array ensures the code runs after the component has rendered
 
 
 
