@@ -12,13 +12,13 @@ export default function UserProfile() {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
 
-    /*For Clinic data */
+    /*For Pets data */
     const [PetsData, setPetsData] = useState([]);
     const usersRef = doc(db, "Users", userObj.uid);
     const fetchPetsData = async () => {
     try {
     const response = collection(db, 'Pets');
-    const q = query(response, where("userID", "==", usersRef.id)); // Assuming userId property in Clinics collection
+    const q = query(response, where("userID", "==", usersRef.id)); // Assuming userId property in Pets collection
     const data = await getDocs(q);
     const PetsDataArray = data.docs.map(doc => doc.data());
     setPetsData(PetsDataArray);
