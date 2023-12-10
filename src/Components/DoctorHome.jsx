@@ -45,7 +45,7 @@ export default function DoctorHome() {
 
                 <div className='py-3 bg-info container'>
                     {posts.map((item) => (
-                        <div key={item.senderId}>
+                        <div key={item.id}>
                             <p>ID: {item.senderId}</p>
                             <img className='circle-round' src={item.SenderPFP} alt="" />
                             <p>Name: {item.senderName}</p>
