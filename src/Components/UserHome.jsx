@@ -46,8 +46,8 @@ export default function UserHome() {
               <hr />
             </div>
             <form onSubmit={handlePostSubmit}>
-              <div class="post-box container">
-                <div class="user-profile row">
+              <div className="post-box container">
+                <div className="user-profile row">
                   <div className='d-flex align-items-center py-2'>
                     <img className='circle-round' src={UserDBData.userPFP} alt="Profile Picture" />
                     <h3 className='usrText'>{UserDBData.userName}</h3>
@@ -56,9 +56,9 @@ export default function UserHome() {
                 <div className='input-area '>
                   <textarea onChange={(e)=>setPostText(e.target.value)} className='form-control  bg-light' rows="6" placeholder="What's on your mind?"></textarea>
                 </div>
-                <div class="action-buttons">
-                  <button type='button' class="btn btn-danger">Add Photo</button>
-                  <button type='submit' class="btn btn-danger m-3">submit</button>
+                <div className="action-buttons">
+                  <button type='button' className="btn btn-danger">Add Photo</button>
+                  <button type='submit' className="btn btn-danger m-3">submit</button>
                 </div>
               </div>
             </form>
