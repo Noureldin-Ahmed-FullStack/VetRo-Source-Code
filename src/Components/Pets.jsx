@@ -65,40 +65,40 @@ export default function Pets() {
             <div className='text-light '>
             <h1 className="text-center">PETS</h1> 
             
-                <div class="mb-3 ">
-                <label for="" > Name</label>
+                <div className="mb-3 ">
+                <label  > Name</label>
                 <div className="col-lg-12">
                 <input type="text" className="form-control" name='Name' value={Name}
                     onChange={(event) => setName(event.target.value)} />
                 </div>
                 </div>
                 
-                <div class="mb-3  ">
-                <label for="" > Age</label>
+                <div className="mb-3  ">
+                <label  > Age</label>
                 <div className="col-lg-12">
                 <input type="number" className="form-control" name='Age' value={Age}
                     onChange={(event) => setAge(event.target.value)} />
                 </div>
                 </div>
 
-                <div class="mb-3  ">
-                <label for=""> Types</label>
+                <div className="mb-3  ">
+                <label > Types</label>
                 <div className="col-lg-12">
                 <input type="text" className="form-control" name='Type'  value={Type}
                     onChange={(event) => setType(event.target.value)} />
                 </div>
                 </div>
 
-                <div class="mb-3  ">
-                <label for="" > Gender</label>
+                <div className="mb-3  ">
+                <label  > Gender</label>
                 <div className="col-lg-12">
                 <input type="text" className="form-control" name='Gender'  value={Gender}
                     onChange={(event) => setGender(event.target.value)}/>
                 </div>
                 </div>
                 
-                <div class="mb-3  ">
-                <label for="" > Breed</label>
+                <div className="mb-3  ">
+                <label  > Breed</label>
                 <div className="col-lg-12">
                 <input type="text" className="form-control" name='Breed' value={Breed}
                     onChange={(event) => setBreed(event.target.value)} />

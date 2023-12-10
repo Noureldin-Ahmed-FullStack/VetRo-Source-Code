@@ -20,12 +20,14 @@ export default function ProfileComponent() {
     const [loading, setLoading] = useState(true);
 
 
+    
     const fetchData = async (userId) => {
         try {
             const documentRef = doc(db, 'Users', userId);
             const docSnapshot = await getDoc(documentRef);
             const userData = docSnapshot.data();
             console.log(userData);
+            console.log("fetch update");
             setUserDBData(userData);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -34,42 +36,85 @@ export default function ProfileComponent() {
         }
     };
 
+
     useEffect(() => {
-        const fetchDataPeriodically = () => {
-            fetchData(userObj.uid);
-            setTimeout(fetchDataPeriodically, 5000); // Fetch data every 5 seconds (adjust the interval as needed)
+        console.log("Profile component Updated");
+        
+        const fetchDataAfterDelay = () => {
+            fetchData(userObj.uid)
+            setTimeout(() => {
+                if (UserDBData === null) {                    
+                    fetchData(userObj.uid);
+                }
+            }, 5000);
         };
-
-        fetchDataPeriodically();
-
+    
+        fetchDataAfterDelay();
+    
         return () => {
-            clearTimeout(fetchDataPeriodically);
+            // Clear any pending timeouts when the component unmounts (optional)
+            clearTimeout(fetchDataAfterDelay);
         };
-    }, [userObj.uid]);
+    }, []);
 
     if (loading) {
         return <Loading />; // Render loading state while data is being fetched
     }
+    if (UserDBData) {
+        if (UserDBData.isDoctor) {
+            return (
+                <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
+                    <div className='container'>
+                        <div className="row">
+                            <DoctorProfile />
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
+                    <div className='container'>
+                        <div className="row">
+                            <h2>user</h2>
+                            <UserProfile />
+                        </div>
+                    </div>
+                </div>
+            )
 
-    return (
-        <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
-        <div className='container'>
-            <div className="row">
-                {UserDBData ? (
-                    UserDBData.isDoctor ? (
-                        <DoctorProfile />
-                    ) : (
-                        <UserProfile />
-                    )
-                ) : (
-                    <>                    
+        }
+    } else {
+        return (
+            <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
+                <div className='container'>
+                    <div className="row">
                         <Loading />
-                    </>
-                )}
-
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
 
-    )
+        )
+    }
+    // return (
+    //     <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
+    //         <div className='container'>
+    //             <div className="row">
+    //                 {UserDBData ? (
+    //                     UserDBData.isDoctor ? (
+    //                         <DoctorProfile />
+    //                     ) : (
+    //                         <UserProfile />
+    //                     )
+    //                 ) : (
+    //                     <>
+    //                         <Loading />
+    //                     </>
+    //                 )}
+
+    //             </div>
+    //         </div>
+    //     </div>
+
+    // )
 }

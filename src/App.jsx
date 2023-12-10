@@ -17,11 +17,16 @@ import Pets from './Components/Pets';
 import { ToastContainer } from 'react-toastify';
 import AddClinic from './Components/AddClinic';
 import SpeciesIdentifier from './Components/SpeciesIdentifier';
+import { useEffect } from 'react';
 
-
+const useLogging = (componentName) => {
+  useEffect(() => {
+    console.log('Updated: ', componentName);
+  });
+};
 
 function App() {
-  
+  useLogging('App');
   let Routes = createHashRouter([
     {
       path: '/', element: <Layout />, children: [

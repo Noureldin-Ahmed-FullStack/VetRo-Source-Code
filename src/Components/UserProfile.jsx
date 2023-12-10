@@ -27,8 +27,9 @@ export default function UserProfile() {
     }
     };
     useEffect(() => {
+        console.log("user component updated");
         fetchPetsData();
-    }, [usersRef]);
+    }, [usersRef.id]);
 
 
 
@@ -45,7 +46,7 @@ export default function UserProfile() {
                 <div className="row">
                     <div className="col-sm-6 col-md-5 About ">
                         <div>
-                            <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
+                            <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100"  />
                         
                         </div>
                     </div>
@@ -54,7 +55,7 @@ export default function UserProfile() {
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Name: </span> <span>{userObj.displayName}</span></p>
 
                             <p className="lol"><span style={{ fontWeight: 'bolder' }} className="title-s">Email: </span>
-                                <a className href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
+                                <a  href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
                             </p>
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Phone: </span> <a href="tel:+201116074576">{userObj.phonNumber}</a></p>
                         </div>
