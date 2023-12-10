@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
@@ -20,17 +22,39 @@ export default function ProfileComponent() {
     const [loading, setLoading] = useState(true);
 
 
-    
+
     const fetchData = async (userId) => {
         try {
             const documentRef = doc(db, 'Users', userId);
             const docSnapshot = await getDoc(documentRef);
-            const userData = docSnapshot.data();
-            console.log(userData);
-            console.log("fetch update");
-            setUserDBData(userData);
+            if (!docSnapshot.exists()) {
+                // Snapshot is empty, wait five seconds and log
+                toast.warn("you dont have an account. Signing you in!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 5000); // Delay of 5 seconds (5000 milliseconds)
+            } else {
+                console.log('Snapshot is not empty');
+                // Handle the case when the snapshot is not empty
+                const userData = docSnapshot.data();
+                console.log(userData);
+                console.log("fetch update");
+                setUserDBData(userData);
+                setLoading(false);
+            }
+
         } catch (error) {
             console.error("Error fetching data:", error);
+            setLoading(false);
         } finally {
             setLoading(false);
         }
@@ -39,22 +63,26 @@ export default function ProfileComponent() {
 
     useEffect(() => {
         console.log("Profile component Updated");
-        
-        const fetchDataAfterDelay = () => {
-            fetchData(userObj.uid)
-            setTimeout(() => {
-                if (UserDBData === null) {                    
-                    fetchData(userObj.uid);
-                }
-            }, 5000);
-        };
-    
-        fetchDataAfterDelay();
-    
-        return () => {
-            // Clear any pending timeouts when the component unmounts (optional)
-            clearTimeout(fetchDataAfterDelay);
-        };
+        console.log(userObj.uid);
+
+        fetchData(userObj.uid)
+        console.log(UserDBData);
+        // const fetchDataAfterDelay = () => {
+        //     console.log("fetcher");
+        //     setTimeout(() => {
+        //         if (UserDBData === null) {         
+        //             console.log("timer");           
+        //             fetchData(userObj.uid);
+        //         }
+        //     }, 5000);
+        // };
+
+        // fetchDataAfterDelay();
+
+        // return () => {
+        //     // Clear any pending timeouts when the component unmounts (optional)
+        //     clearTimeout(fetchDataAfterDelay);
+        // };
     }, []);
 
     if (loading) {
@@ -76,7 +104,6 @@ export default function ProfileComponent() {
                 <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
                     <div className='container'>
                         <div className="row">
-                            <h2>user</h2>
                             <UserProfile />
                         </div>
                     </div>
@@ -90,6 +117,7 @@ export default function ProfileComponent() {
                 <div className='container'>
                     <div className="row">
                         <Loading />
+                        {/* <button onClick={() => console.log(UserDBData)}>click for update</button> */}
                     </div>
                 </div>
             </div>
