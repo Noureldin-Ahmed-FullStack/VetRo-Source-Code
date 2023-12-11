@@ -35,7 +35,7 @@ export default function SpeciesIdentifier() {
             <h2>{Result}</h2>
             <button onClick={call}>Identify</button>
             <img src="" alt="" />
-            <img id='imageDisplay' className='AvatarMainPic my-3' src={dataFromChild} alt='avatar' />
+            <img id='imageDisplay' className=' my-3' src={dataFromChild} alt='avatar' />
             <CameraComponent sendDataToParent={handleDataFromChild} />
         </div>
     )

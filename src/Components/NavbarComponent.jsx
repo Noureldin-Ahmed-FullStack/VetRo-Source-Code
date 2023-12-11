@@ -26,7 +26,7 @@ export default function NavbarComponent() {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup"> */}
 
         <Link className="nav-link" to=""><FontAwesomeIcon className='BigIcon px-2' icon={fa.faHouse} /></Link>
-        <NavLink className="nav-link" to="about"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
+        <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
        
         <div className='px-3'> <VetRoBot /> </div>
         <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
