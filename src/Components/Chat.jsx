@@ -139,7 +139,7 @@ export default function Chat(props) {
                 </div>
 
             </form>
-        
+         
  {/* -----------update image-----------*/}
  <div className="col-3">
  <form onSubmit={handlleSubmit} className='form'>

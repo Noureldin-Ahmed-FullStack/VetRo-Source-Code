@@ -131,11 +131,11 @@ const handleUpdateClick = () => {
                 <div className="row">
                     <div className="col-sm-6 col-md-5 About ">
                         <div>
-                            <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
+                            <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100"  />
                         
                         </div>
                     </div>
-                               
+                                
                 {/* update image*/}
                 <div className="App">
              <form onSubmit={handleSubmit} className='form'>

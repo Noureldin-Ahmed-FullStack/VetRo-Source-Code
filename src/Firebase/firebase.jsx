@@ -19,6 +19,5 @@ const firebaseConfig = {
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const db = getFirestore(app);
-  const storage = getStorage(app);
   setPersistence(auth, browserLocalPersistence);
   export {auth, provider ,app, db};
