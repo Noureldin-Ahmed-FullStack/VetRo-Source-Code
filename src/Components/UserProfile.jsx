@@ -1,14 +1,42 @@
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from './ContextProvider';
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../Firebase/firebase';
 
 export default function UserProfile() {
     
     const { signOutUser } = UseFirebaseAuth();
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+
+    /*For Pets data */
+    const [PetsData, setPetsData] = useState([]);
+    const usersRef = doc(db, "Users", userObj.uid);
+    const fetchPetsData = async () => {
+    try {
+    const response = collection(db, 'Pets');
+    const q = query(response, where("userID", "==", usersRef.id)); // Assuming userId property in Pets collection
+    const data = await getDocs(q);
+    const PetsDataArray = data.docs.map(doc => doc.data());
+    setPetsData(PetsDataArray);
+    } catch (error) {
+    console.error("Error fetching PETS data:", error);
+    }
+    };
+    useEffect(() => {
+        console.log("user component updated");
+        fetchPetsData();
+    }, [usersRef.id]);
+
+
+
+
+
+
+
   return (
     
     <div className="col-sm-12">
@@ -18,9 +46,8 @@ export default function UserProfile() {
                 <div className="row">
                     <div className="col-sm-6 col-md-5 About ">
                         <div>
-                            <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
-                            {/* {console.log(UserDBData.pets[0].petRef._key.path.segments[6])} */}
-                            {/* {console.log(UserDBData.pets[0])} */}
+                            <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100"  />
+                        
                         </div>
                     </div>
                     <div className="col-sm-6 col-md-7 About">
@@ -28,36 +55,34 @@ export default function UserProfile() {
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Name: </span> <span>{userObj.displayName}</span></p>
 
                             <p className="lol"><span style={{ fontWeight: 'bolder' }} className="title-s">Email: </span>
-                                <a className href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
+                                <a  href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
                             </p>
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Phone: </span> <a href="tel:+201116074576">{userObj.phonNumber}</a></p>
                         </div>
                     </div>
                 </div>
                 <div className="skill-mf my-2 wow bounceInUp" data-wow-offset={150} style={{ visibility: 'visible', animationName: 'bounceInUp' }}>
-                    <p className="title-s lul-title">Skills</p>
-                    <ul>
-                        <li>Programming Languages: JavaScript, C#</li>
-                        <li>Web Technologies: ASP.NET, HTML, CSS, Bootstrap, React (in progress)</li>
-                        <li>Databases: MS SQL</li>
-                        <li>Version Control: Git</li>
-                        <li>Problem Solving and Analytical Skills</li>
-                        <li>Strong Communication and Teamwork Skills</li>
-                        <li>Attention to Detail and Time Management</li>
-                        <li>Languages : Arabic (Native speaker)
-                            <div className="progress">
-                                <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '100%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>100%</div>
+                    {/*display data of Pets*/}
+                    <h4>PETS Data:</h4>
+                    {
+                        PetsData.map((pets, index) => (
+                            <div key={index}>
+                            <p><b>Name:</b> {pets.Name}</p>
+                            <p><b>Age:</b> {pets.Age}</p>
+                            <p><b>Type:</b> {pets.Type}</p>
+                            <p><b>Gender:</b> {pets.Gender}</p>
+                            <p><b>Breed:</b> {pets.Breed}</p>
+                            
                             </div>
-                            and English (Fluent Speaker)
-                        </li>
-                        <div className="progress">
-                            <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '100%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>100%</div>
-                        </div>
-                    </ul>
-                    <span>ReactJS [Inprogress]</span> <span className="pull-right" />
-                    <div className="progress">
-                        <div className="progress-bar MyOrangeBg" role="progressbar" style={{ width: '9%' }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}>9%</div>
-                    </div>
+                        ))
+                        }
+
+
+
+
+
+
+                    
                 </div>
             </div>
             <div className="col-md-1" />
@@ -90,12 +115,7 @@ export default function UserProfile() {
             </div>
         </div>
     </div>
-    {/* <p>User is authenticated:</p>
-                                <p>Name: {user.displayName}</p>
-                                <p>Email: {user.email}</p>
-                                {user.photoURL && (
-                                    <img src={user.photoURL} alt="Profile" />
-                                )} */}
+    
 </div>
   )
 }

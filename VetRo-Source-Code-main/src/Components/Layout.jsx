@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import NavbarComponent from './NavbarComponent'
 // import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
@@ -12,44 +12,9 @@ import Loading from './Loading';
 export default function Layout() {
   // let { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext)
   const { pending, setPending } = useContext(MyContext);
-  // let { myAuth, setMyAuth } = useContext(MyContext)
-  // const [user] = useAuthState(auth)
-
-  // useEffect(() => {
-  //   if (user) {
-  //     setUserObj(user);
-  //     setMyAuth("Logged in")
-  //     setprofilePhotoURL(user.photoURL);
-  //     console.log(user);
-  //   } else {
-  //     setMyAuth("Not Logged in")
-  //     setUserObj(null);
-  //     setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png");
-  //   }
-  // }, [user]);
-
-
-  // if (user) {
-  //   setUserObj(user)
-  //   if (userObj !== null && userObj.photoURL) {
-  //     setMyAuth("Logged in")
-  //     setprofilePhotoURL(userObj.photoURL);
-  //   }
-  //   // setprofilePhotoURL(userObj.photoURL)
-  // }
-   //}
-  // onAuthStateChanged(auth, (currentUser) => {
-  //   if (currentUser != null) {
-  //     setUserObj(currentUser)
-  //     setMyAuth("Logged in")
-  //     console.log(userObj);
-  //     if (userObj !== null && userObj.photoURL) {
-  //       setprofilePhotoURL(userObj.photoURL);
-  //     }
-  //     // setprofilePhotoURL(userObj.photoURL)
-  //   }
-
-  // })
+  useEffect(() => {
+    console.log("Layout component Updated");
+}, []);
 
   return (
     <>

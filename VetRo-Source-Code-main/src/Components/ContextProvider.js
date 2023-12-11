@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../Firebase/firebase';
+import { auth, db } from '../Firebase/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 // Create a context
 export let MyContext = createContext();
@@ -12,13 +13,29 @@ export default function MyContextProvider(props) {
   const [UserDBData, setUserDBData] = useState();
   const [pending, setPending] = useState(true);
   var [myAuth, setMyAuth] = useState("false");
+
+  const fetchData = async (userId) => {
+    try {
+        const documentRef = doc(db, 'Users', userId);
+        const docSnapshot = await getDoc(documentRef);
+        const userData = docSnapshot.data();
+        // console.log(userData);
+        setUserDBData(userData);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    } finally {
+      setPending(false);
+    }
+};
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
         setUserObj(currentUser);
+        fetchData(currentUser.uid)
         setMyAuth("Logged in");
         setPending(false)
-        console.log(currentUser);
+        // console.log(currentUser);
       }else if(currentUser===null){
         setPending(false)
       }
@@ -27,13 +44,7 @@ export default function MyContextProvider(props) {
     // Cleanup function for useEffect
     return () => unsubscribe();
   }, [auth, setMyAuth ,setPending]);
-  //  onAuthStateChanged(auth, (currentUser) => { 
-  //   if (currentUser != null) {
-  //     setUserObj(currentUser)
-  //     setMyAuth("Logged in") 
-  //     console.log(userObj);      
-  //   }
-  // })
+
   const contextValue = {
     userObj,
     setUserObj,
@@ -44,13 +55,7 @@ export default function MyContextProvider(props) {
     UserDBData,
     setUserDBData,
   };
-  // if (userObj === null) {
-  //   return (
-  //     <div className='tall bg-danger'>
-  //       <p>Loading...</p>
-  //     </div>
-  //   )
-  // }
+ 
   return (
     <MyContext.Provider value={contextValue}>
       {props.children}

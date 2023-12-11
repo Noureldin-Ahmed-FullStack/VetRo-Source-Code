@@ -16,11 +16,17 @@ import Room from './Components/Room';
 import Pets from './Components/Pets';
 import { ToastContainer } from 'react-toastify';
 import AddClinic from './Components/AddClinic';
+import SpeciesIdentifier from './Components/SpeciesIdentifier';
+import { useEffect } from 'react';
 
-
+const useLogging = (componentName) => {
+  useEffect(() => {
+    console.log('Updated: ', componentName);
+  });
+};
 
 function App() {
-  
+  useLogging('App');
   let Routes = createHashRouter([
     {
       path: '/', element: <Layout />, children: [
@@ -35,6 +41,7 @@ function App() {
         { path: "contact", element: <Contact /> },
         { path: "SignIn/pets", element: <Pets /> },
         { path: "SignIn/clinic", element: <AddClinic/>},
+        { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
         { path: "*", element: <PageMissing /> },
 
       ]
@@ -53,6 +60,6 @@ function App() {
 }
 
 export default App;
-/****************************************** */
-/****************************************** */
-/****************************************** */
+
+
+// 11/12/2023 7:40pm nour
