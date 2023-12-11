@@ -1,3 +1,4 @@
+import avatarImg from '../images/avatars.svg'
 import React, { useRef, useState } from 'react'
 import CameraComponent from './CameraComponent';
 import { storage, ref, uploadBytes, getDownloadURL } from '../Firebase/firebase';
@@ -6,7 +7,7 @@ import 'firebase/storage';
 export default function SpeciesIdentifier() {
     const [Result, setResult] = useState("result")
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(avatarImg);
     const warframUrl = 'https://www.wolframcloud.com/obj/407c7a68-d5d0-4a90-b115-e4d143b56338'
 
 
@@ -79,17 +80,16 @@ export default function SpeciesIdentifier() {
 
     };
     return (
-        <div>
-            <h1>SpeciesIdentifier</h1>
-            <h2>{Result}</h2>
+        <div id="samyDIV">
+            <h1>Species Identifier</h1>
             <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
             <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
-            <button className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
-            <button className='btn btn-warning  mx-3' onClick={call}>Identify</button>
+            <div id="uploadContainer">
+                <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
+                <h2><i>{Result}</i></h2>
+            </div>
+            <button id="identifyBTN" className='btn btn-warning  mx-3' onClick={call}>Identify</button>
             <img id='imageDisplay' className=' my-3' src={imageUrl} />
-            <p>Image URL: {imageUrl}</p>
-            {/* <CameraComponent sendDataToParent={handleDataFromChild} /> */}
-
         </div>
     )
 

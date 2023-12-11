@@ -403,3 +403,61 @@
     cursor: pointer;
     color: #505050;
   }
+
+  /*samy's junk ;)*/
+  #samyDIV {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+  }
+  #samyDIV h1{
+    color: #1ABC9C;
+    -webkit-text-stroke: 2px black;
+  }
+  #samyDIV img{
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-style: solid;
+    border-color: #43315b;
+}
+
+  #uploadContainer {
+    background-color: #396061; 
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 900px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #uploadContainer h2{
+    color: #00000069;
+  }
+
+  #uploadBTN, #identifyBTN {
+    background-color: #ffc107; /* Bootstrap warning color */
+    margin: 0 3px;
+  }
+
+  #uploadBTN:hover, #identifyBTN:hover {
+    background-color: #ffca2b; /* Lighter shade on hover */
+  }
+
+  #imageDisplay {
+    max-width: 338px;
+    max-height: 280px;
+  }
+  /*samy's junk ;)*/
+
