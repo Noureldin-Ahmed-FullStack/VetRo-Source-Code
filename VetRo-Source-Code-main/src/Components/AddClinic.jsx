@@ -1,44 +1,64 @@
-import React, { useState } from "react";
+import React, { useContext, useState  } from "react";
 import { UseFirebaseAuth } from './UseFirebaseAuth'
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, updateDoc } from "firebase/firestore";
+import { async } from "@firebase/util";
+import { MyContext } from "./ContextProvider";
 const db = getFirestore();
-
 
 export default function AddClinic() {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [location, setLocation] = useState("");
     const [price, setPrice] = useState("");
+    const [Day, setDay] = useState("");
     const [availableFrom, setAvailableFrom] = useState("");
     const [availableTo, setAvailableTo] = useState("");
+    const { userObj, setUserObj } = useContext(MyContext);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const usersRef = doc(db, "Users",userObj.uid);
+    const clinicRef = doc(db, "Clinics", "clinicID");
+   
+    // await updateDoc(usersRef, {
+    //     clinic: clinicRef,
+    // });
     
+    const handleSubmit = (async (event) => {
+        event.preventDefault();
+        
+
         const clinicData = {
             name,
+            DoctorId:userObj.uid,
             phone,
             location,
             price,
+            Day,
             availableFrom,
             availableTo,
         };
-    // Save clinic data to Firestore
-    addDoc(collection(db, "Clinics"), clinicData)
-    .then((docRef) => {
-        console.log("Clinic added with ID: ", docRef.id);
+        try {
+            // Save clinic data to Firestore
+            const docRef = await addDoc(collection(db, "Clinics"), clinicData);
+            console.log("Clinic added with ID: ", docRef.id);
+            // Update user document with clinic reference
+            await updateDoc(usersRef, {
+                clinics: docRef, 
+            
+            });
+    
         // Clear the form after successful submission
         setName("");
         setPhone("");
         setLocation("");
-        setPrice("")
+        setPrice("");
+        setDay("");
         setAvailableFrom("");
         setAvailableTo("");
-        })
-        .catch((error) => {
-        console.error("Error adding clinic: ", error);
-        });
-    };
+        } catch (error) {
+            console.error("Error adding clinic: ", error);
+        }
+        
+    });
     return (<>
     <div className='container '>
     <form  onSubmit={handleSubmit}>
@@ -75,6 +95,13 @@ export default function AddClinic() {
         <div className="col-lg-12">
         <input type="text" className="form-control" name='price'  value={price}
             onChange={(event) => setPrice(event.target.value)} />
+        </div>
+        </div>
+        <div class="mb-3 ">
+        <label for="" > Day</label>
+        <div className="col-lg-12">
+        <input type="text" className="form-control" name='Day'  value={Day}
+            onChange={(event) => setDay(event.target.value)} />
         </div>
         </div>
 

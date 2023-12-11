@@ -1,67 +1,110 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { IoPersonCircleOutline } from "react-icons/io5";
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
-import { app , auth } from '../Firebase/firebase';
+import { app, auth, db } from '../Firebase/firebase';
 import { MyContext } from './ContextProvider';
-import Avatar from './Avatar';
+import { doc, getDoc } from 'firebase/firestore';
+import Loading from './Loading';
+import UserProfile from './UserProfile';
+import DoctorProfile from './DoctorProfile';
 
-const Profile = ({ token }) => {
-    const [user, setUser] = useState({});
-    const [isUserUpdated, setisUserUpdated] = useState(false);
-  
-    useEffect(() => {
-      const getProfileData = async () => {
+export default function ProfileComponent() {
+    // const userObj = props.userData;
+    // let [userObj, setuserObj] = useState();
+    const { signOutUser } = UseFirebaseAuth();
+    const { userObj, setUserObj } = useContext(MyContext);
+    const { UserDBData, setUserDBData } = useContext(MyContext);
+    const [loading, setLoading] = useState(true);
+
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const documentRef = doc(db, 'Users', userObj.uid);
+    //             const docSnapshot = await getDoc(documentRef);
+    //             console.log(docSnapshot.data());
+    //             setUserDBData(docSnapshot.data());
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, [userObj.uid]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const documentRef = doc(db, 'Users', userObj.uid);
+    //             const docSnapshot = await getDoc(documentRef);
+    //             const userData = docSnapshot.data();
+    //             console.log(userData);
+    //             setUserDBData(userData);
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         } finally {
+    //             setLoading(false); // Set loading state to false when data fetching is complete
+    //         }
+    //     };
+
+    //     if (!UserDBData) {
+    //         // Fetch data conditionally when userDBData is null
+    //         fetchData();
+    //     }
+    // }, [UserDBData, userObj.uid]);
+
+    const fetchData = async (userId) => {
         try {
-          const { data } = await axios.get(`http://localhost:1337/api/users/me`, {
-            headers: {
-              Authorization: `bearer ${token}`,
-            },
-          });
-          setUser(data);
-          setisUserUpdated(false);
+            const documentRef = doc(db, 'Users', userId);
+            const docSnapshot = await getDoc(documentRef);
+            const userData = docSnapshot.data();
+            console.log(userData);
+            setUserDBData(userData);
         } catch (error) {
-          console.log({ error });
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
         }
-      };
-      getProfileData();
-    }, [token, isUserUpdated]);
-  
+    };
 
+    useEffect(() => {
+        const fetchDataPeriodically = () => {
+            fetchData(userObj.uid);
+            setTimeout(fetchDataPeriodically, 5000); // Fetch data every 5 seconds (adjust the interval as needed)
+        };
+
+        fetchDataPeriodically();
+
+        return () => {
+            clearTimeout(fetchDataPeriodically);
+        };
+    }, [userObj.uid]);
+
+    if (loading) {
+        return <Loading />; // Render loading state while data is being fetched
+    }
 
     return (
-        <div className="profile">
-        <div className="avatar">
-          <div className="avatar-wrapper">
-            {user.avatarUrl ? (
-              <img
-                src={`http://localhost:1337${user.avatarUrl}`}
-                alt={`${user.username} avatar`}
-              />
-            ) : (
-              <IoPersonCircleOutline />
-            )}
-            <Avatar
-              token={token}
-              userId={user.id}
-              username={user.username}
-              avatarUrl={user.avatarUrl}
-              setisUserUpdated={setisUserUpdated}
-            />
-          </div>
+        <div className='container'>
+            <div className="row">
+                {UserDBData ? (
+                    UserDBData.isDoctor ? (
+                        <DoctorProfile />
+                    ) : (
+                        <UserProfile />
+                    )
+                ) : (
+                    <>
+                    
+                        <Loading />
+                    </>
+                )}
+
+            </div>
         </div>
-        <div className="body">
-          <p>Name: {user.username}</p>
-          <p>Email: {user.email}</p>
-          <p>
-            Account created at: {new Date(user.createdAt).toLocaleDateString()}
-          </p>
-        </div>
-      </div>
 
     )
 }

@@ -53,20 +53,44 @@ export default function Pets() {
 }
 */
 
-import React, { useState } from 'react';
-import { collection, addDoc } from "firebase/firestore";
+import React, { useContext, useState } from 'react';
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { db } from '../Firebase/firebase'
+import { UseFirebaseAuth } from './UseFirebaseAuth'
+import { MyContext } from './ContextProvider';
+var arr =[]
 function Form() {
+    const { userObj, setUserObj } = useContext(MyContext);
+    const petRef = collection(db, "Pets")
+    const newPetDocRef = doc(petRef);
+    const { updatePetsFieldForUser } = UseFirebaseAuth();
+    const [PetData, setPetData] = useState([]);
 
     //This function takes in the PetData object
-    const addpetToFirestore = async (PetData) => {
+    const addpetToFirestore = async () => {
         try {
-
-            const docRef = await addDoc(collection(db, "Pets"), PetData); //addDoc to add a new document to the "Pets" collection
-            console.log("Document written with ID: ", docRef.id);
+            arr.push({
+                petRef: newPetDocRef
+              })
+              await setPetData(arr)
+            setDoc(newPetDocRef, {
+                petId: newPetDocRef.id,
+                Name: Name,
+                Age: Age,
+                gender: gender,
+                Type: Type,
+                breed: breed
+              })
+              console.log(newPetDocRef.id);
+              setCurrentPetId(newPetDocRef.id)
+              console.log(arr);
+              console.log(userObj.uid);
+            // const docRef = await addDoc(collection(db, "Pets"), PetData); //addDoc to add a new document to the "Pets" collection
+            // console.log("Document written with ID: ", docRef.id);
         } catch (e) {
             console.error("Error adding document: ", e);
         }
+        await updatePetsFieldForUser( arr)
     };
 
     const handleSubmit = (event) => {
@@ -87,6 +111,7 @@ function Form() {
     const [gender, setgender] = useState('');
     const [Type, setType] = useState('');
     const [breed, setbreed] = useState('');
+    const [currentPetId, setCurrentPetId] = useState('');
 
 
     return (
