@@ -28,7 +28,7 @@ export default function SpeciesIdentifier() {
             setTimeout(() => {
                 console.log("handleUP");
                 triggerInputClick()
-            }, 10); // Delay of 0.1 seconds (500 milliseconds)
+            }, 200); // Delay of 0.1 seconds (500 milliseconds)
         }
     };
 
@@ -82,7 +82,7 @@ export default function SpeciesIdentifier() {
         <div>
             <h1>SpeciesIdentifier</h1>
             <h2>{Result}</h2>
-            <input ref={inputRef} className='d-none' type="file" onChange={handleImageChange} />
+            <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
             <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
             <button className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
             <button className='btn btn-warning  mx-3' onClick={call}>Identify</button>
