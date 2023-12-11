@@ -28,7 +28,7 @@ export default function SpeciesIdentifier() {
             setTimeout(() => {
                 console.log("handleUP");
                 triggerInputClick()
-            }, 10); // Delay of 0.5 seconds (500 milliseconds)
+            }, 10); // Delay of 0.1 seconds (500 milliseconds)
         }
     };
 
