@@ -3,9 +3,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from './ContextProvider';
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link } from 'react-router-dom'
-import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where ,updateDoc,getDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
-
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
+//----
+import { getAuth ,updateProfile,onAuthStateChanged} from "firebase/auth";
 
 export default function DoctorProfile() {
   
@@ -13,10 +16,177 @@ export default function DoctorProfile() {
     const { signOutUser } = UseFirebaseAuth(); 
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+//--
+const [newName, setNewName] = useState('');
+const storage=getStorage();
+
+const [user, setUser] = useState();
+const [isFormOpen, setIsFormOpen] = useState(false);
+const [newphone, setphone] = useState('');
+
+ //--------image-----------------
+ const [imgUrl, setImgUrl] = useState();
+ const [progresspercent, setProgresspercent] = useState(0);
+
+ const handleSubmit = (e) => {
+   e.preventDefault()
+   const file = e.target[0]?.files[0]
+   if (!file) return;   
+   const storage=getStorage();
+   //reference where the file will be stored in Storage.
+   const storageRef = ref(storage, `profilImage/${file.name}`);
+   //uploading the file to Storage.
+   const uploadTask = uploadBytesResumable(storageRef, file);
+
+   uploadTask.on("state_changed",
+   //--
+(snapshot) => {
+   //calculated as a percentage of the total bytes transferred
+const progress =
+  Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+setProgresspercent(progress);
+},
+(error) => {
+console.error("Upload error:", error);
+},
+() => {
+
+getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  console.log("Download URL:", downloadURL);
+  setImgUrl(downloadURL);
+  //-------
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const userRef = doc(db, "Users", user.uid);
+//update profile picture in the Firestore.
+updateDoc(userRef, {userPFP: downloadURL })
+  updateProfile(auth.currentUser, {  photoURL: `${imgUrl}` })
+    .then(() => {
+      console.log("Profile updated successfully");
+    })
+    .catch((error) => {
+      console.error("Update profile error:", error);
+    });
+});
+}
+);
+ }
 
 
+  //---------UserName_edit--------------------------
+ const handleNameChange = (event) => {
+  
+  setNewName(event.target.value);
+};
+
+const handleUpdateClick = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  //display in profil
+  onAuthStateChanged(auth, (user) => {
+   if (user) {
+     // User is signed in
+     const uid = user.uid;
+     // ...
+   } else {
+     // User is signed out
+     // ...
+   }
+ });
+
+   updateProfile(auth.currentUser, {
+     displayName: newName,
+   });
+ 
+
+//save in firestore
+  if (user) {
+      const userRef = doc(db, "Users", user.uid);
+     
+      updateDoc(userRef, { DoctorName: newName })
+      .then(() => {
+        console.log("Name updated in Firestore");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+//----------About---------
+const [About, setNewAbout] = useState('');
+
+const handleAboutChange = (event) => {
+setNewAbout(event.target.value);
+};
+
+const abouthandleSubmit = async (event) => {
+event.preventDefault();
+
+const docRef = doc(db, "Users",  userObj.uid);
+await updateDoc(docRef, { About: About });
+};
+
+const [newAboutData, setNewAboutData] = useState(null);
+ useEffect(() => {
+ const fetchData = async () => {
+  const docRef = doc(db, "Users",  userObj.uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    setNewAboutData(docSnap.data());
+  } else {
+    console.log("No such document!");
+  }
+ };
+
+ fetchData();
+ }, []);
+
+ 
+//---------------
+
+const handlephoneChange = (event) => {
+  setphone(event.target.value);
+};
+
+const handlleUpdateClick = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  //display in profil
+  onAuthStateChanged(auth, (user) => {
+   if (user) {
+     // User is signed in
+     const uid = user.uid;
+     // ...
+   } else {
+     // User is signed out
+     // ...
+   }
+ });
+
+   updateProfile(auth.currentUser, {
+      phone: newphone,
+   });
+ 
+  
+//save in firestore
+  if (user) {
+      const userRef = doc(db, "Users", userObj.uid);
+     
+      updateDoc(userRef, {phoneNumber: newphone })
+      .then(() => {
+        console.log("Name updated in Firestore");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
 
 
+//--------------------------------------------
   /*For Clinic data */
   const [clinicData, setClinicData] = useState([]);
   const usersRef = doc(db, "Users", userObj.uid);
@@ -47,10 +217,42 @@ export default function DoctorProfile() {
                         <div>
                             <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" alt />
                         </div>
+                        {/* -----------update image-----------     <div className="App">
+      <form onSubmit={handleSubmit} className='form'>
+        <input type='file' />
+        <button type='submit'>Upload</button>
+      </form>
+      {
+        !imgUrl &&
+        <div className='outerbar'>
+          <div className='innerbar' style={{ width: `${progresspercent}%` }}>{progresspercent}%</div>
+        </div>
+    
+      }
+        </div>*/}
+         <div className="App">
+             <form onSubmit={handleSubmit} className='form'>
+              <input type='file' />
+             <button type='submit'>Upload</button>
+              </form>
+              {/*----
+              {
+        !imgUrl &&
+        <div className='outerbar'>
+          <div className='innerbar' style={{ width: `${progresspercent}%` }}>{progresspercent}%</div>
+        </div>
+    
+      }*/}
+    
+              </div>
                     </div>
-                    <div>
-          
-         </div>
+         {/*------------- update name-------------*/}
+                 <div>
+                     <input type="text" value={newName} onChange={handleNameChange} />
+                     <button onClick={handleUpdateClick}>Update Name</button>
+        
+                  </div>
+   {/* ---------------------------------------- */}
                     <div className="col-sm-6 col-md-7 About">
                         <div className="about-info my-2">
                             <p><span style={{ fontWeight: 'bolder' }} className="title-s">Doctor Name: </span> <span>{userObj.displayName}</span></p>
@@ -86,17 +288,24 @@ export default function DoctorProfile() {
             <div className="col-md-6 wow BounceInRight" data-wow-offset={200} style={{ visibility: 'visible', animationName: 'bounceInRight' }}>
                 <div className="about-me pt-4 pt-md-0">
                     <div className="title-box-2">
-                        <h5 className="title-left lul-title">
-                            About me
-                        </h5>
+                      
                     </div>
+
+                     {/*---------About-----*/}
+                     <form onSubmit={ abouthandleSubmit}>
+                        <input type="text" value={About} onChange={handleAboutChange} placeholder="About" />
+                        <button type="submit">Update About</button>
+                    </form>
                     <p className="lead">
-                        Highly motivated and detail-oriented computer science student seeking
-                        opportunities to apply and enhance my skills in JavaScript, ASP.NET, C#, MS
-                        SQL, HTML, CSS, Bootstrap, and React (In progress). I am eager to contribute
-                        to a dynamic team and gain real-world experience in the field of software
-                        development.
+                    <div>
+                       {newAboutData && (
+                        <div>
+                           <h2>About:</h2><h5> {newAboutData.About}</h5>
+                        </div>
+                         )}
+                    </div>
                     </p>
+                    {/*--------------*/}
                     <div className="title-box-2">
                         <h5 className="title-left lul-title">
                             Pets
