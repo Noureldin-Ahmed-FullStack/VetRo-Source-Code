@@ -82,20 +82,6 @@ export default function Chat(props) {
             await triggerInputClick()
             // await triggerInputClick()
         }
-        // e.preventDefault()
-        // if (newMessage === "") return
-        // console.log(userObj);
-        // await addDoc(messagesRef, {
-        //     text: newMessage,
-        //     createdAt: serverTimestamp(),
-        //     senderName: userObj.displayName,
-        //     senderId: userObj.uid,
-        //     SenderPFP: userObj.photoURL,
-        //     IsImage: true,
-        //     room,
-        // })
-        // setNewMessage("")
-        // scrollToBottom();
     };
 
 
@@ -160,13 +146,13 @@ export default function Chat(props) {
                 ) : (
                     messages.senderId === userObj.uid ? (
                         <div key={messages.id} className='d-flex align-items-center my-2 justify-content-end'>
-                            <h6 className='MechatBubble'>{messages.text}</h6>
+                            <h6 className='MechatBubble wordBreaker'>{messages.text}</h6>
                             <span><img className='MechatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                         </div>
                     ) : (
                         <div key={messages.id} className='d-flex align-items-center my-2 '>
                             <span><img className='OtherchatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
-                            <h6 className='OtherchatBubble'>{messages.text}</h6>
+                            <h6 className='OtherchatBubble wordBreaker'>{messages.text}</h6>
                         </div>
                     )
                 )

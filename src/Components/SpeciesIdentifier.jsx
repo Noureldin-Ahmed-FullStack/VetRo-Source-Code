@@ -96,6 +96,7 @@ export default function SpeciesIdentifier() {
     };
     return (
         <div id="samyDIV">
+            <div>
             <h1>Species Identifier</h1>
             <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
             <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
@@ -115,6 +116,7 @@ export default function SpeciesIdentifier() {
             )
             }
             <img id='imageDisplay' className=' my-3 mb-5' src={imageUrl} />
+            </div>
         </div >
     )
 
