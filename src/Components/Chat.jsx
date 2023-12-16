@@ -107,7 +107,7 @@ export default function Chat(props) {
         console.log("handling");
         if (image) {
             console.log(image);
-            const storageRef = ref(storage, `images/${image.name}`);
+            const storageRef = ref(storage, `chat/${image.name}`);
             uploadBytes(storageRef, image)
                 .then((snapshot) => {
                     // Image uploaded successfully, get download URL
