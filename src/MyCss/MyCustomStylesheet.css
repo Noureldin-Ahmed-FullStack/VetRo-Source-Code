@@ -232,6 +232,9 @@
     overflow-y: auto;
     height: 60vh;
 }
+.ChatImages{
+  width: 60%;
+}
 .MechatBubblePhoto{    
     border-radius: 50%;
     width: 2.7rem;
