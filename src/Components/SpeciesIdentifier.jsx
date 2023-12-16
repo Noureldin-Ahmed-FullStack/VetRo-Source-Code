@@ -4,9 +4,13 @@ import CameraComponent from './CameraComponent';
 import { storage, ref, uploadBytes, getDownloadURL } from '../Firebase/firebase';
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import Loading from './Loading';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as fa from '@fortawesome/free-solid-svg-icons'
 export default function SpeciesIdentifier() {
     const [Result, setResult] = useState("result")
     const [image, setImage] = useState(null);
+    const [pending, setPending] = useState(false);
     const [imageUrl, setImageUrl] = useState(avatarImg);
     const warframUrl = 'https://www.wolframcloud.com/obj/407c7a68-d5d0-4a90-b115-e4d143b56338'
 
@@ -18,18 +22,23 @@ export default function SpeciesIdentifier() {
     const IdentRef = useRef(null);
 
     const triggerInputBrowse = () => {
+        setPending(true)
         inputRef.current.click(); //handleImageChange
     };
     const triggerInputClick = () => {
         btnRef.current.click(); //handleUpload
     };
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
+
         if (e.target.files[0]) {
-            setImage(e.target.files[0]);
-            setTimeout(() => {
-                console.log("handleUP");
-                triggerInputClick()
-            }, 200); // Delay of 0.1 seconds (500 milliseconds)
+            await setImage(e.target.files[0]);
+            // setTimeout(() => {
+            //     console.log("handleUP");
+            await triggerInputClick()
+
+            // }, 200); // Delay of 0.1 seconds (500 milliseconds)
+        } else {
+            setPending(false)
         }
     };
 
@@ -44,6 +53,8 @@ export default function SpeciesIdentifier() {
                     getDownloadURL(snapshot.ref).then((downloadURL) => {
                         setImageUrl(downloadURL);
                         console.log('File available at', downloadURL);
+                        setPending(false)
+
                         // You can use downloadURL here or set it to state for later use
                     });
                 })
@@ -57,6 +68,7 @@ export default function SpeciesIdentifier() {
 
     function identifyImage(imageUrl) {
         // Make a fetch request to the Wolfram Cloud API
+        setPending(true)
         return fetch(`${warframUrl}?url=` + encodeURIComponent(imageUrl))
             .then(response => response.json()) // Assume the API returns JSON
             .then(data => data)
@@ -69,7 +81,10 @@ export default function SpeciesIdentifier() {
     // Example usage
     function call() {
         identifyImage(imageUrl)
-            .then(result => setResult(result))
+            .then(result => {
+                setResult(result)
+                setPending(false)
+            })
             .catch(error => console.error('Error:', error));
     }
     const [dataFromChild, setDataFromChild] = useState();
@@ -86,11 +101,21 @@ export default function SpeciesIdentifier() {
             <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
             <div id="uploadContainer">
                 <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
-                <h2><i>{Result}</i></h2>
+                <h2 className='text-light pt-2'><i>{Result}</i></h2>
+                {/* <h2><i>{pending.toString()}</i></h2> */}
             </div>
-            <button id="identifyBTN" className='btn btn-warning  mx-3' onClick={call}>Identify</button>
-            <img id='imageDisplay' className=' my-3' src={imageUrl} />
-        </div>
+            {pending ? (
+                <div className=''>
+                    <FontAwesomeIcon className='heartbeat' icon={fa.faPaw} />
+                </div>
+            ) : (
+                <div>
+                    <button id="identifyBTN" className='btn btn-warning  mx-3' onClick={call}>Identify</button>
+                </div >
+            )
+            }
+            <img id='imageDisplay' className=' my-3 mb-5' src={imageUrl} />
+        </div >
     )
 
 }
