@@ -96,26 +96,28 @@ export default function SpeciesIdentifier() {
     };
     return (
         <div id="samyDIV">
-            <div>
-            <h1>Species Identifier</h1>
-            <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
-            <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
-            <div id="uploadContainer">
-                <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
-                <h2 className='text-light pt-2'><i>{Result}</i></h2>
-                {/* <h2><i>{pending.toString()}</i></h2> */}
-            </div>
-            {pending ? (
-                <div className=''>
-                    <FontAwesomeIcon className='heartbeat' icon={fa.faPaw} />
-                </div>
-            ) : (
+            <div className='container '>
                 <div>
-                    <button id="identifyBTN" className='btn btn-warning  mx-3' onClick={call}>Identify</button>
-                </div >
-            )
-            }
-            <img id='imageDisplay' className=' my-3 mb-5' src={imageUrl} />
+                    <h1 className='pt-2'>Species Identifier</h1>
+                    <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
+                    <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
+                    <div id="uploadContainer" className='w-100'>
+                        <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
+                        <h2 className='text-light pt-2'><i>{Result}</i></h2>
+                        {/* <h2><i>{pending.toString()}</i></h2> */}
+                    </div>
+                    {pending ? (
+                        <div className=''>
+                            <FontAwesomeIcon className='heartbeat' icon={fa.faPaw} />
+                        </div>
+                    ) : (
+                        <div>
+                            <button id="identifyBTN" className='btn btn-warning  mx-3' onClick={call}>Identify</button>
+                        </div >
+                    )
+                    }
+                    <img id='imageDisplay' className=' my-3 mb-5' src={imageUrl} />
+                </div>
             </div>
         </div >
     )

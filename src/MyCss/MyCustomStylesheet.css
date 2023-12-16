@@ -503,7 +503,7 @@
 /*samy's junk ;)*/
 #samyDIV {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   height: 100vh;
   margin: 0;
@@ -530,7 +530,6 @@
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 10px;
-  width: 900px;
   justify-content: center;
   align-items: center;
 }

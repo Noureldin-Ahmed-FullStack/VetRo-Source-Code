@@ -33,7 +33,7 @@ export default function NavbarComponent() {
         <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
         <NavLink className="" to="SignIn" >
           {/* <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> */}
-          {userObj ? (
+          {UserDBData ? (
           <img className='circle-round' src={UserDBData.userPFP} alt="" />
           ) : (
           <img className='circle-round' src={"https://ssniper.sirv.com/Images/3.png"} alt="" />
