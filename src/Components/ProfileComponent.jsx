@@ -38,10 +38,10 @@ export default function ProfileComponent() {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                  });
-                  setTimeout(() => {
+                });
+                setTimeout(() => {
                     window.location.reload();
-                  }, 5000); // Delay of 5 seconds (5000 milliseconds)
+                }, 5000); // Delay of 5 seconds (5000 milliseconds)
             } else {
                 console.log('Snapshot is not empty');
                 // Handle the case when the snapshot is not empty
@@ -91,17 +91,12 @@ export default function ProfileComponent() {
     if (UserDBData) {
         if (UserDBData.isDoctor) {
             return (
-                <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
-                    <div className='container'>
-                        <div className="row">
-                            <DoctorProfile />
-                        </div>
-                    </div>
-                </div>
+
+                <DoctorProfile />
             )
         } else {
             return (
-                            <UserProfile />
+                <UserProfile />
             )
 
         }
