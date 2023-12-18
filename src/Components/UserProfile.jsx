@@ -262,7 +262,7 @@ export default function UserProfile() {
                                                         <FontAwesomeIcon className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
                                                     </div>
                                                     {PetsData?(
-                                                        <p>{PetsData[0].Type}: {PetsData[0].Breed}</p>
+                                                        <p>{PetsData[0]?.Type}: {PetsData[0]?.Breed}</p>
                                                     ):(<></>)
                                                     }
                                                 </div>
