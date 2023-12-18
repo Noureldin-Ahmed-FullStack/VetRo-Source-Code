@@ -101,13 +101,7 @@ export default function ProfileComponent() {
             )
         } else {
             return (
-                <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
-                    <div className='container'>
-                        <div className="row">
                             <UserProfile />
-                        </div>
-                    </div>
-                </div>
             )
 
         }

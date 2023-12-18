@@ -5,6 +5,10 @@
   .AvatarMainPic {
     width: 100%;
   }
+  .profile-pic ,.pet-add{
+    width: 20vw;
+    height: 20vw;  
+  }
 
 }
 
@@ -15,6 +19,10 @@
   .AvatarMainPic {
     width: 100%;
   }
+  .profile-pic ,.pet-add{
+    width: 16vw;
+    height: 16vw;  
+  }
 }
 
 /* Medium devices (tablets and small desktops) */
@@ -23,6 +31,10 @@
   /* Your CSS for medium screens here */
   .AvatarMainPic {
     width: 100%;
+  }
+  .profile-pic ,.pet-add{
+    width: 16vw;
+    height: 16vw;  
   }
 }
 
@@ -33,6 +45,10 @@
   .AvatarMainPic {
     width: 60%;
   }
+  .profile-pic ,.pet-add{
+    width: 10vw;
+    height: 10vw;  
+  }
 
 }
 
@@ -40,6 +56,10 @@
 @media only screen and (min-width: 1200px) {
   .AvatarMainPic {
     width: 40%;
+  }
+  .profile-pic ,.pet-add{
+    width: 10vw;
+    height: 10vw;  
   }
 
   /* Your CSS for extra large screens here */
@@ -50,6 +70,9 @@
 
 
 
+.title {
+  font-weight: bolder;
+}
 
 .tealBG {
   background-color: #2c3e50;
@@ -201,7 +224,9 @@
 
 .circle-round {
   border-radius: 50%;
+  object-fit: cover;
   width: 2.7rem;
+  height: 2.7rem;
 }
 
 .bp-widget-widget {
@@ -275,11 +300,13 @@
   border-bottom-right-radius: 0;
   background-color: #1ABC9C;
 }
-.wordBreaker{
+
+.wordBreaker {
   word-wrap: break-word;
   max-width: 70%;
   padding: 0.8rem;
 }
+
 .OtherchatBubble {
   padding: 8px;
   border-radius: 2rem;
@@ -293,7 +320,16 @@
   width: 100vw;
   background-color: #1ABC9C;
 }
-
+.mySignOut{
+  right: 1rem;
+  top: 0.5rem;
+}
+.pointer{
+  cursor: pointer;
+}
+.myBottomMargin{
+  margin-bottom: 5rem;
+}
 #loading {
   display: flex;
   position: fixed;
@@ -500,7 +536,12 @@
   color: #505050;
 }
 
-/*samy's junk ;)*/
+.avatar {
+  width: 10rem;
+  height: 10rem;
+}
+
+/*samy's junk ;)***************************************************************************/
 #samyDIV {
   display: flex;
   align-items: start;
@@ -556,4 +597,87 @@
   max-height: 280px;
 }
 
-/*samy's junk ;)*/
+/*samy's junk ;)* **************************************************************************/
+
+
+
+/* ahmed bayoumy ***************************************************************************/
+/* user profile style*/
+/* .profile-pic ,.pet-add{
+  width: 20vw;
+  height: 20vw;
+
+} */
+
+.profile-pic {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pet-add {
+  border-radius: 50% !important; 
+  object-fit: cover;
+  background-color: white;
+}
+
+.pet-pic {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  object-fit: cover;
+}
+.MyLeftBorder{
+  border-left: #6a6a6a1e 2px solid;
+  border-radius: 0.4rem;
+  padding-left: 1rem;
+}
+.pet-pic2 {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.149);
+  object-fit: cover;
+}
+.mail{
+  color: #395673;
+  text-decoration: none;
+  font-weight: 600;
+}
+.pet {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  cursor: pointer;
+  border-radius: 0.6rem;
+  padding: 0.4rem;
+  border: #007bff 2px solid;
+  color: #007bff;
+}
+
+/* doctor profile style */
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.hours {
+  font-size: 14px;
+  color: #555;
+}
+
+.book:hover {
+  text-decoration: underline;
+}
+
+.clinic-info {
+  font-size: 14px;
+  color: #555;
+}
+.pet-Data-height{
+  height: 6rem;
+  max-height: 6rem;
+}
+/* ahmed bayoumy ***************************************************************************/
