@@ -228,6 +228,12 @@
   width: 2.7rem;
   height: 2.7rem;
 }
+.circle-round-profile {
+  border-radius: 8%;
+  object-fit: cover;
+  width: 6.5rem;
+  height: 6.5rem;
+}
 
 .bp-widget-widget {
   bottom: -20px !important;
@@ -326,6 +332,10 @@
 }
 .pointer{
   cursor: pointer;
+}
+.lineOnHover:hover{
+  text-decoration: 1px rgb(89, 89, 89) underline;
+  font-weight: bold;
 }
 .myBottomMargin{
   margin-bottom: 5rem;
@@ -648,7 +658,9 @@
   display: flex;
   align-items: center;
 }
-
+.myCard{
+  border: rgba(0, 0, 0, 0.175) 1px solid;
+}
 .icon {
   cursor: pointer;
   border-radius: 0.6rem;

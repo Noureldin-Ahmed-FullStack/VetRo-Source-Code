@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import AddClinic from './Components/AddClinic';
 import SpeciesIdentifier from './Components/SpeciesIdentifier';
 import { useEffect } from 'react';
+import Profile from './Components/Profile';
 
 const useLogging = (componentName) => {
   useEffect(() => {
@@ -42,6 +43,7 @@ function App() {
         { path: "SignIn/pets", element: <Pets /> },
         { path: "SignIn/clinic", element: <AddClinic/>},
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
+        { path: "profile", element: <Profile />},
         { path: "*", element: <PageMissing /> },
 
       ]
