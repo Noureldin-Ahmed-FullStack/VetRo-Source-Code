@@ -115,7 +115,7 @@ export default function UserHome() {
                       <div className='col-4'>
                         <img className="circle-round-profile" src={doctors.userPFP} alt="Card image" />
                       </div>
-                      <div className='ps-3 col-8'>
+                      <div className='sm-left-padd col-8'>
                         <div className="card-body">
                           <h4 className="card-title">{doctors.DoctorName}</h4>
                           <p className="card-text">{doctors.DoctorName}</p>

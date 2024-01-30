@@ -1,6 +1,8 @@
 /* Extra small devices (phones) */
 @media only screen and (max-width: 575.98px) {
-
+  .sm-left-padd{
+    padding-left: 2rem !important;
+  }
   /* Your CSS for extra small screens here */
   .AvatarMainPic {
     width: 100%;
