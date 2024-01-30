@@ -66,7 +66,7 @@ useEffect(() => {
 }, [usersRef.id]);
 
 //Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
-const EditPetData = () => {
+const EditPetData = (id) => {
 
 }
 //*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************

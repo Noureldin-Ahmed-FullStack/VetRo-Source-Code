@@ -18,6 +18,11 @@ export default function DoctorProfile() {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
     const [isOpen, setIsOpen] = useState(false)
+//Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
+const EditClinicData = (id) => {
+
+}
+//*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************
 
 
 
@@ -30,7 +35,11 @@ export default function DoctorProfile() {
             const response = collection(db, 'Clinics');
             const q = query(response, where("DoctorId", "==", usersRef.id)); // Assuming userId property in Clinics collection
             const data = await getDocs(q);
-            const clinicDataArray = data.docs.map(doc => doc.data());
+            const clinicDataArray = data.docs.map(doc => {
+                const clinicData = doc.data();
+                clinicData.clinicID = doc.id;
+                return clinicData
+            });
             setClinicData(clinicDataArray);
         } catch (error) {
             console.error("Error fetching clinic data:", error);
@@ -98,91 +107,9 @@ export default function DoctorProfile() {
                         <></>
                     )
                     }
-                    {
-                        // clinicData.map((clinic, index) => (
-                        //     <div key={index}>
-                        //         <p><b>Name:</b> {clinic.name}</p>
-                        //         <p><b>Phone:</b> {clinic.phone}</p>
-                        //         <p><b>Location:</b> {clinic.location}</p>
-                        //         <p><b>Price:</b> {clinic.price}</p>
-                        //         <p><b>Day:</b> {clinic.Day}</p>
-                        //         <p><b>Available From:</b> {clinic.availableFrom}</p>
-                        //         <p><b>Available To:</b> {clinic.availableTo}</p>
-                        //     </div>
-                        // ))
-                    }
+                    
 
-                    {/* <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
-                <div className='container'>
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <div className="box-shadow-full">
-                                <div className="row">
-                                    <div className="col-md-5 wow BounceInLeft" data-wow-offset={200} style={{ visibility: 'visible', animationName: 'bounceInLeft' }}>
-                                        <div className="row">
-                                            <div className="col-sm-6 col-md-5 About ">
-                                                <div>
-                                                    <img id="img" src={UserDBData.userPFP} className="img-fluid rounded b-shadow-a w-100" />
-                                                </div>
-                                            </div>
-
-                                            <div className="col-sm-6 col-md-7 About">
-                                                <div className="about-info my-2">
-                                                    <p><span style={{ fontWeight: 'bolder' }} className="title-s">Doctor Name: </span> <span>{UserDBData.DoctorName}</span></p>
-
-                                                    <p className="lol"><span style={{ fontWeight: 'bolder' }} className="title-s">Email: </span>
-                                                        <a href="mailto: noureldin2662002@gmail.com">{userObj.email}</a>
-                                                    </p>
-                                                    <p><span style={{ fontWeight: 'bolder' }} className="title-s">Phone: </span> <a href="tel:+201116074576">{UserDBData.phoneNumber}</a></p>
-                                                </div>
-                                                <div>
-                                                    <button onClick={() => setIsOpen(true)} className='btn btn-danger'>Edit Info</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="skill-mf my-2 wow bounceInUp" data-wow-offset={150} style={{ visibility: 'visible', animationName: 'bounceInUp' }}> */}
-                    {/*display data of clinics*/}
-                    {/* <h4>Clinic Details:</h4>
-
-
-                                        </div>
-                                    </div>
-                                    <div className="col-md-1" />
-                                    <div className="col-md-6 wow BounceInRight" data-wow-offset={200} style={{ visibility: 'visible', animationName: 'bounceInRight' }}>
-                                        <div className="about-me pt-4 pt-md-0">
-                                            <div className="title-box-2">
-                                                <h5 className="title-left lul-title">
-                                                    About me
-                                                </h5>
-                                            </div> */}
-
-                    {/* {UserDBData.About} */}
-                    {/* {UserDBData.About ? (
-                                                <p className="lead" >{UserDBData.About}</p>
-                                            ) : (
-                                                <p className='lead'>This is your about 😎</p>
-                                            )} */}
-                    {/* <div className="title-box-2">
-                                                <h5 className="title-left lul-title">
-                                                    Pets
-                                                </h5>
-                                            </div>
-                                            <div>
-                                                <Link className="btn btn-info my-2" to="Clinic">Add Clinic</Link>
-
-                                            </div>
-                                            <button id="cvBtn" className="btn btn-warning text-light MyOrangeBg w-100">Download CV</button>
-                                            <button onClick={signOutUser} className="btn btn-warning text-light MyOrangeBg w-100 mt-4">Sign Out</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div> */}
+                    
 
 
                     <div className='position-relative'>
@@ -222,7 +149,7 @@ export default function DoctorProfile() {
                                     <div className='row justify-content-center'>
                                         {
                                             clinicData.map((clinic, index) => (
-                                                <div key={index} onClick={() => console.log(clinic)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                                                <div key={index} onClick={() => console.log(clinic.clinicID)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
                                                     {
                                                         clinic.image ? (
                                                             <img src={clinic.image} className="profile-pic pointer" />
@@ -258,10 +185,11 @@ export default function DoctorProfile() {
                                             <div className=' ps-3'>
                                                 <div className=" align-items-center d-flex" >
                                                     <p className='mb-0 me-3'>{clinicData[0]?.name}</p>
-                                                    <FontAwesomeIcon className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                                    <FontAwesomeIcon onClick={()=> EditClinicData(clinicData[0]?.clinicID)} className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
                                                 </div>
                                                 {clinicData ? (
                                                     <>
+                                                    {console.log(clinicData)}
                                                         <p className='m-0'>Booking price: {clinicData[0]?.price} L.E</p>
                                                         <p className='m-0'>Clinic phone number: {clinicData[0]?.phone}</p></>
                                                 ) : (<></>)
