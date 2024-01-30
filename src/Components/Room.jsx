@@ -9,13 +9,15 @@ export default function Room() {
     const location = useLocation();
     const roomInputRef = useRef(null)
     const handleSubmit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
     }
-{/*chat */}
-useEffect(()=>{
-    setRoom(location.state.RID)
-},[location.state.RID])
-
+    {/*chat */ }
+    useEffect(() => {
+        if (location.state && location.state.RID) {
+            setRoom(location.state.RID)
+        }
+    }, [location])
+    
     return (
         <div className='tall d-flex align-items-center'>
             <div className='container d-flex justify-content-center'>

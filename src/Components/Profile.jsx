@@ -25,7 +25,12 @@ export default function Profile(props) {
     /*chat */
   }
   const chatFunc = () => {
-    const RID = userObj.id + location.state.id;
+    let RID
+    if (ProfileData?.isDoctor) {
+        RID = userObj.id+ " " + ProfileData.DoctorID;        
+    }else{
+        RID = ProfileData.id+ " " + userObj.id;     
+    }
     goToRoom(RID);
   };
   let navigate = useNavigate();
@@ -44,6 +49,7 @@ export default function Profile(props) {
       } else {
         fetchPetsData();
       }
+      console.log(ProfileData);
     } catch (error) {
       console.error("Error fetching Profile data:", error);
     }
