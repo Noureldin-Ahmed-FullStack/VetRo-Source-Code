@@ -1,17 +1,19 @@
 import { doc, getDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { db } from '../Firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as faReg from '@fortawesome/free-regular-svg-icons'
 import { Timestamp, addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import { MyContext } from './ContextProvider';
 
 export default function Profile(props) {
     const location = useLocation();
     const [ProfileData, setProfileData] = useState();
     const [PetsData, setPetsData] = useState([]);
     const [clinicData, setClinicData] = useState([]);
+    const { userObj, setUserObj } = useContext(MyContext);
 
     const fetchProfileData = async () => {
         try {
