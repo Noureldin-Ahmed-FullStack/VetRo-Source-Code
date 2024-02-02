@@ -564,9 +564,15 @@
 }
 
 #samyDIV h1 {
-  color: #1ABC9C;
-  -webkit-text-stroke: 2px black;
+  font-size:180%;
+  font-family: Verdana ;
 }
+
+#samyDIV span {
+  font-size: 85%;
+  color: #469395;
+}
+
 
 #samyDIV img {
   border-radius: 15px;
@@ -574,14 +580,14 @@
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
-  border-style: solid;
-  border-color: #43315b;
 }
 
 #uploadContainer {
-  background-color: #396061;
+  background-color: #469594;
   padding: 15px;
   border-radius: 10px;
+  border-style: solid;
+  border-color: #ffc107c4;
   margin-bottom: 10px;
   justify-content: center;
   align-items: center;
@@ -600,7 +606,7 @@
 
 #uploadBTN:hover,
 #identifyBTN:hover {
-  background-color: #ffca2b;
+  background-color: #9f7d18;
   /* Lighter shade on hover */
 }
 

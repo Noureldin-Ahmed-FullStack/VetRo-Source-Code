@@ -98,12 +98,16 @@ export default function SpeciesIdentifier() {
         <div id="samyDIV">
             <div className='container '>
                 <div>
-                    <h1 className='pt-2'>Species Identifier</h1>
+                    <h1 className='pt-1 pb-3'>Animal Breed<br></br> <span><b>Identification Program</b></span></h1>
                     <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
                     <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
                     <div id="uploadContainer" className='w-100'>
-                        <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
-                        <h2 className='text-light pt-2'><i>{Result}</i></h2>
+                        <div className='col'>
+                            <img id='imageDisplay' className='mb-2' src={imageUrl} />
+                        </div>
+                        <div className='col'>
+                            <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
+                        </div>
                         {/* <h2><i>{pending.toString()}</i></h2> */}
                     </div>
                     {pending ? (
@@ -116,7 +120,7 @@ export default function SpeciesIdentifier() {
                         </div >
                     )
                     }
-                    <img id='imageDisplay' className=' my-3 mb-5' src={imageUrl} />
+                    <h2 className='my-2'><i>{Result}</i></h2>
                 </div>
             </div>
         </div >
