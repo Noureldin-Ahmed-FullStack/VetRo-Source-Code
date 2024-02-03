@@ -9,9 +9,10 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 export default function Chat(props) {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+    const { room, reciverPFP } = props;
+
     const dummy = useRef()
     const ChatRoom = useRef()
-    const { room } = props
     const [newMessage, setNewMessage] = useState("")
     const [messages, setMessages] = useState([])
     const messagesRef = collection(db, "messages")
@@ -130,6 +131,7 @@ export default function Chat(props) {
     }
     return (
         <div className=' w-100 '>
+        <div className='w-100 bg-danger'>{reciverPFP}</div>
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
                 <div>{messages.map((messages) => (messages.IsImage ? (
                     messages.senderId === userObj.uid ? (

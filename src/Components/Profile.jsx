@@ -27,7 +27,7 @@ export default function Profile(props) {
   const chatFunc = () => {
     let RID
     if (ProfileData?.isDoctor) {
-        RID = userObj.uid+ " " + ProfileData.DoctorID;        
+        RID = userObj.uid+ " " + ProfileData.uid;        
     }else{
         RID = ProfileData.uid+ " " + userObj.uid;     
     }
@@ -36,7 +36,7 @@ export default function Profile(props) {
   };
   let navigate = useNavigate();
   const goToRoom = (RID) => {
-    navigate("/Room", { state: { RID: RID } });
+    navigate("/Room", { state: { RID: RID ,reciverPFP:ProfileData.userPFP } });
   };
 
   const fetchProfileData = async () => {
