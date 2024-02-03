@@ -305,12 +305,27 @@
   margin-right: 1rem;
 }
 
+.mainOtherchatBubblePhoto {
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  object-fit: cover;
+  margin-right: 1rem;
+
+}
+
+.mainOtherchatBubbleName {
+  font-size: 1.1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .MechatBubble {
 
   padding: 8px;
   border-radius: 2rem;
   border-bottom-right-radius: 0;
-  background-color: #1ABC9C;
+  background-color: #1782FF;
+  ;
 }
 
 .wordBreaker {
