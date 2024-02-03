@@ -16,7 +16,7 @@ export default function Room() {
     useEffect(() => {
         if (location.state && location.state.RID) {
             setRoom(location.state.RID)
-            setReciverPFP(location.state.reciverPFP)
+            setReciverPFP(location.state.reciver)
         }
     }, [location])
     
@@ -26,7 +26,7 @@ export default function Room() {
                 {userObj ? (
                     <div className='w-100 d-flex justify-content-center '>
                         {room ?
-                            <Chat room={room} reciverPFP={reciverPFP} />
+                            <Chat room={room} reciver={reciver} />
                             :
                             <form className='bg-warning p-4 rounded-4 w-100 ' onSubmit={handleSubmit}>
                                 <div className="row w-100 gx-1">

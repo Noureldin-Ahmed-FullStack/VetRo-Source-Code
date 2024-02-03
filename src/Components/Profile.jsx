@@ -36,7 +36,7 @@ export default function Profile(props) {
   };
   let navigate = useNavigate();
   const goToRoom = (RID) => {
-    navigate("/Room", { state: { RID: RID ,reciverPFP:ProfileData.userPFP } });
+    navigate("/Room", { state: { RID: RID ,reciver:ProfileData } });
   };
 
   const fetchProfileData = async () => {
