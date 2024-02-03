@@ -27,10 +27,11 @@ export default function Profile(props) {
   const chatFunc = () => {
     let RID
     if (ProfileData?.isDoctor) {
-        RID = userObj.id+ " " + ProfileData.DoctorID;        
+        RID = userObj.uid+ " " + ProfileData.DoctorID;        
     }else{
-        RID = ProfileData.id+ " " + userObj.id;     
+        RID = ProfileData.uid+ " " + userObj.uid;     
     }
+    console.log(RID);
     goToRoom(RID);
   };
   let navigate = useNavigate();
