@@ -117,8 +117,8 @@ export default function UserHome() {
                       </div>
                       <div className='sm-left-padd col-8'>
                         <div className="card-body">
-                          <h4 className="card-title">{doctors.DoctorName}</h4>
-                          <p className="card-text">{doctors.DoctorName}</p>
+                          <h4 className="card-title">{doctors.userName}</h4>
+                          <p className="card-text">{doctors.userName}</p>
                           <button onClick={()=> goToProfile(doctors.DoctorID)} className="btn btn-primary">See Profile</button>
                           {/* <Link className="btn btn-primary" to={{ pathname: '/profile', state: { id: doctors.DoctorID } }}>See Profile</Link> */}
                         </div>

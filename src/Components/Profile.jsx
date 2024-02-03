@@ -102,7 +102,7 @@ export default function Profile(props) {
                         src={ProfileData.userPFP}
                         className="avatar circle-round"
                       />
-                      <h4>Dr.{ProfileData.DoctorName}</h4>
+                      <h4>Dr.{ProfileData.userName}</h4>
                       <div className="about-info d-flex justify-content-center">
                         {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
                         <div className="text-warning pe-2">
@@ -128,7 +128,7 @@ export default function Profile(props) {
                       <div className=" py-1"></div>
                       <hr className="w-100" />
                       <div>
-                        <h4>Dr.{ProfileData.DoctorName}'s Clinics</h4>
+                        <h4>Dr.{ProfileData.userName}'s Clinics</h4>
                       </div>
                     </div>
                     {/**chat  */}
@@ -247,7 +247,7 @@ export default function Profile(props) {
                         className="avatar circle-round"
                       />
                       <div className="about-info my-2">
-                        {/* <h4 >{ProfileData.userName}</h4> */}
+                        <h4 >{ProfileData?.userName}</h4>
                         <div className="py-1 ">
                           <a
                             className="mail"
