@@ -9,7 +9,7 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 export default function Chat(props) {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
-    const { room, reciverPFP } = props;
+    const { room, reciverName, reciverPFP } = props;
 
     const dummy = useRef()
     const ChatRoom = useRef()
@@ -29,6 +29,7 @@ export default function Chat(props) {
 
     useEffect(() => {
         let delayedAction;
+        console.log(props);
         const queryMessages = query(messagesRef, where("room", "==", room), orderBy('createdAt'))
         const unsubscribe = onSnapshot(queryMessages, (snapShot) => {
             // console.log("newMessage");
@@ -131,7 +132,7 @@ export default function Chat(props) {
     }
     return (
         <div className=' w-100 '>
-        <div className='w-100 bg-danger'>{reciverPFP}</div>
+        <div className='w-100 bg-danger'>{reciverName + " "+ reciverPFP}</div>
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
                 <div>{messages.map((messages) => (messages.IsImage ? (
                     messages.senderId === userObj.uid ? (

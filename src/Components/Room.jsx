@@ -6,6 +6,7 @@ import { MyContext } from './ContextProvider';
 export default function Room() {
     const [room, setRoom] = useState(null)
     const [reciverPFP, setReciverPFP] = useState(null)
+    const [reciverName, setReciverName] = useState(null)
     const { userObj, setUserObj } = useContext(MyContext);
     const location = useLocation();
     const roomInputRef = useRef(null)
@@ -16,7 +17,8 @@ export default function Room() {
     useEffect(() => {
         if (location.state && location.state.RID) {
             setRoom(location.state.RID)
-            setReciverPFP(location.state.reciver)
+            setReciverName(location.state.reciverName)
+            setReciverPFP(location.state.reciverPFP)
         }
     }, [location])
     
@@ -26,7 +28,7 @@ export default function Room() {
                 {userObj ? (
                     <div className='w-100 d-flex justify-content-center '>
                         {room ?
-                            <Chat room={room} reciver={reciver} />
+                            <Chat room={room} reciverName={reciverName} reciverPFP={reciverPFP}/>
                             :
                             <form className='bg-warning p-4 rounded-4 w-100 ' onSubmit={handleSubmit}>
                                 <div className="row w-100 gx-1">
