@@ -47,7 +47,6 @@ function App() {
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
         { path: "profile", element: <Profile />},
         { path: "*", element: <PageMissing /> },
-        { path: "*", element: <Sidebar /> }
 
       ]
     },
@@ -58,7 +57,6 @@ function App() {
     <MyContextProvider>
       <ToastContainer />
       <div className='myWidth'>
-        <Sidebar/>
         <RouterProvider router={Routes} />
       </div>
     </MyContextProvider>

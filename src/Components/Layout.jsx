@@ -4,6 +4,7 @@ import NavbarComponent from './NavbarComponent'
 import { Outlet } from 'react-router-dom'
 import { MyContext } from './ContextProvider'
 import Loading from './Loading';
+import Sidebar from './Sidebar';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
 // import { onAuthStateChanged } from 'firebase/auth';
@@ -25,6 +26,8 @@ export default function Layout() {
       <div className='tall '>
         <Outlet />
       </div>
+      <Sidebar/>
+
       <NavbarComponent />
       </>
       )}
