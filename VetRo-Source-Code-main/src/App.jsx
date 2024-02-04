@@ -8,7 +8,7 @@ import Main from './Components/Main';
 import Portfolio from './Components/Portfolio';
 import SignIn from './Components/SignIn';
 import VetRoBot from './Components/VetRoBot';
-import { BrowserRouter, Route, RouterProvider, createHashRouter } from "react-router-dom"
+import { RouterProvider, createHashRouter } from "react-router-dom"
 import PageMissing from './Components/PageMissing';
 import MyContextProvider, { MyContext } from './Components/ContextProvider';
 import Chat from './Components/Chat';
@@ -18,8 +18,6 @@ import { ToastContainer } from 'react-toastify';
 import AddClinic from './Components/AddClinic';
 import SpeciesIdentifier from './Components/SpeciesIdentifier';
 import { useEffect } from 'react';
-import Profile from './Components/Profile';
-import Sidebar from './Components/Sidebar';
 
 const useLogging = (componentName) => {
   useEffect(() => {
@@ -44,10 +42,7 @@ function App() {
         { path: "SignIn/pets", element: <Pets /> },
         { path: "SignIn/clinic", element: <AddClinic/>},
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
-        { path: "profile", element: <Profile />},
         { path: "*", element: <PageMissing /> },
-        { path: "*", element: <Sidebar /> }
-        
 
       ]
     },
@@ -55,18 +50,10 @@ function App() {
 
   ])
   return (
-    
     <MyContextProvider>
-      
-      
       <ToastContainer />
-      
-
       <div className='myWidth'>
-        <Sidebar />
         <RouterProvider router={Routes} />
-
-        
       </div>
     </MyContextProvider>
   );

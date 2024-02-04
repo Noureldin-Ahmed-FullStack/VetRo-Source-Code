@@ -1,0 +1,697 @@
+/* Extra small devices (phones) */
+@media only screen and (max-width: 575.98px) {
+  .sm-left-padd{
+    padding-left: 2rem !important;
+  }
+  /* Your CSS for extra small screens here */
+  .AvatarMainPic {
+    width: 100%;
+  }
+  .profile-pic ,.pet-add{
+    width: 20vw;
+    height: 20vw;  
+  }
+
+}
+
+/* Small devices (tablets and larger phones) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+
+  /* Your CSS for small screens here */
+  .AvatarMainPic {
+    width: 100%;
+  }
+  .profile-pic ,.pet-add{
+    width: 16vw;
+    height: 16vw;  
+  }
+}
+
+/* Medium devices (tablets and small desktops) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+
+  /* Your CSS for medium screens here */
+  .AvatarMainPic {
+    width: 100%;
+  }
+  .profile-pic ,.pet-add{
+    width: 16vw;
+    height: 16vw;  
+  }
+}
+
+/* Large devices (desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+
+  /* Your CSS for large screens here */
+  .AvatarMainPic {
+    width: 60%;
+  }
+  .profile-pic ,.pet-add{
+    width: 10vw;
+    height: 10vw;  
+  }
+
+}
+
+/* Extra large devices (large desktops) */
+@media only screen and (min-width: 1200px) {
+  .AvatarMainPic {
+    width: 40%;
+  }
+  .profile-pic ,.pet-add{
+    width: 10vw;
+    height: 10vw;  
+  }
+
+  /* Your CSS for extra large screens here */
+}
+
+
+
+
+
+
+.title {
+  font-weight: bolder;
+}
+
+.tealBG {
+  background-color: #2c3e50;
+}
+
+.bold-text {
+  font-weight: 900;
+}
+
+.bigerText {
+  font-size: 45px;
+}
+
+.DarktealBG {
+  background-color: #18222c;
+
+}
+
+.Camera {
+  width: 100%;
+  /* white-space: normal; */
+  /* Allow text to wrap to the next line */
+  /* word-wrap: break-word; */
+  /* Break long words if necessary */
+
+}
+
+.GreenishBG {
+  background-color: #1ABC9C;
+
+}
+
+.tall {
+  min-height: 100vh;
+}
+
+.Mytall {
+  height: 100vh;
+}
+
+.whiteLine {
+  background-color: #fff;
+  height: 4px;
+  width: 85px;
+}
+
+.DarkLine {
+  background-color: #2c3e50;
+  height: 4px;
+  width: 85px;
+}
+
+.MainSection {
+  color: #fff;
+}
+
+.bigga {
+  font-size: 35px;
+  font-weight: 900;
+}
+
+.bigga-5 {
+  font-size: 6em;
+  font-weight: 900;
+}
+
+.FooterList li {
+  padding: 6px 11px;
+  margin: 0 5px;
+  border: #fff 2px solid;
+  border-radius: 50%;
+}
+
+.selected {
+  background-color: #1ABC9C !important;
+  border-radius: 8px;
+  color: #fff !important;
+}
+
+.portfolioComponent {
+  color: #2c3e50;
+}
+
+.PortOverlay:hover {
+  opacity: 100%;
+  transition: all 0.7s;
+}
+
+.PortOverlay {
+  position: absolute;
+  width: 95%;
+  height: 100%;
+  opacity: 0%;
+  background-color: #1ABC9C;
+}
+
+.imgDiv {
+  position: relative;
+  overflow: hidden;
+}
+
+.AboutSection {
+  background-color: #1ABC9C;
+  color: #fff;
+}
+
+.myPadding {
+  padding-bottom: 12em;
+}
+
+.navbar-nav .nav-link.active {
+  background-color: #1ABC9C;
+  border-radius: 0.6rem;
+}
+
+.myForm label {
+  color: #1ABC9C;
+}
+
+#userNameLbl,
+#userAgeLbl,
+#userEmailLbl,
+#userPasswordLbl {
+  display: none;
+}
+
+.block {
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.MySignIN {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 3rem;
+  border: 2px solid #C3C3C3;
+}
+
+.MySignIN:hover {
+  border: 2px solid #828282;
+  transition: border 0.2s;
+}
+
+.MyLogo img {
+  width: 2rem;
+}
+
+.circle-round {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 2.7rem;
+  height: 2.7rem;
+}
+.circle-round-profile {
+  border-radius: 8%;
+  object-fit: cover;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.bp-widget-widget {
+  bottom: -20px !important;
+  left: 50% !important;
+  transform: translateX(-66%) !important;
+}
+
+.bp-widget-web {
+  z-index: 2000 !important;
+}
+
+#bp-web-widget {
+  /* width: 57px !important; */
+}
+
+.box {
+  background-color: #1ABC9C;
+  min-height: 60vh;
+}
+
+.choice h3 {
+  color: #ffffffbb;
+  transition: all 0.3s;
+}
+
+.BigIcon {
+  font-size: 1.6rem;
+}
+
+.BiggerIcon {
+  font-size: 3.6rem;
+  color: #ffffffbb;
+  transition: all 0.3s;
+}
+
+.box:hover {
+  cursor: pointer;
+}
+
+.box:hover .BiggerIcon {
+  font-size: 4rem;
+  color: #ffffff;
+}
+
+.flower {
+  overflow-y: auto;
+  height: 60vh;
+}
+
+.ChatImages {
+  width: 60%;
+}
+
+.MechatBubblePhoto {
+  border-radius: 50%;
+  width: 2.7rem;
+  margin-left: 1rem;
+}
+
+.OtherchatBubblePhoto {
+  border-radius: 50%;
+  width: 2.7rem;
+  margin-right: 1rem;
+}
+
+.MechatBubble {
+
+  padding: 8px;
+  border-radius: 2rem;
+  border-bottom-right-radius: 0;
+  background-color: #1ABC9C;
+}
+
+.wordBreaker {
+  word-wrap: break-word;
+  max-width: 70%;
+  padding: 0.8rem;
+}
+
+.OtherchatBubble {
+  padding: 8px;
+  border-radius: 2rem;
+  border-bottom-left-radius: 0;
+  background-color: rgb(159, 159, 159);
+
+}
+
+.loading {
+  height: 100vh;
+  width: 100vw;
+  background-color: #1ABC9C;
+}
+.mySignOut{
+  right: 1rem;
+  top: 0.5rem;
+}
+.pointer{
+  cursor: pointer;
+}
+.lineOnHover:hover{
+  text-decoration: 1px rgb(89, 89, 89) underline;
+  font-weight: bold;
+}
+.myBottomMargin{
+  margin-bottom: 5rem;
+}
+#loading {
+  display: flex;
+  position: fixed;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+.sk-cube-grid {
+  width: 60px;
+  height: 60px;
+  margin: 100px auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #ffffff;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+
+  0%,
+  70%,
+  100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+
+  0%,
+  70%,
+  100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  }
+
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+    transform: scale3D(0, 0, 1);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply the animation to a class */
+.heartbeat {
+  color: #fffffff1;
+  font-size: 40px;
+  animation: heartbeat 1s ease-in-out infinite;
+  /* Adjust duration for speed */
+}
+
+.myOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Adjust the transparency by changing the last value */
+  z-index: 9999;
+  /* Adjust the z-index as needed */
+}
+
+.post-box {
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  padding: 0 16px;
+  width: 100%;
+  max-width: 600px;
+  /* Adjust the maximum width as needed */
+  margin: 0 auto;
+  /* Center the box horizontally */
+  /* background-color: #fff; */
+}
+
+.user-profile img {
+  width: 3rem;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.input-area textarea {
+  width: calc(100% - 50px);
+  /* Adjust based on the content and button width */
+  width: 100%;
+  height: 100%;
+  resize: none;
+
+  /* border: none; */
+  /* outline: none; */
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* .action-buttons button { */
+/* background-color: #1877f2; Facebook blue color */
+/* color: #fff; */
+/* border: none; */
+/* border-radius: 4px; */
+/* padding: 8px 16px; */
+/* margin-top: 8px; */
+/* cursor: pointer; */
+/* } */
+
+.action-buttons button.add-photo-button {
+  background-color: #42b72a;
+  /* Change color for different actions */
+}
+
+.usrText {
+  color: #646464;
+  font-size: 1.3rem;
+}
+
+.myClose {
+  font-size: 2rem;
+  /* position: relative;
+    top: 20px;
+    left: calc(100% - 40px); */
+  margin-right: 20px;
+  transition: all 0.1s;
+}
+
+.myClose:hover {
+  cursor: pointer;
+  color: #505050;
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
+}
+
+/*samy's junk ;)***************************************************************************/
+#samyDIV {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+}
+
+#samyDIV h1 {
+  color: #1ABC9C;
+  -webkit-text-stroke: 2px black;
+}
+
+#samyDIV img {
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-style: solid;
+  border-color: #43315b;
+}
+
+#uploadContainer {
+  background-color: #396061;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+#uploadContainer h2 {
+  color: #00000069;
+}
+
+#uploadBTN,
+#identifyBTN {
+  background-color: #ffc107;
+  /* Bootstrap warning color */
+  margin: 0 3px;
+}
+
+#uploadBTN:hover,
+#identifyBTN:hover {
+  background-color: #ffca2b;
+  /* Lighter shade on hover */
+}
+
+#imageDisplay {
+  max-width: 338px;
+  max-height: 280px;
+}
+
+/*samy's junk ;)* **************************************************************************/
+
+
+
+/* ahmed bayoumy ***************************************************************************/
+/* user profile style*/
+/* .profile-pic ,.pet-add{
+  width: 20vw;
+  height: 20vw;
+
+} */
+
+.profile-pic {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pet-add {
+  border-radius: 50% !important; 
+  object-fit: cover;
+  background-color: white;
+}
+
+.pet-pic {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  object-fit: cover;
+}
+.MyLeftBorder{
+  border-left: #6a6a6a1e 2px solid;
+  border-radius: 0.4rem;
+  padding-left: 1rem;
+}
+.pet-pic2 {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.149);
+  object-fit: cover;
+}
+.mail{
+  color: #395673;
+  text-decoration: none;
+  font-weight: 600;
+}
+.pet {
+  display: flex;
+  align-items: center;
+}
+.myCard{
+  border: rgba(0, 0, 0, 0.175) 1px solid;
+}
+.icon {
+  cursor: pointer;
+  border-radius: 0.6rem;
+  padding: 0.4rem;
+  border: #007bff 2px solid;
+  color: #007bff;
+}
+
+/* doctor profile style */
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.hours {
+  font-size: 14px;
+  color: #555;
+}
+
+.book:hover {
+  text-decoration: underline;
+}
+
+.clinic-info {
+  font-size: 14px;
+  color: #555;
+}
+.pet-Data-height{
+  height: 6rem;
+  max-height: 6rem;
+}
+/* ahmed bayoumy ***************************************************************************/

@@ -9,10 +9,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.js'
 import VetRoBot from './VetRoBot'
 
 
-
 export default function NavbarComponent() {
   const { userObj, setUserObj } = useContext(MyContext);
-  const { UserDBData, setUserDBData } = useContext(MyContext);
 
 
 
@@ -27,21 +25,19 @@ export default function NavbarComponent() {
             </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup"> */}
 
-        
         <Link className="nav-link" to=""><FontAwesomeIcon className='BigIcon px-2' icon={fa.faHouse} /></Link>
         <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
        
         <div className='px-3'> <VetRoBot /> </div>
         <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
-        {/* <NavLink className="" to="SignIn" >
-           <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> 
-          {UserDBData ? (
-          <img className='circle-round' src={UserDBData.userPFP} alt="" />
+        <NavLink className="" to="SignIn" >
+          {/* <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> */}
+          {userObj ? (
+          <img className='circle-round' src={userObj.photoURL} alt="" />
           ) : (
           <img className='circle-round' src={"https://ssniper.sirv.com/Images/3.png"} alt="" />
           )}
-        </NavLink> */}
-        <Link className="nav-link" data-bs-target="#demo1" data-bs-toggle="offcanvas" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /></Link>
+        </NavLink>
 
 
 
