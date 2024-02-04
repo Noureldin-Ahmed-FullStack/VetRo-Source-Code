@@ -19,7 +19,7 @@ export default function SignIn() {
 
 
     return (
-        <div className="container GreenishBG">
+        <div className="">
             <div className="row justify-content-center">
 
                 {userObj ? (

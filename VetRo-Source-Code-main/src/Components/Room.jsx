@@ -1,18 +1,23 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import Chat from './Chat';
 import { MyContext } from './ContextProvider';
 
 export default function Room() {
     const [room, setRoom] = useState(null)
     const { userObj, setUserObj } = useContext(MyContext);
-
+    const location = useLocation();
     const roomInputRef = useRef(null)
     const handleSubmit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
     }
-
-
-
+    {/*chat */ }
+    useEffect(() => {
+        if (location.state && location.state.RID) {
+            setRoom(location.state.RID)
+        }
+    }, [location])
+    
     return (
         <div className='tall d-flex align-items-center'>
             <div className='container d-flex justify-content-center'>

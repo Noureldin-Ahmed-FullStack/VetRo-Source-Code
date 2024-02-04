@@ -22,7 +22,7 @@ export default function Layout() {
       <Loading />
       ) : (
         <>
-      <div className='tall GreenishBG'>
+      <div className='tall '>
         <Outlet />
       </div>
       <NavbarComponent />
