@@ -18,7 +18,6 @@ import { ToastContainer } from 'react-toastify';
 import AddClinic from './Components/AddClinic';
 import SpeciesIdentifier from './Components/SpeciesIdentifier';
 import { useEffect } from 'react';
-import Sidebar from './Components/Sidebar';
 
 const useLogging = (componentName) => {
   useEffect(() => {
@@ -44,7 +43,6 @@ function App() {
         { path: "SignIn/clinic", element: <AddClinic/>},
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
         { path: "*", element: <PageMissing /> },
-        { path: "*", element: <Sidebar /> },
 
       ]
     },
@@ -54,11 +52,8 @@ function App() {
   return (
     <MyContextProvider>
       <ToastContainer />
-      
       <div className='myWidth'>
-        <Sidebar/>
         <RouterProvider router={Routes} />
-        
       </div>
     </MyContextProvider>
   );

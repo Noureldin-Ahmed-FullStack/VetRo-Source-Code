@@ -67,7 +67,6 @@ function Sidebar  ({children}) {
             <main>{children}</main>
 
           </div>
-          
           <p>Some text lorem ipsum.</p>
     
         </ul>
