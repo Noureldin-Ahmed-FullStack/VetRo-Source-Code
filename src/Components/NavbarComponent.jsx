@@ -31,14 +31,15 @@ export default function NavbarComponent() {
        
         <div className='px-3'> <VetRoBot /> </div>
         <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
-        <NavLink className="" to="SignIn" >
-          {/* <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> */}
+        <Link  className="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /></Link>
+        {/* <NavLink className="" to="SignIn" >
+           <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> 
           {UserDBData ? (
           <img className='circle-round' src={UserDBData.userPFP} alt="" />
           ) : (
           <img className='circle-round' src={"https://ssniper.sirv.com/Images/3.png"} alt="" />
           )}
-        </NavLink>
+        </NavLink> */}
 
 
 
