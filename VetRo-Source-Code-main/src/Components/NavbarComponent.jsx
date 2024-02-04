@@ -11,7 +11,6 @@ import VetRoBot from './VetRoBot'
 
 export default function NavbarComponent() {
   const { userObj, setUserObj } = useContext(MyContext);
-  const { UserDBData, setUserDBData } = useContext(MyContext);
 
 
 
@@ -33,8 +32,8 @@ export default function NavbarComponent() {
         <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
         <NavLink className="" to="SignIn" >
           {/* <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> */}
-          {UserDBData ? (
-          <img className='circle-round' src={UserDBData.userPFP} alt="" />
+          {userObj ? (
+          <img className='circle-round' src={userObj.photoURL} alt="" />
           ) : (
           <img className='circle-round' src={"https://ssniper.sirv.com/Images/3.png"} alt="" />
           )}
