@@ -19,6 +19,8 @@ import AddClinic from './Components/AddClinic';
 import SpeciesIdentifier from './Components/SpeciesIdentifier';
 import { useEffect } from 'react';
 import Profile from './Components/Profile';
+import Sidebar from './Components/Sidebar';
+
 
 const useLogging = (componentName) => {
   useEffect(() => {
@@ -45,6 +47,7 @@ function App() {
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
         { path: "profile", element: <Profile />},
         { path: "*", element: <PageMissing /> },
+        { path: "*", element: <Sidebar /> }
 
       ]
     },
@@ -55,6 +58,7 @@ function App() {
     <MyContextProvider>
       <ToastContainer />
       <div className='myWidth'>
+        <Sidebar/>
         <RouterProvider router={Routes} />
       </div>
     </MyContextProvider>
