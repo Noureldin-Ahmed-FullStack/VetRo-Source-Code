@@ -11,6 +11,7 @@ export default function MyContextProvider(props) {
   // let [profilePhotoURL, setprofilePhotoURL] = useState('https://ssniper.sirv.com/Images/3.png');
   const [userObj, setUserObj] = useState();
   const [UserDBData, setUserDBData] = useState();
+  const [currentDevice, setCurrentDevice] = useState();
   const [pending, setPending] = useState(true);
   var [myAuth, setMyAuth] = useState("false");
 
@@ -27,6 +28,18 @@ export default function MyContextProvider(props) {
       setPending(false);
     }
 };
+const detectDevice = () => {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (/android/.test(userAgent)) {
+    return 'Android';
+  } else if (/iphone|ipad|ipod/.test(userAgent)) {
+    return 'iOS';
+  } else {
+    return 'Other';
+  }
+};
+
+const device = detectDevice();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -34,6 +47,7 @@ export default function MyContextProvider(props) {
         setUserObj(currentUser);
         fetchData(currentUser.uid)
         setMyAuth("Logged in");
+        setCurrentDevice(device)
         setPending(false)
         // console.log(currentUser);
       }else if(currentUser===null){
@@ -54,6 +68,8 @@ export default function MyContextProvider(props) {
     setPending,
     UserDBData,
     setUserDBData,
+    currentDevice,
+    setCurrentDevice
   };
  
   return (

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function DoctorHome() {
     const { UserDBData, setUserDBData } = useContext(MyContext);
     const [posts, setPosts] = useState([])
+    const { currentDevice, setCurrentDevice } = useContext(MyContext);
     const PostsRef = collection(db, "Posts")
     const getTimeSince = (time) => {
         // Create a new Date object with the desired date and time
@@ -24,7 +25,7 @@ export default function DoctorHome() {
 
         const seconds = Math.floor((timeDifference) / 1000);
         let interval = Math.floor(seconds / 31536000);
-    
+
         if (interval >= 1) {
             return interval + " year" + (interval === 1 ? "" : "s") + " ago";
         }
@@ -49,8 +50,8 @@ export default function DoctorHome() {
 
     }
     let navigate = useNavigate()
-    const goToProfile = (Docid)=>{
-      navigate('/profile',{state:{id:Docid}});
+    const goToProfile = (Docid) => {
+        navigate('/profile', { state: { id: Docid } });
     }
     useEffect(() => {
         const fetchCollection = async () => {
@@ -77,6 +78,7 @@ export default function DoctorHome() {
             <div className='w-100 '>
                 <h1 className='bigga my-2 mb-3'>Welcome to VetRo</h1>
                 <h2>Doctor</h2>
+                <h2>current Device: {currentDevice}</h2>
                 {UserDBData ? (
                     <>
                         <h2>{UserDBData.isDoctor.toString()}</h2>
@@ -100,7 +102,7 @@ export default function DoctorHome() {
                         <div key={post.id} className="card my-4 text-start gedf-card">
                             <div className="card-header">
                                 <div className="d-flex justify-content-between align-items-center">
-                                    <div onClick={()=> goToProfile(post.senderId)} className="d-flex pointer justify-content-between align-items-center">
+                                    <div onClick={() => goToProfile(post.senderId)} className="d-flex pointer justify-content-between align-items-center">
                                         <div className="me-2">
                                             <img className="rounded-circle" width={45} src={post.SenderPFP} />
                                         </div>

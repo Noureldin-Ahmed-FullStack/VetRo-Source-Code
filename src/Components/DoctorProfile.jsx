@@ -48,7 +48,7 @@ const EditClinicData = (id) => {
 
     const HandleInfoUpdate = async (event) => {
         let newUserInfo = {
-            DoctorName: event.target[0].value,
+            userName: event.target[0].value,
             phoneNumber: event.target[1].value,
             About: event.target[2].value
         }
@@ -84,7 +84,7 @@ const EditClinicData = (id) => {
                                     <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
                                         <div className='row py-2 align-items-center'>
                                             <div className='col-sm-2'><span className=''>Name:</span></div>
-                                            <div className='col-sm-10'><input className='form-control' type='text' defaultValue={UserDBData.DoctorName} /></div>
+                                            <div className='col-sm-10'><input className='form-control' type='text' defaultValue={UserDBData.userName} /></div>
                                         </div>
                                         <div className='row py-2 align-items-center'>
                                             <div className='col-sm-2'><span className=''>Phone:</span></div>
@@ -119,7 +119,7 @@ const EditClinicData = (id) => {
                             <div className="card text-center align-items-center w-100 bg-white py-4 rounded shadow">
                                 <div className="row"  >
                                     <div className=""><img src={UserDBData.userPFP} className="avatar circle-round" />
-                                        <h4>Dr.{UserDBData.DoctorName}</h4>
+                                        <h4>Dr.{UserDBData.userName}</h4>
                                         <div className="about-info d-flex justify-content-center">
                                             {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
                                             <div className='text-warning pe-2'>

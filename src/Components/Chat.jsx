@@ -9,9 +9,10 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 export default function Chat(props) {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+    const { room, reciverName, reciverPFP } = props;
+
     const dummy = useRef()
     const ChatRoom = useRef()
-    const { room } = props
     const [newMessage, setNewMessage] = useState("")
     const [messages, setMessages] = useState([])
     const messagesRef = collection(db, "messages")
@@ -28,6 +29,7 @@ export default function Chat(props) {
 
     useEffect(() => {
         let delayedAction;
+        console.log(props);
         const queryMessages = query(messagesRef, where("room", "==", room), orderBy('createdAt'))
         const unsubscribe = onSnapshot(queryMessages, (snapShot) => {
             // console.log("newMessage");
@@ -130,6 +132,9 @@ export default function Chat(props) {
     }
     return (
         <div className=' w-100 '>
+            <div className='w-100 border-bottom'>
+                <img src={reciverPFP} className='mx-2 mb-1 mainOtherchatBubblePhoto ' /><span className='mainOtherchatBubbleName'>{reciverName}</span>
+            </div>
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
                 <div>{messages.map((messages) => (messages.IsImage ? (
                     messages.senderId === userObj.uid ? (
@@ -161,9 +166,15 @@ export default function Chat(props) {
                 </div>
                 <div ref={dummy}></div>
             </div>
-            <form className='bg-warning p-4 rounded-4 rounded-top-0 w-100 ' onSubmit={handleSubmit}>
+            <form id='chatForm' className='bg-light p-4 rounded-4 rounded-top-0 w-100 border-top' onSubmit={handleSubmit}>
                 <div className="row gx-1 w-100">
-                    <div className="col-9 ">
+                    <div className='col-1'>
+                        <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
+                            <label className='btn' htmlFor="imgUploader"><FontAwesomeIcon className='' icon={fa.faImage} /></label>
+                            <input onChange={handleImageUpload} accept="image/*" id='imgUploader' capture="environment" className='d-none' text="hi" type="file" />
+                            {/* <button onClick={handleImageUpload} type='button' className='btn btn-success w-100'>Upload Image</button> */}
+                    </div>
+                    <div className="col-9">
                         <input
                             placeholder='Enter message'
                             className='form-control w-100'
@@ -172,15 +183,10 @@ export default function Chat(props) {
                             value={newMessage}
                         />
                     </div>
-                    <div className="col-3 btn-group">
-                        <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
-                        <label className='btn btn-danger' htmlFor="imgUploader"><FontAwesomeIcon className='' icon={fa.faImage} /></label>
-                        <input onChange={handleImageUpload} accept="image/*" id='imgUploader' capture="environment" className='d-none' text="hi" type="file" />
-                        {/* <button onClick={handleImageUpload} type='button' className='btn btn-success w-100'>Upload Image</button> */}
+                    <div className="col-2 btn-group">
                         <button type='submit' className='btn btn-primary w-100'>send</button>
                     </div>
                 </div>
-
             </form>
         </div>
 

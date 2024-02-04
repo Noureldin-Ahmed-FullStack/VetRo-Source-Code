@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function UserHome() {
   const { UserDBData, setUserDBData } = useContext(MyContext);
+  const { currentDevice, setCurrentDevice } = useContext(MyContext);
   const [isOpen, setIsOpen] = useState(false)
   const [doctorData, setDoctorData] = useState(false)
   const [PostText, setPostText] = useState("")
@@ -117,8 +118,8 @@ export default function UserHome() {
                       </div>
                       <div className='sm-left-padd col-8'>
                         <div className="card-body">
-                          <h4 className="card-title">{doctors.DoctorName}</h4>
-                          <p className="card-text">{doctors.DoctorName}</p>
+                          <h4 className="card-title">{doctors.userName}</h4>
+                          <p className="card-text">{doctors.userName}</p>
                           <button onClick={()=> goToProfile(doctors.DoctorID)} className="btn btn-primary">See Profile</button>
                           {/* <Link className="btn btn-primary" to={{ pathname: '/profile', state: { id: doctors.DoctorID } }}>See Profile</Link> */}
                         </div>
@@ -135,10 +136,11 @@ export default function UserHome() {
       <div className='d-flex justify-content-center align-items-center MainSection text-center'>
 
         <div className='w-100 justify-content-center d-flex'>
-          <div className='w-50 '>
+          <div className='w-50 text-black'>
             {/* <img id='imageDisplay' className='AvatarMainPic my-3' src={dataFromChild} alt='avatar' /> */}
             <h1 className='bigga my-2 mb-3'>Welcome to VetRo</h1>
             <h2>User</h2>
+            <h2>current Device: {currentDevice}</h2>
             {UserDBData ? (
               <div className='w-100 overflow-hidden'>
                 <h2>{UserDBData.isDoctor.toString()}</h2>
@@ -155,7 +157,7 @@ export default function UserHome() {
               <div className="whiteLine"></div>
               <div className="whiteLine"></div>
             </div>
-            <p>Your Expert Veterinary assitant</p>
+            <p className='text-black'>Your Expert Veterinary assitant</p>
 
           </div>
         </div>
