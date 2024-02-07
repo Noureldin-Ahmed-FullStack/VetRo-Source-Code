@@ -26,14 +26,14 @@ export default function NavbarComponent() {
             </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup"> */}
 
-        <Link className="nav-link" to=""><FontAwesomeIcon className='BigIcon px-2' icon={fa.faHouse} /></Link>
-        <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
+        <NavLink activeClassName="activeNavLink" className="nav-link" to=""><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faHouse} /></NavLink>
+        <NavLink activeClassName="activeNavLink" className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
        
         <div className='px-3'> <VetRoBot /> </div>
-        <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></NavLink>
-        <Link  className="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /></Link>
+        <NavLink activeClassName="activeNavLink" className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
+        <Link activeClassName="activeNavLink" className="nav-link"  data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link>
         {/* <NavLink className="" to="SignIn" >
-           <FontAwesomeIcon className='BigIcon px-2' icon={fa.faBars} /> 
+           <FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /> 
           {UserDBData ? (
           <img className='circle-round' src={UserDBData.userPFP} alt="" />
           ) : (

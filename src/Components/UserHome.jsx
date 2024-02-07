@@ -111,7 +111,7 @@ export default function UserHome() {
             <div className='row g-3'>
               {
                 doctorData.map((doctors, index) => (
-                  <div key={doctors.DoctorID} className='col-lg-6'>
+                  <div key={doctors.DoctorID} className='col-lg-6 d-flex justify-content-center'>
                     <div className="bg-light myCard p-3 rounded-3 w-100 row" >
                       <div className='col-4'>
                         <img className="circle-round-profile" src={doctors.userPFP} alt="Card image" />

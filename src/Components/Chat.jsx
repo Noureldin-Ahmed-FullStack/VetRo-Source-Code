@@ -60,7 +60,7 @@ export default function Chat(props) {
 
 
     const handleSubmit = async (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         
         if (newMessage === "") return
         console.log(userObj);
@@ -132,30 +132,31 @@ export default function Chat(props) {
     }
     return (
         <div className=' w-100 '>
-            <div className='w-100 border-bottom'>
+            <div className='w-100 d-flex align-items-center border-bottom'>
+            <FontAwesomeIcon className=' mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
                 <img src={reciverPFP} className='mx-2 mb-1 mainOtherchatBubblePhoto ' /><span className='mainOtherchatBubbleName'>{reciverName}</span>
             </div>
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
                 <div>{messages.map((messages) => (messages.IsImage ? (
                     messages.senderId === userObj.uid ? (
-                        <div key={messages.id} className='d-flex align-items-center my-2 justify-content-end'>
+                        <div key={messages.id} className='d-flex align-items-end my-2 justify-content-end'>
                             <img src={messages.text} className='MechatBubble ChatImages' />
                             <span><img className='MechatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                         </div>
                     ) : (
-                        <div key={messages.id} className='d-flex align-items-center my-2 '>
+                        <div key={messages.id} className='d-flex align-items-end my-2 '>
                             <span><img className='OtherchatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                             <img src={messages.text} className='OtherchatBubble ChatImages' />
                         </div>
                     )
                 ) : (
                     messages.senderId === userObj.uid ? (
-                        <div key={messages.id} className='d-flex align-items-center my-2 justify-content-end'>
+                        <div key={messages.id} className='d-flex align-items-end my-2 justify-content-end'>
                             <h6 className='MechatBubble wordBreaker'>{messages.text}</h6>
                             <span><img className='MechatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                         </div>
                     ) : (
-                        <div key={messages.id} className='d-flex align-items-center my-2 '>
+                        <div key={messages.id} className='d-flex align-items-end my-2 '>
                             <span><img className='OtherchatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                             <h6 className='OtherchatBubble wordBreaker'>{messages.text}</h6>
                         </div>
@@ -184,7 +185,7 @@ export default function Chat(props) {
                         />
                     </div>
                     <div className="col-2 btn-group">
-                        <button type='submit' className='btn btn-primary w-100'>send</button>
+                        <button type='submit' className='btn btn-primary w-100'><FontAwesomeIcon className='' icon={fa.faPaperPlane} /></button>
                     </div>
                 </div>
             </form>
