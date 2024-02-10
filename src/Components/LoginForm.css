@@ -1,0 +1,159 @@
+.log-in {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: 42px;
+  font-weight: 700;
+  font-family: Catamaran;
+  color: #39434f;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+}
+.input-box1,
+.input-box2,
+.inputs {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-family: "Noto Sans";
+}
+.input-box1,
+.input-box2 {
+  border: 1px solid #d9dfe6;
+  outline: 0;
+  background-color: #fff;
+  align-self: stretch;
+  border-radius: 14px;
+  box-sizing: border-box;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 15px;
+  color: #808b9a;
+  transition: border-color 0.3s ease; /* Add smooth transition for border color change */
+
+}
+.input-box1:focus {
+  border-color: #1b85f3;
+
+}
+.input-box2:focus {
+  border-color: #1b85f3;
+
+}
+
+.inputs {
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.button10 {
+  flex: 1;
+  position: relative;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  font-family: "Noto Sans";
+  color: #fff;
+  text-align: center;
+}
+.confirm-btn1,
+.or-use-one1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirm-btn1 {
+  cursor: pointer;
+  border: 0;
+  padding: 15px 0;
+  background-color: #1b85f3;
+  align-self: stretch;
+  border-radius: 14px;
+  flex-direction: row;
+  transition: background-color 0.2s ease; /* Add a smooth transition effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.confirm-btn1:hover {
+  background-color: #1566c0; /* Change the background color on hover */
+}
+.or-use-one1 {
+  width: 362px;
+  flex: 1;
+  position: relative;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  line-height: 18px;
+}
+.register {
+  color: #2f80ed;
+  transition: color 0.3s ease; /* Add smooth transition for color change */
+
+}
+.register:hover {
+  color: #1a5bb1; /* Change the color on hover */
+}
+.dont-have-an-container {
+  align-self: stretch;
+  position: relative;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.login-total {
+  width: 394px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  text-align: center;
+  font-size: 32px;
+  color: #808b9a;
+  font-family: Poppins;
+}
+@media screen and (max-width: 1200px) {
+  .log-in {
+    font-size: 36px;
+  }
+  .input-box1 {
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 960px) {
+  .log-in {
+    font-size: 36px;
+  }
+  .input-box1 {
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .button10,
+  .dont-have-an-container,
+  .or-use-one1 {
+    font-size: 14px;
+  }
+  .login-total {
+    width: 340px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .log-in {
+    font-size: 24px;
+  }
+  .button10,
+  .dont-have-an-container,
+  .or-use-one1 {
+    font-size: 14px;
+  }
+  .login-total {
+    width: 298px;
+  }
+}

@@ -1,0 +1,158 @@
+.sign-up {
+  margin: 0;
+  position: relative;
+  font-size: 42px;
+  font-weight: 700;
+  font-family: Catamaran;
+  color: #39434f;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+}
+
+.button9,
+.input-box {
+  font-size: 14px;
+  font-family: "Noto Sans";
+}
+.input-box {
+  border: 1px solid #d9dfe6;
+  outline: 0;
+  background-color: #fff;
+  align-self: stretch;
+  border-radius: 14px;
+  box-sizing: border-box;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 15px;
+  color: #808b9a;
+  transition: border-color 0.3s ease; /* Add smooth transition for border color change */
+}
+.input-box:focus {
+  border-color: #1b85f3;
+
+}
+.button9 {
+  flex: 1;
+  position: relative;
+  line-height: 20px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+}
+.confirm-btn,
+.inputs-sign-up {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirm-btn {
+  cursor: pointer;
+  border: 0;
+  padding: 15px 0;
+  background-color: #1b85f3;
+  border-radius: 14px;
+  flex-direction: row;
+  flex-direction: row;
+  transition: background-color 0.2s ease; /* Add a smooth transition effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.confirm-btn:hover {
+  background-color: #1566c0; /* Change the background color on hover */
+}
+.inputs-sign-up {
+  flex-direction: column;
+  gap: 15px;
+}
+.or-use-one {
+  flex: 1;
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 18px;
+}
+.social-media-log-in {
+  width: 229px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 3px 16px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.sign-in {
+  color: #2f80ed;
+  transition: color 0.3s ease; /* Add smooth transition for color change */
+}
+.sign-in:hover {
+  color: #1a5bb1; /* Change the color on hover */
+}
+.already-have-an-container {
+  align-self: stretch;
+  position: relative;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.sign-up-total {
+  width: 394px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  text-align: center;
+  font-size: 32px;
+  color: #808b9a;
+  font-family: Poppins;
+}
+@media screen and (max-width: 1200px) {
+  .sign-up {
+    font-size: 36px;
+  }
+}
+@media screen and (max-width: 960px) {
+  .sign-up {
+    font-size: 36px;
+  }
+  .input-box {
+    height: 55px;
+  }
+  .button9 {
+    font-size: 14px;
+  }
+  .confirm-btn {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .already-have-an-container {
+    font-size: 14px;
+  }
+  .sign-up-total {
+    width: 340px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .sign-up {
+    font-size: 32px;
+  }
+  .input-box {
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+  }
+  .already-have-an-container,
+  .button9,
+  .or-use-one 
+  {
+    font-size: 13px;
+  }
+  .sign-up-total {
+    width: 298px;
+  }
+}
