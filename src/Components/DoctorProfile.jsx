@@ -18,14 +18,6 @@ export default function DoctorProfile() {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
     const [isOpen, setIsOpen] = useState(false)
-//Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
-const EditClinicData = (id) => {
-
-}
-//*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************
-
-
-
 
     /*For Clinic data */
     const [clinicData, setClinicData] = useState([]);
@@ -60,7 +52,32 @@ const EditClinicData = (id) => {
         console.log("Doctor Profile updated");
         fetchClinicData();
     }, [usersRef.id]);
+//Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
 
+const [SelectedClinic, setSelectedClinic] = useState()
+    // Function to handle the form submission and update the Clinic information
+    const handleClinicUpdate = async (event) => {
+        event.preventDefault();
+        const updatedClinicInfo = {
+            name: event.target[0].value,
+            phone: event.target[1].value,
+             location: event.target[2].value,
+             price: event.target[3].value,
+             availableFrom: event.target[4].value,
+             availableTo: event.target[5].value
+             
+        };
+
+
+        const ClinicRef = doc(db, 'Clinics', SelectedClinic);
+        await updateDoc(ClinicRef, updatedClinicInfo);
+        console.log(`Clinic${SelectedClinic} updated successfully.`);
+
+        window.location.reload();
+    };
+
+
+//*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************
 
     return (
 
@@ -108,6 +125,58 @@ const EditClinicData = (id) => {
                     )
                     }
                     
+                    {/* form for clinic edit */}
+                    <div>
+                      
+                      <div className="modal" id="myModal">
+                          <div className="modal-dialog">
+                              <div className="modal-content">
+                                  {/* Modal Header */}
+                                  <div className="modal-header">
+                                      <h4 className="modal-title">Edit Clinic Info</h4>
+                                      <button type="button" className="btn-close" data-bs-dismiss="modal" />
+                                  </div>
+                                  {/* Modal body */}
+                                  <div className="modal-body">
+                                      <form onSubmit={handleClinicUpdate}> 
+                                          <div className="container" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                              <div className="row py-2 align-items-center">
+                                                  <div className="col-sm-2"><label htmlFor="name">Name:</label></div>
+                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
+                                              </div>
+                                              <div className="row py-2 align-items-center">
+                                                  <div className="col-sm-2"><label htmlFor="phone">phone:</label></div>
+                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
+                                              </div>
+                                              <div className="row py-2 align-items-center">
+                                                  <div className="col-sm-2"><label htmlFor="location"> location:</label></div>
+                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
+                                              </div>
+                                              <div className="row py-2 align-items-center">
+                                                  <div className="col-sm-2"><label htmlFor="price">price:</label></div>
+                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
+                                              </div>
+                                              <div className="row py-2 align-items-center">
+                                                  <div className="col-sm-2"><label htmlFor="availableFrom">availableFrom:</label></div>
+                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
+                                              </div>
+                                              <div className="row py-2 align-items-center">
+                                                  <div className="col-sm-2"><label htmlFor="availableTo"> availableTo:</label></div>
+                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
+                                              </div>
+                                              
+                                              <div className='d-flex justify-content-center'>
+                                                  <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                          
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      {/**** *******/}
 
                     
 
@@ -120,6 +189,7 @@ const EditClinicData = (id) => {
                                 <div className="row"  >
                                     <div className=""><img src={UserDBData.userPFP} className="avatar circle-round" />
                                         <h4>Dr.{UserDBData.userName}</h4>
+                                        <h4>{SelectedClinic}</h4>
                                         <div className="about-info d-flex justify-content-center">
                                             {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
                                             <div className='text-warning pe-2'>
@@ -185,7 +255,7 @@ const EditClinicData = (id) => {
                                             <div className=' ps-3'>
                                                 <div className=" align-items-center d-flex" >
                                                     <p className='mb-0 me-3'>{clinicData[0]?.name}</p>
-                                                    <FontAwesomeIcon onClick={()=> EditClinicData(clinicData[0]?.clinicID)} className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                                    <FontAwesomeIcon onClick={() => setSelectedClinic(clinicData[0]?.clinicID)} data-bs-toggle="modal" data-bs-target="#myModal" className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
                                                 </div>
                                                 {clinicData ? (
                                                     <>

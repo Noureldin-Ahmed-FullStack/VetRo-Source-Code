@@ -19,8 +19,8 @@ export default function SignIn() {
 
 
     return (
-        <div className="">
-            <div className="row justify-content-center">
+        <div className="w-100 d-flex justify-content-center">
+            <div className="row w-100 justify-content-center">
 
                 {userObj ? (
                         <ProfileComponent />

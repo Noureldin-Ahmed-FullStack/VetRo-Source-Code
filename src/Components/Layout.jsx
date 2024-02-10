@@ -23,7 +23,7 @@ export default function Layout() {
       <Loading />
       ) : (
         <>
-      <div className='tall '>
+      <div className='tall bg-body-secondary'>
         <Outlet />
       </div>
       <Sidebar/>
