@@ -13,6 +13,8 @@ import shoes from '../images/shoes.jpg'
 
 export default function UserProfile() {
 
+    const [SelectedPet, setSelectedPet] = useState(0)
+    const [SelectedPetID, setSelectedPetID] = useState()
     const { signOutUser } = UseFirebaseAuth();
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
@@ -55,10 +57,6 @@ export default function UserProfile() {
         await updateDoc(usersRef, newUserInfo)
         setIsOpen(false)
         window.location.reload();
-    }
-    const petClick = (index) => {
-        console.log("click");
-        console.log(index);
     }
     useEffect(() => {
         console.log("user component updated");
@@ -164,30 +162,33 @@ export default function UserProfile() {
                                     <form onSubmit={handlePetUpdate}>
 
                                         <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                            <div className='d-flex w-100 justify-content-center pb-2'>
+                                                <img src={PetsData[SelectedPet]?.image} className="pet-pic2" />
+                                            </div>
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='name'>Name:</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={editingPet.Name}/></div>
+                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Name}/></div>
                                                 {/* */}
                                             </div>
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='Age'>Age</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={editingPet.Age} /></div>
+                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Age} /></div>
 
                                             </div>
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='Gender'>Gender</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={editingPet.Gender} /></div>
+                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Gender} /></div>
 
                                             </div>
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='Breed'> Breed</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={editingPet.Breed} /></div>
+                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Breed} /></div>
 
                                             </div>
 
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='Type'> Type</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={editingPet.Type} /></div>
+                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Type} /></div>
 
                                             </div>
                                             <div className='d-flex justify-content-center'>
@@ -232,12 +233,17 @@ export default function UserProfile() {
 
                                     {/* {console.log(UserDBData.pets[0].petRef._key.path.segments[6])} */}
                                     {/* {console.log(UserDBData.pets[0])} */}
-                                    <div className='row justify-content-center'>
+                                    <div className='row gy-3 justify-content-center'>
                                         {
                                             PetsData.map((pets, index) => (
-                                                <div key={pets.PetID} onClick={() => console.log(pets)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
-
-                                                    <img src={pets.image} className="profile-pic pointer" />
+                                                <div key={index} onClick={() => setSelectedPet(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                                                    {
+                                                    pets.image ? (
+                                                        <img src={pets.image} className="profile-pic pointer" />
+                                                    ) : (
+                                                        <img src={shoes} className="profile-pic pointer" />
+                                                    )
+                                                }
                                                 </div>
 
                                             ))
@@ -259,15 +265,15 @@ export default function UserProfile() {
                                         <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
                                             <div className='col-md-5 align-items-center d-flex'>
                                                 <div className=''>
-                                                    <img src={PetsData[0]?.image} className="pet-pic2" />
+                                                    <img src={PetsData[SelectedPet]?.image} className="pet-pic2" />
                                                 </div>
                                                 <div className=' ps-3'>
                                                     <div className=" align-items-center d-flex" >
-                                                        <p className='mb-0 me-3'>{PetsData[0]?.Name}</p>
-                                                        <FontAwesomeIcon onClick={() => EditPetData(PetsData[0]?.PetID)} className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                                        <p className='mb-0 me-3'>{PetsData[SelectedPet]?.Name}</p>
+                                                        <FontAwesomeIcon onClick={() => EditPetData(PetsData[SelectedPet]?.PetID)} className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
                                                     </div>
                                                     {PetsData ? (
-                                                        <p>{PetsData[0]?.Type}: {PetsData[0]?.Breed}</p>
+                                                        <p>{PetsData[SelectedPet]?.Type}: {PetsData[SelectedPet]?.Breed}</p>
                                                     ) : (<></>)
                                                     }
                                                 </div>
@@ -276,17 +282,17 @@ export default function UserProfile() {
                                                 <div className='w-100 MyLeftBorder'>
                                                     <div className="d-flex align-items-center justify-content-between">
                                                         <h6 className='mb-0 text-secondary'>gender</h6>
-                                                        <span className='me-5 title'>{PetsData[0]?.Gender}</span>
+                                                        <span className='me-5 title'>{PetsData[SelectedPet]?.Gender}</span>
                                                     </div>
                                                     <hr className='my-2' />
                                                     <div className="d-flex align-items-center justify-content-between">
                                                         <h6 className='mb-0 text-secondary'>age</h6>
-                                                        <span className='me-5 title'>{PetsData[0]?.Age}</span>
+                                                        <span className='me-5 title'>{PetsData[SelectedPet]?.Age}</span>
                                                     </div>
                                                     <hr className='my-2' />
                                                     <div className="d-flex align-items-center justify-content-between">
                                                         <h6 className='mb-0 text-secondary'>breed</h6>
-                                                        <span className='me-5 title'>{PetsData[0]?.Breed}</span>
+                                                        <span className='me-5 title'>{PetsData[SelectedPet]?.Breed}</span>
                                                     </div>
 
                                                 </div>
