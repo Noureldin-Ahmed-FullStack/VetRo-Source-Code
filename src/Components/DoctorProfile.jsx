@@ -142,6 +142,9 @@ export default function DoctorProfile() {
                                     <div className="modal-body">
                                         <form onSubmit={handleClinicUpdate}>
                                             <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                                <div className='d-flex w-100 justify-content-center pb-2'>
+                                                    <img src={clinicData[SelectedClinic]?.image} className="pet-pic2" />
+                                                </div>
                                                 <div className="row py-2 align-items-center">
                                                     <div className="col-sm-4"><label htmlFor="name">Name:</label></div>
                                                     <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.name} type="text" /></div>
