@@ -33,6 +33,7 @@ export default function DoctorProfile() {
                 return clinicData
             });
             setClinicData(clinicDataArray);
+            console.log(clinicDataArray);
         } catch (error) {
             console.error("Error fetching clinic data:", error);
         }
@@ -52,32 +53,33 @@ export default function DoctorProfile() {
         console.log("Doctor Profile updated");
         fetchClinicData();
     }, [usersRef.id]);
-//Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
+    //Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
 
-const [SelectedClinic, setSelectedClinic] = useState()
+    const [SelectedClinic, setSelectedClinic] = useState(0)
+    const [SelectedClinicID, setSelectedClinicID] = useState()
     // Function to handle the form submission and update the Clinic information
     const handleClinicUpdate = async (event) => {
         event.preventDefault();
         const updatedClinicInfo = {
             name: event.target[0].value,
             phone: event.target[1].value,
-             location: event.target[2].value,
-             price: event.target[3].value,
-             availableFrom: event.target[4].value,
-             availableTo: event.target[5].value
-             
+            location: event.target[2].value,
+            price: event.target[3].value,
+            availableFrom: event.target[4].value,
+            availableTo: event.target[5].value
+
         };
 
 
-        const ClinicRef = doc(db, 'Clinics', SelectedClinic);
+        const ClinicRef = doc(db, 'Clinics', SelectedClinicID);
         await updateDoc(ClinicRef, updatedClinicInfo);
-        console.log(`Clinic${SelectedClinic} updated successfully.`);
+        console.log(`Clinic${SelectedClinicID} updated successfully.`);
 
         window.location.reload();
     };
 
 
-//*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************
+    //*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************
 
     return (
 
@@ -124,61 +126,64 @@ const [SelectedClinic, setSelectedClinic] = useState()
                         <></>
                     )
                     }
-                    
+
                     {/* form for clinic edit */}
                     <div>
-                      
-                      <div className="modal" id="myModal">
-                          <div className="modal-dialog">
-                              <div className="modal-content">
-                                  {/* Modal Header */}
-                                  <div className="modal-header">
-                                      <h4 className="modal-title">Edit Clinic Info</h4>
-                                      <button type="button" className="btn-close" data-bs-dismiss="modal" />
-                                  </div>
-                                  {/* Modal body */}
-                                  <div className="modal-body">
-                                      <form onSubmit={handleClinicUpdate}> 
-                                          <div className="container" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
-                                              <div className="row py-2 align-items-center">
-                                                  <div className="col-sm-2"><label htmlFor="name">Name:</label></div>
-                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
-                                              </div>
-                                              <div className="row py-2 align-items-center">
-                                                  <div className="col-sm-2"><label htmlFor="phone">phone:</label></div>
-                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
-                                              </div>
-                                              <div className="row py-2 align-items-center">
-                                                  <div className="col-sm-2"><label htmlFor="location"> location:</label></div>
-                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
-                                              </div>
-                                              <div className="row py-2 align-items-center">
-                                                  <div className="col-sm-2"><label htmlFor="price">price:</label></div>
-                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
-                                              </div>
-                                              <div className="row py-2 align-items-center">
-                                                  <div className="col-sm-2"><label htmlFor="availableFrom">availableFrom:</label></div>
-                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
-                                              </div>
-                                              <div className="row py-2 align-items-center">
-                                                  <div className="col-sm-2"><label htmlFor="availableTo"> availableTo:</label></div>
-                                                  <div className="col-sm-10"><input className="form-control" type="text" /></div>
-                                              </div>
-                                              
-                                              <div className='d-flex justify-content-center'>
-                                                  <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
-                                              </div>
-                                          </div>
-                                      </form>
-                                  </div>
-                          
-                              </div>
-                          </div>
-                      </div>
-                      </div>
-                      {/**** *******/}
 
-                    
+                        <div className="modal" id="myModal">
+                            <div className="modal-dialog ">
+                                <div className="modal-content">
+                                    {/* Modal Header */}
+                                    <div className="modal-header">
+                                        <h4 className="modal-title">Edit Clinic Info</h4>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" />
+                                    </div>
+                                    {/* Modal body */}
+                                    <div className="modal-body">
+                                        <form onSubmit={handleClinicUpdate}>
+                                            <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                                <div className='d-flex w-100 justify-content-center pb-2'>
+                                                    <img src={clinicData[SelectedClinic]?.image} className="pet-pic2" />
+                                                </div>
+                                                <div className="row py-2 align-items-center">
+                                                    <div className="col-sm-4"><label htmlFor="name">Name:</label></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.name} type="text" /></div>
+                                                </div>
+                                                <div className="row py-2 align-items-center">
+                                                    <div className="col-sm-4"><label htmlFor="phone">phone:</label></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.phone} type="text" /></div>
+                                                </div>
+                                                <div className="row py-2 align-items-center">
+                                                    <div className="col-sm-4"><label htmlFor="location"> location:</label></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.location} type="text" /></div>
+                                                </div>
+                                                <div className="row py-2 align-items-center">
+                                                    <div className="col-sm-4"><label htmlFor="price">price:</label></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.price} type="text" /></div>
+                                                </div>
+                                                <div className="row py-2 align-items-center">
+                                                    <div className="col-sm-4"><label htmlFor="availableFrom">availableFrom:</label></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableFrom} type="text" /></div>
+                                                </div>
+                                                <div className="row py-2 align-items-center">
+                                                    <div className="col-sm-4"><label htmlFor="availableTo"> availableTo:</label></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableTo} type="text" /></div>
+                                                </div>
+
+                                                <div className='d-flex justify-content-center'>
+                                                    <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/**** *******/}
+
+
 
 
                     <div className='position-relative'>
@@ -189,7 +194,7 @@ const [SelectedClinic, setSelectedClinic] = useState()
                                 <div className="row"  >
                                     <div className=""><img src={UserDBData.userPFP} className="avatar circle-round" />
                                         <h4>Dr.{UserDBData.userName}</h4>
-                                        <h4>{SelectedClinic}</h4>
+                                        <h4>{SelectedClinicID}</h4>
                                         <div className="about-info d-flex justify-content-center">
                                             {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
                                             <div className='text-warning pe-2'>
@@ -199,11 +204,11 @@ const [SelectedClinic, setSelectedClinic] = useState()
                                                 <FontAwesomeIcon className='' icon={faReg.faStar} />
                                                 <FontAwesomeIcon className='' icon={faReg.faStar} />
                                             </div>
-                                                <p className='text-secondary'>4.5 (1500 reviews)</p>
+                                            <p className='text-secondary'>4.5 (1500 reviews)</p>
                                         </div>
-                                            <div id='about' className='w-100 text-center d-flex justify-content-center'>
-                                                <p className='w-50 text-secondary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur deleniti est, animi vero dolores temporibus sint cumque et quae alias.</p>
-                                            </div>
+                                        <div id='about' className='w-100 text-center d-flex justify-content-center'>
+                                            <p className='w-50 text-secondary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur deleniti est, animi vero dolores temporibus sint cumque et quae alias.</p>
+                                        </div>
                                         <div className=" py-1">
                                             <FontAwesomeIcon onClick={() => setIsOpen(true)} className='btn btn-outline-primary p-2 mb-2' icon={fa.faPenToSquare} />
 
@@ -219,7 +224,7 @@ const [SelectedClinic, setSelectedClinic] = useState()
                                     <div className='row justify-content-center'>
                                         {
                                             clinicData.map((clinic, index) => (
-                                                <div key={index} onClick={() => console.log(clinic.clinicID)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                                                <div key={index} onClick={() => setSelectedClinic(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
                                                     {
                                                         clinic.image ? (
                                                             <img src={clinic.image} className="profile-pic pointer" />
@@ -250,18 +255,18 @@ const [SelectedClinic, setSelectedClinic] = useState()
                                     <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
                                         <div className='col-md-5 align-items-center d-flex'>
                                             <div className=''>
-                                                <img src={clinicData[0]?.image} className="pet-pic2" />
+                                                <img src={clinicData[SelectedClinic]?.image} className="pet-pic2" />
                                             </div>
                                             <div className=' ps-3'>
                                                 <div className=" align-items-center d-flex" >
-                                                    <p className='mb-0 me-3'>{clinicData[0]?.name}</p>
-                                                    <FontAwesomeIcon onClick={() => setSelectedClinic(clinicData[0]?.clinicID)} data-bs-toggle="modal" data-bs-target="#myModal" className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                                    <p className='mb-0 me-3'>{clinicData[SelectedClinic]?.name}</p>
+                                                    <FontAwesomeIcon onClick={() => setSelectedClinicID(clinicData[SelectedClinic]?.clinicID)} data-bs-toggle="modal" data-bs-target="#myModal" className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
                                                 </div>
                                                 {clinicData ? (
                                                     <>
-                                                    {console.log(clinicData)}
-                                                        <p className='m-0'>Booking price: {clinicData[0]?.price} L.E</p>
-                                                        <p className='m-0'>Clinic phone number: {clinicData[0]?.phone}</p></>
+                                                        {console.log(clinicData)}
+                                                        <p className='m-0'>Booking price: {clinicData[SelectedClinic]?.price} L.E</p>
+                                                        <p className='m-0'>Clinic phone number: {clinicData[SelectedClinic]?.phone}</p></>
                                                 ) : (<></>)
                                                 }
                                             </div>
@@ -270,17 +275,17 @@ const [SelectedClinic, setSelectedClinic] = useState()
                                             <div className='w-100 MyLeftBorder'>
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <h6 className='mb-0 text-secondary'>Clinic Name</h6>
-                                                    <span className='me-5 title'>{clinicData[0]?.name}</span>
+                                                    <span className='me-5 title'>{clinicData[SelectedClinic]?.name}</span>
                                                 </div>
                                                 <hr className='my-2' />
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <h6 className='mb-0 text-secondary'>Clinic phone number</h6>
-                                                    <span className='me-5 title'>{clinicData[0]?.phone}</span>
+                                                    <span className='me-5 title'>{clinicData[SelectedClinic]?.phone}</span>
                                                 </div>
                                                 <hr className='my-2' />
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <h6 className='mb-0 text-secondary'>Booking price</h6>
-                                                    <span className='me-5 title'>{clinicData[0]?.price}</span>
+                                                    <span className='me-5 title'>{clinicData[SelectedClinic]?.price}</span>
                                                 </div>
 
                                             </div>
