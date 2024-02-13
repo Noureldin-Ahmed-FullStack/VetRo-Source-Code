@@ -1,0 +1,126 @@
+.item1{
+    margin-bottom: 20px;
+   
+}
+.item22{
+    color:white;
+}
+
+  .search2{
+    background-color: rgb(243, 240, 255);
+    padding: 15px 0px;
+    border-radius: 30px;
+    
+
+    
+}
+.chatIcon2 {
+    background-color: #d1e6ff;
+    width: 3rem;
+    height: 3rem;
+    margin-right: px;
+    margin-top: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px;
+    background-position: center;
+  }
+  .buttonDetails1 {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 10px 50px;
+    background-color: white;
+    color: #1782ff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid #1782ff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 6px #74b4ff;
+  }
+  .buttonDetails2 {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 10px 50px;
+    background-color: white;
+    color: red;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid red;
+    border-radius: 20px;
+    box-shadow: 0px 2px 6px #74b4ff;
+  }
+  .itemimage{
+    width: 150px;
+    height: 150px;
+    border-radius: 50px;
+  }
+
+  .c1{
+    color: grey;
+    text-decoration: none;
+    font-size: 20px;
+
+  }
+  .c2{
+    color: #1782ff;
+  }
+  .card-link{
+    text-decoration: none;
+
+  }
+  .c4{
+    background-color:white;
+    border: 5px solid whitesmoke;
+    }
+    .c5{
+    border: 1px solid #abbfd6;
+
+    }
+  .buttonPost2{
+    margin:10px;
+    padding: 5px 60px;
+    background-color:transparent;
+    color: #800c0c;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    border:5px double #1782ff;
+    border-radius: 30px;
+
+}
+
+@media screen and (min-width:200px) and (max-width:600px) {
+  .bg1{
+    height:300px;
+  background-image: url(../images/docCover.jpg);
+  background-size: cover;
+  background-repeat:no-repeat;
+  border-radius: 20px;
+  background-position: top ;
+
+
+}
+}
+
+@media screen and (min-width:601px) and (max-width:100600px) {
+  .bg1{
+    width: 100%;
+    height: 500px;
+    background-image: url(../images/docCover.jpg);
+      background-size: cover;
+    background-repeat:no-repeat;
+    background-position: top;
+    border-radius: 20px;
+
+}
+}
+.r1{
+  background-color: #d1e5ff;
+}
+.r2{
+  background-color: #c1d6ec ;
+  border:1px solid #1782ff;
+  border-radius: 20px;
+}
