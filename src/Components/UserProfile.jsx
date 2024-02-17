@@ -4,7 +4,7 @@ import { MyContext } from './ContextProvider';
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
-import { db } from '../Firebase/firebase';
+import { db, storage, ref, uploadBytes, getDownloadURL } from '../Firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons'
 import tomatto from '../images/tomatto.jpg'
@@ -12,6 +12,10 @@ import shoes from '../images/shoes.jpg'
 
 
 export default function UserProfile() {
+
+    const [image, setImage] = useState(null);
+    const [pending, setPending] = useState(false);
+    const [imageUrl, setImageUrl] = useState();
 
     const [SelectedPet, setSelectedPet] = useState(0)
     const [SelectedPetID, setSelectedPetID] = useState()
@@ -54,14 +58,57 @@ export default function UserProfile() {
             phonNumber: event.target[1].value,
             About: event.target[2].value
         }
+        if (imageUrl) {
+            newUserInfo.userPFP = imageUrl
+        }
         await updateDoc(usersRef, newUserInfo)
         setIsOpen(false)
+        setImageUrl(null)
         window.location.reload();
     }
     useEffect(() => {
         console.log("user component updated");
         fetchPetsData();
     }, [usersRef.id]);
+
+    //Image Update 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
+    const handleImageChange = async (e) => {
+        setPending(true)
+
+        if (e.target.files[0]) {
+            // await setImage(e.target.files[0]);
+            const img = await e.target.files[0]
+            handleImageUpload(img)
+        } else {
+            setPending(false)
+        }
+    };
+    const handleImageUpload = (image) => {
+        console.log("lol ya negm");
+        if (image) {
+            console.log(image);
+            const storageRef = ref(storage, `images/${image.name}`);
+            uploadBytes(storageRef, image)
+                .then((snapshot) => {
+                    // Image uploaded successfully, get download URL
+                    getDownloadURL(snapshot.ref).then((downloadURL) => {
+                        setImageUrl(downloadURL);
+                        console.log('File available at', downloadURL);
+                        setPending(false)
+
+                        // You can use downloadURL here or set it to state for later use
+                    });
+                })
+                .catch((error) => {
+                    setPending(false)
+                    // Handle any errors here
+                    console.error('Error uploading image: ', error);
+                });
+        }
+    }
+    //img update 👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆*************
+
+
 
     //Fatima's code starts here 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇*************
     const [Open, setOpen] = useState(false)
@@ -86,10 +133,16 @@ export default function UserProfile() {
             Breed: event.target[3].value,
             Type: event.target[4].value
         };
+        
+
+        if (imageUrl) {
+            updatedPetInfo.image = imageUrl
+        }
         const petRef = doc(db, 'Pets', editingPet.PetID);
         await updateDoc(petRef, updatedPetInfo);
         console.log(`Pet ${editingPet.PetID} updated successfully.`);
         setOpen(false);
+        setImageUrl(null)
         window.location.reload();
     };
     //*************************👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆************
@@ -115,6 +168,12 @@ export default function UserProfile() {
                                             </div>
                                         </div>
                                         <hr />
+                                    </div>
+                                    <div className='d-flex w-100 justify-content-center'>
+                                        <label htmlFor="imgUpload">
+                                            <img src={imageUrl || UserDBData.userPFP} className='avatar-sm circle-round pointer' alt="" />
+                                        </label>
+                                        <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                                     </div>
                                     <form onSubmit={HandleInfoUpdate}>
                                         <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
@@ -154,20 +213,24 @@ export default function UserProfile() {
                                             <p className='px-3'></p>
                                             <h2 className='py-3'><b>Edit Pet Info</b></h2>
                                             <div className='d-flex justify-content-end align-items-center'>
-                                                <FontAwesomeIcon onClick={() => setOpen(false)} className='myClose' icon={fa.faCircleXmark} />
+                                                <FontAwesomeIcon onClick={() => {setOpen(false);setImageUrl(null)}} className='myClose' icon={fa.faCircleXmark} />
                                             </div>
                                         </div>
                                         <hr />
                                     </div>
+                                    <div className='d-flex w-100 justify-content-center'>
+                                            <label htmlFor="imgUpload">
+                                                <img src={imageUrl || PetsData[SelectedPet]?.image} className='avatar-sm circle-round pointer' alt="" />
+                                            </label>
+                                            <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
+                                        </div>
                                     <form onSubmit={handlePetUpdate}>
 
                                         <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
-                                            <div className='d-flex w-100 justify-content-center pb-2'>
-                                                <img src={PetsData[SelectedPet]?.image} className="pet-pic2" />
-                                            </div>
+                                            
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='name'>Name:</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Name}/></div>
+                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Name} /></div>
                                                 {/* */}
                                             </div>
                                             <div className='row py-2 align-items-center'>
@@ -192,7 +255,7 @@ export default function UserProfile() {
 
                                             </div>
                                             <div className='d-flex justify-content-center'>
-                                                <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
+                                                <button type='submit' className="btn btn-outline-success py-3 m-3">submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -238,12 +301,12 @@ export default function UserProfile() {
                                             PetsData.map((pets, index) => (
                                                 <div key={index} onClick={() => setSelectedPet(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
                                                     {
-                                                    pets.image ? (
-                                                        <img src={pets.image} className="profile-pic pointer" />
-                                                    ) : (
-                                                        <img src={shoes} className="profile-pic pointer" />
-                                                    )
-                                                }
+                                                        pets.image ? (
+                                                            <img src={pets.image} className="profile-pic pointer" />
+                                                        ) : (
+                                                            <img src={shoes} className="profile-pic pointer" />
+                                                        )
+                                                    }
                                                 </div>
 
                                             ))
