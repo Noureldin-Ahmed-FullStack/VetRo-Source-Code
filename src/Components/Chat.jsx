@@ -141,11 +141,11 @@ export default function Chat(props) {
                     messages.senderId === userObj.uid ? (
                         <div key={messages.id} className='d-flex align-items-end my-2 justify-content-end'>
                             <img src={messages.text} className='MechatBubble ChatImages' />
-                            <span><img className='MechatBubblePhoto' src={UserDBData.userPFP} alt="" /></span>
+                            <span><img className='MechatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                         </div>
                     ) : (
                         <div key={messages.id} className='d-flex align-items-end my-2 '>
-                            <span><img className='OtherchatBubblePhoto' src={reciverPFP} alt="" /></span>
+                            <span><img className='OtherchatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                             <img src={messages.text} className='OtherchatBubble ChatImages' />
                         </div>
                     )
@@ -153,11 +153,11 @@ export default function Chat(props) {
                     messages.senderId === userObj.uid ? (
                         <div key={messages.id} className='d-flex align-items-end my-2 justify-content-end'>
                             <h6 className='MechatBubble wordBreaker'>{messages.text}</h6>
-                            <span><img className='MechatBubblePhoto' src={UserDBData.userPFP} alt="" /></span>
+                            <span><img className='MechatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                         </div>
                     ) : (
                         <div key={messages.id} className='d-flex align-items-end my-2 '>
-                            <span><img className='OtherchatBubblePhoto' src={reciverPFP} alt="" /></span>
+                            <span><img className='OtherchatBubblePhoto' src={messages.SenderPFP} alt="" /></span>
                             <h6 className='OtherchatBubble wordBreaker'>{messages.text}</h6>
                         </div>
                     )
