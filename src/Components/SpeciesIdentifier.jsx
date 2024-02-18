@@ -1,4 +1,4 @@
-import avatarImg from '../images/avatars.svg'
+import avatarImg from '../images/qm.png'
 import React, { useRef, useState } from 'react'
 import CameraComponent from './CameraComponent';
 import { storage, ref, uploadBytes, getDownloadURL } from '../Firebase/firebase';
@@ -95,35 +95,41 @@ export default function SpeciesIdentifier() {
 
     };
     return (
-        <div id="samyDIV">
-            <div className='container '>
+           <div className='background '>
                 <div>
-                    <h1 className='pt-1 pb-3'>Animal Breed<br></br> <span><b>Identification Program</b></span></h1>
+                <h1  className='pt-1 pb-3'>Animal <span style={{ color: '#B95F00 '}} > <b>Breed </b></span> Identification Program</h1>
                     <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
                     <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
-                    <div id="uploadContainer" className='w-100'>
-                        <div className='col'>
-                            <img id='imageDisplay' className='mb-2' src={imageUrl} />
+                    <div id="" className='three'>
+                        <div className=''>
+                            <img id='imageDisplay' className='' src={imageUrl} />
                         </div>
-                        <div className='col'>
-                            <button id="uploadBTN" className='btn btn-warning mx-3' onClick={triggerInputBrowse}>handleUpload</button>
+                        <div > 
+                            
+                            <button  className='bt btt0' onClick={triggerInputBrowse}>  Upload photo  </button>
                         </div>
                         {/* <h2><i>{pending.toString()}</i></h2> */}
                     </div>
+
+
                     {pending ? (
                         <div className=''>
                             <FontAwesomeIcon className='heartbeat' icon={fa.faPaw} />
                         </div>
                     ) : (
                         <div>
-                            <button id="identifyBTN" className='btn btn-warning  mx-3' onClick={call}>Identify</button>
+                           <br></br>
+                            <button  className='btt1' onClick={call}>Identify!</button>
                         </div >
                     )
                     }
-                    <h2 className='my-2'><i>{Result}</i></h2>
+                    
+                    <h3 > <p>{Result}</p> </h3>
                 </div>
+                
             </div>
-        </div >
+            
+      
     )
 
 }
