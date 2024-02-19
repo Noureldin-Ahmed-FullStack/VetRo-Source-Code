@@ -2,8 +2,8 @@
 /* Extra small devices (phones) */
 @media only screen and (max-width: 575.98px) {
   #imageDisplay {
-    max-width: 20rem;
-    max-height: 20rem;
+    max-width: 10rem;
+    max-height: 10rem;
   }
   .start{
     padding-top: 2rem !important;
@@ -20,8 +20,8 @@
 /* Small devices (tablets and larger phones) */
 @media only screen and (min-width: 576px) and (max-width: 767.98px) {
   #imageDisplay {
-    max-width: 20rem;
-    max-height: 20rem;
+    max-width: 10rem;
+    max-height: 10rem;
   }
 
 }
@@ -29,9 +29,8 @@
 /* Medium devices (tablets and small desktops) */
 @media only screen and (min-width: 768px) and (max-width: 991.98px) {
   #imageDisplay {
-    width: 100%;
-    max-width: 20rem;
-    max-height: 20rem;
+    max-width: 10rem;
+    max-height: 10rem;
   }
 
 }
@@ -39,14 +38,22 @@
 /* Large devices (desktops) */
 @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
   #imageDisplay {
-    max-width: 20rem;
-    max-height: 20rem;
+    max-width: 10rem;
+    max-height: 10rem;
   }
 
 }
 
 /* Extra large devices (large desktops) */
-@media only screen and (min-width: 1200px) {
+
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  #imageDisplay {
+    max-width: 10rem;
+    max-height: 10rem;
+  }
+
+}
+@media only screen and (min-width: 1400px) {
   #imageDisplay {
     max-width: 20rem;
     max-height: 20rem;

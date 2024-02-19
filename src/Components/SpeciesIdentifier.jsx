@@ -122,7 +122,7 @@ export default function SpeciesIdentifier() {
                 <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
                 <div id="" className='three'>
                     <div className=''>
-                        {imageUrl == 'https://iili.io/JEP1YL7.png' ? (
+                        {imageUrl == 'https://iili.io/JEijWG4.png' ? (
                             <img id='imageDisplay' className=' attention-grabber ' src={imageUrl} />
                         ) : (
                             <img id='imageDisplay' className=' ' src={imageUrl} />
@@ -142,16 +142,18 @@ export default function SpeciesIdentifier() {
                     </div>
                 ) : (
                     <div className='py-3'>
-                        <button className='btn btn-orange' onClick={call}>Identify!</button>
+                        {imageUrl == "https://iili.io/JEijWG4.png" ? (<button className='btn btn-orange' disabled={true} onClick={call}>Identify!</button>):(
+                            <button className='btn btn-orange' onClick={call}>Identify!</button>
+                        )}
                     </div >
                 )
                 }
                 <div className='phone'>
                     <h2 className='bold container mt-1'>Upload a picture and press Identify to show the result!</h2>
                     {Result == "Try it!" ? (
-                        <h3 className='mt-5'>{Result}</h3>
+                        <h3 className=''>{Result}</h3>
                     ) : (
-                        <h3 className='mt-5 colorful'>{Result}</h3>
+                        <h3 className=' colorful'>{Result}</h3>
                     )}
                 </div>
             </div>
