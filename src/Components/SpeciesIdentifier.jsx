@@ -151,9 +151,9 @@ export default function SpeciesIdentifier() {
                 <div className='phone'>
                     <h2 className='bold container mt-1'>Upload a picture and press Identify to show the result!</h2>
                     {Result == "Try it!" ? (
-                        <h3 className=''>{Result}</h3>
+                        <h3 className='mt-4'>{Result}</h3>
                     ) : (
-                        <h3 className=' colorful'>{Result}</h3>
+                        <h3 className='mt-4 colorful'>{Result}</h3>
                     )}
                 </div>
             </div>
