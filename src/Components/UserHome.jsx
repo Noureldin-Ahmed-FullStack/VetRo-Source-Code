@@ -84,37 +84,36 @@ export default function UserHome() {
     <>
 
 {/*********************************************************************************************** */}
-<div className='container'>
-    <div className='row'>
-      <div className='bg'>
-      <div className='text-center item1' >
-        <h3 className='item2'>Welcome Back, <span style={{fontSize:'30px'}}> {UserDBData.userName} 
-      </span><FontAwesomeIcon icon={faCat} style={{fontSize:'40px' , color:'black'}} /> </h3>
-      </div>
-      </div>
-    </div>
 
+<div className='w-100 p1 L1  '>
+<div className='row'>
+  <div className='col-12'>
+  <h3 className='p2'>Welcome Back, <span style={{fontSize:'35px'}}> {UserDBData.userName} </span></h3>  
+  <div className='col-11 p3'>
+  <input className='form-control p4 py-2'  placeholder="search here"/>
+  </div>
+  </div>
+</div>
 </div>
 
-
-
-
-<div className='d-grid container srch2'>
+<div className='container'>
     <form>
-      <div className="form-group">
-        <h5 className='item6'>Create Post</h5>
-        <input type="email" onClick={() => setIsOpen(true)} className="form-control" placeholder='write here' style={{borderRadius:'10px'}}/>
+      <div className="form-group ppp10  ">
+        <h5 className='text-center'>Create Post</h5>
+        <input type="email" onClick={() => setIsOpen(true)} className="form-control inpo" placeholder='write here' />
       </div>
     </form> 
     </div>
 
+
 {/*********************************************************************************************** */}
 
       {isOpen ? (
-        <div className='myOverlay d-flex justify-content-center align-items-center '>
+        <div className='myOverlay  w-100  d-flex justify-content-center align-items-center '>
+          <div className="container">
           <div className='container bg-light rounded-5 w-100 '>
-            <div className="row text-center  ">
-              <div className="col-12 d-flex justify-content-between  y2">
+            <div className="row text-center">
+              <div className="col-12 d-flex justify-content-between  ">
                 <p></p>
                 <h2 className='py-3' style={{color:'#74b4ff'}}>Create  post</h2>
                 <div className='d-flex justify-content-end align-items-center'>
@@ -128,7 +127,7 @@ export default function UserHome() {
                 <div className="user-profile row">
                   <div className='d-flex align-items-center py-2'>
                     <img className='circle-round' src={UserDBData.userPFP} alt="Profile Picture" />
-                    <h2 className='usrText'style={{color:'black', fontSize:'35px'}}>{UserDBData.userName}</h2>
+                    <h2 className='usrText pot1'>{UserDBData.userName}</h2>
                   </div>
                 </div>
                 <div className='input-area '>
@@ -141,6 +140,7 @@ export default function UserHome() {
               </div>
             </form>
           </div>
+          </div>
         </div>
 
       ) : (
@@ -150,49 +150,53 @@ export default function UserHome() {
 
       }
       {/************************************************************************************************************ */}
-      <div className=' container mt-3 test1'>
+      <div className='container mt-3'>
         {doctorData ? (
-          <div className='w-100 test2 '>
-            <div className='row g-3 '>
-            <h2 style={{color:'#178fff' ,fontSize:'30px', marginTop:'20px'}}>Veterinarian in Your Area:</h2>
+          <div className='w-100 '>
+            <div className='pp4' >
+              Veterinarian in Your Area:
+              </div>
+            <div className='row gx-3 gy-1'>
+              
               {
                 doctorData.map((doctors, index) => (
-                      <div class="card mb-3 test3   col-lg-6" style={{maxWidth:'540px'}}>
-                        
-                        <div class="row no-gutters ">
-                          <div class="col-md-4 ">
-                          <img className=" M1" src={doctors.userPFP} alt="Card image" />
+                  <div key={doctors.DoctorID} className='col-lg-6 d-flex justify-content-center '>
+                    <div className="bg-light myCard p-3 rounded-3 w-100 row bordcard " >
+                      <div className='col-4 col-lg-3 col-md-3 '>
+                        <img className="circle-round-profile" src={doctors.userPFP} alt="Card image"  />
+                      </div>
+                      <div className='sm-left-padd col-8'>
+                        <div className="card-body">                          
+                          <h4 className="card-title">Dr.{doctors.userName}</h4>
+                          <div className='starRatepp8'>
+                            <p>
+                          <FontAwesomeIcon  className='str' icon={fa.faStar} style={{color:'gold'}} />
+                          <FontAwesomeIcon  className='str' icon={fa.faStar} style={{color:'gold'}} />
+                          <FontAwesomeIcon  className='str' icon={fa.faStar} style={{color:'gold'}}/>
+                          <FontAwesomeIcon  className='str' icon={fa.faStar} style={{color:'black'}}/>
+                            </p>
+                          <p className='pp9'>4.5</p>
                           </div>
-                          <div class="col-md-8">
-                            <div class="card-body smallltext">
-                            <h2 className="card-title">Dr.{doctors.userName}</h2>
-                            <p className="card-text " style={{color:'#0c4180'}}>you may have a certain speciality and expertise.</p>
-                            <div className='starRate1'>
-                            <h2>
-                            <FontAwesomeIcon icon={faStar} style={{fontSize:'20px' , color:'gold'}} />
-                            <FontAwesomeIcon icon={faStar} style={{fontSize:'20px' ,color:'gold'}}/>
-                            <FontAwesomeIcon icon={faStar} style={{fontSize:'20px' ,color:'gold'}}/>
-                            <FontAwesomeIcon icon={faStar} style={{fontSize:'20px' ,color:''}}/>
-                            </h2>
-                            <h3>4.5</h3>
-                            </div>
-                            <div className='col-3 mt-2 pb-2 starRate' >
-                              <button onClick={()=> goToProfile(doctors.DoctorID)} className="btn buttonDetails" >Details</button>
-                              <p className='chatIcon' >
-                              <FontAwesomeIcon icon={faMessage} style={{color:'#1782ff' , fontSize:'25px' , margin:'12px'}}/>
-                              </p>
-                            </div>
+                          <div className='starRatepp7'>
+                            <button onClick={()=> goToProfile(doctors.DoctorID)} className="btn  pp5">Details</button>
+                            <div className='pp6 col-6'>
+                            <FontAwesomeIcon  className='mess' icon={fa.faMessage} />
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
                 ))
               }
             </div>
           </div>
         ) : (<></>)}
       </div>
-      {/************************************************************************************ */}
+
+         {/************************************************************************************ */}
+
       <div className='d-flex justify-content-center align-items-center MainSection text-center'>
 
 <div className='w-100 justify-content-center d-flex'>
@@ -213,7 +217,8 @@ export default function UserHome() {
     }
 
 */} 
-    
+
+ 
 
    <div className="starArea d-flex justify-content-center my-5 align-items-center ">
       <div className="whiteLine"></div>
