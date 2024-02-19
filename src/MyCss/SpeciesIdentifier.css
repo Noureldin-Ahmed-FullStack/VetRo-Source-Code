@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+/* Extra small devices (phones) */
+@media only screen and (max-width: 575.98px) {
+  #imageDisplay {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+  .start{
+    padding-top: 2rem !important;
+  }
+  .phone{
+    display: block !important;
+  }
+  .other{
+    display: none !important;
+  }
+
+}
+
+/* Small devices (tablets and larger phones) */
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+  #imageDisplay {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+
+}
+
+/* Medium devices (tablets and small desktops) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+  #imageDisplay {
+    width: 100%;
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+
+}
+
+/* Large devices (desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+  #imageDisplay {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+
+}
+
+/* Extra large devices (large desktops) */
+@media only screen and (min-width: 1200px) {
+  #imageDisplay {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+
+  /* Your CSS for extra large screens here */
+}
+
+.attention-grabber {
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+
+/*fatema**/
+/*SpeciesIdentifier css************************/
+.start{
+  padding: 1rem;
+}
+.bold {
+  font-weight: 500;
+}
+.boldest {
+  font-weight: 900;
+}
+.phone{
+  display: none;
+}
+.background {
+  background-color: #f4f3f9;
+  background-image: url('https://iili.io/JEPWbXR.jpg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+@keyframes colorChange {
+  0% {
+    background-image: linear-gradient(135deg, #e58c12, #1436f0);
+  }
+
+  50% {
+    background-image: linear-gradient(225deg, #e58c12, #1436f0);
+  }
+
+  100% {
+    background-image: linear-gradient(135deg, #e58c12, #1436f0);
+  }
+}
+
+.colorful {
+  font-weight: 900;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* For Safari */
+  color: transparent;
+  animation: colorChange 0.8s infinite;
+}
+
+.btn-outline-orange {
+  --bs-btn-color: #B95F00;
+  --bs-btn-border-color: #B95F00;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #B95F00;
+  /* Lighter shade for hover background */
+  --bs-btn-hover-border-color: #B95F00;
+  /* Lighter shade for hover border */
+  --bs-btn-focus-shadow-rgb: 185, 95, 0;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #7a3700;
+  /* Darker shade for active background */
+  --bs-btn-active-border-color: #7a3700;
+  /* Darker shade for active border */
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #B95F00;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #B95F00;
+  --bs-gradient: none;
+}
+
+.btn-orange {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #B95F00;
+  --bs-btn-border-color: #B95F00;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #a96115;
+  --bs-btn-hover-border-color: #a96115;
+  --bs-btn-focus-shadow-rgb: 225, 83, 97;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #904a00;
+  --bs-btn-active-border-color: #a96115;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #B95F00;
+  --bs-btn-disabled-border-color: #B95F00;
+}

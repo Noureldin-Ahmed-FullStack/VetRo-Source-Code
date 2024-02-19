@@ -701,10 +701,6 @@
   /* Lighter shade on hover */
 }
 
-#imageDisplay {
-  max-width: 338px;
-  max-height: 280px;
-}
 
 /*samy's junk ;)* **************************************************************************/
 
@@ -805,47 +801,4 @@
 #demo1 ul li:hover {
   background-color: #1782FF;
 }
-
-
-/*fatema**/
-/*SpeciesIdentifier css************************/
-.background  {
-  background-image: url('../images/aii.jpg'); 
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-position:center;
-  height: 100vh;
-  width: 100%;
-  text-align: center;
-  padding-top:40px;
-padding-left: 20px;
-padding-right: 20px;
-}
-.btt0{
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #ffe60018 ;
-  color: #B95F00 ;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  border: 1px solid #B95F00 ;
-  border-radius: 10px;
-  box-shadow: 0px 2px 6px #74b4;
-  margin-top: 10px;
-}
-
-.btt1{
-  display: inline-block;
-  padding: 10px 60px;
-  background-color: #B95F00 ;
-  color: #ffffff;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  border: 1px solid #B95F00 ;
-  border-radius: 20px;
-  margin-bottom: 10px;
-}
-
 
