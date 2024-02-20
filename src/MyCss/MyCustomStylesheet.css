@@ -3,6 +3,11 @@
   .sm-left-padd {
     padding-left: 2rem !important;
   }
+  .bp-widget-widget {
+    bottom: -20px !important;
+    left: 50% !important;
+    transform: translateX(-66%) !important;
+  }
 
   /* Your CSS for extra small screens here */
   .AvatarMainPic {
@@ -289,11 +294,6 @@
   height: 6.5rem;
 }
 /* chat bot */
-.bp-widget-widget {
-  bottom: -20px !important;
-  left: 50% !important;
-  transform: translateX(-66%) !important;
-}
 
 .bp-widget-web {
   z-index: 1031 !important;

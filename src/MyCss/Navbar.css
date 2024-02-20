@@ -1,0 +1,13 @@
+.Nav-Image{
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+}
+.Nav-PFP{
+    width: 2.6rem;
+    height: 2.6rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px rgba(0, 0, 0, 0.107) solid;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.193);
+}

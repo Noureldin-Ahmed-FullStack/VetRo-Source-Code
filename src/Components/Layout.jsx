@@ -15,21 +15,21 @@ export default function Layout() {
   const { pending, setPending } = useContext(MyContext);
   useEffect(() => {
     console.log("Layout component Updated");
-}, []);
+  }, []);
 
   return (
     <>
-     {pending ? (
-      <Loading />
+      {pending ? (
+        <Loading />
       ) : (
         <>
-      <div className='tall bg-body-secondary'>
-        <Outlet />
-      </div>
-      <Sidebar/>
+          <div className='tall bg-body-secondary'>
+          <NavbarComponent />
+            <Outlet />
+          </div>
+          <Sidebar />
 
-      <NavbarComponent />
-      </>
+        </>
       )}
     </>
   )
