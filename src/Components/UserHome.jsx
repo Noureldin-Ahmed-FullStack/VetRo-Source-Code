@@ -88,7 +88,7 @@ export default function UserHome() {
       <div className='w-100 p1 L1  '>
         <div className='row'>
           <div className='col-12'>
-            <h3 className='p2'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData.userName} </span></h3>
+            <h3 className='p2'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
             <div className='col-11 p3'>
               <input className='form-control p4 py-2' placeholder="search here" />
             </div>
@@ -126,8 +126,8 @@ export default function UserHome() {
                 <div className="post-box container y1">
                   <div className="user-profile row">
                     <div className='d-flex align-items-center py-2'>
-                      <img className='circle-round' src={UserDBData.userPFP} alt="Profile Picture" />
-                      <h2 className='usrText pot1'>{UserDBData.userName}</h2>
+                      <img className='circle-round' src={UserDBData?.userPFP} alt="Profile Picture" />
+                      <h2 className='usrText pot1'>{UserDBData?.userName}</h2>
                     </div>
                   </div>
                   <div className='input-area '>
