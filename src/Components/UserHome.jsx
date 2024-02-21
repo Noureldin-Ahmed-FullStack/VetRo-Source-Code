@@ -85,7 +85,7 @@ export default function UserHome() {
 
       {/*********************************************************************************************** */}
 
-      <div className='w-100 p1 L1  '>
+      <div className='w-100 p1 '>
         <div className=''>
           <div className=''>
             <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
@@ -96,8 +96,18 @@ export default function UserHome() {
         </div>
       </div>
 
-      <div className=' container '>
-        <form>
+      <div className='L1 w-100 d-flex align-items-center justify-content-center'>
+        <div className='noneInphone'>
+          <div className=' text-center text-light'>
+            <h1 className='container text-light'>Empowering Healthy Lives for Your Pets</h1>
+            <div className='pt-4 container pb-2'>
+              <h4>Experience Veterinary Excellence Crafted with Love and Expertise for the Furry Friends We Adore</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='d-flex mt-4 justify-content-center'>
+        <form className=' w-75 bg-light MyShadow rounded-5'>
           <div className="form-group ppp10  ">
             <h5 className='text-center'>Create Post</h5>
             <input type="email" onClick={() => setIsOpen(true)} className="form-control inpo" placeholder='write here' />
@@ -177,10 +187,10 @@ export default function UserHome() {
                             </p>
                             <p className='pp9'>4.5</p>
                           </div>
-                          <div className='starRatepp7'>
-                            <button onClick={() => goToProfile(doctors.DoctorID)} className="btn  pp5">Details</button>
-                            <div className='pp6 col-6'>
-                              <FontAwesomeIcon className='mess' icon={fa.faMessage} />
+                          <div className='starRatepp7 justify-content-between align-items-center'>
+                            <button onClick={() => goToProfile(doctors.DoctorID)} className="btn btn-primary pp5">Details</button>
+                            <div className=''>
+                              <FontAwesomeIcon className='mess' icon={fa.faCommentDots} />
                             </div>
                           </div>
                         </div>
