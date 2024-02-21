@@ -14,41 +14,25 @@ export default function NavbarComponent() {
   const { currentDevice, setCurrentDevice } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
   if (currentDevice != 'Other') {
-    return (<nav className="navbar bold-text tealBG navbar-expand-lg navbar-dark py-2 fixed-bottom">
-      <div className="container d-flex navbar-nav justify-content-around flex-row px-0">
-        {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-<span className="navbar-toggler-icon" />
-</button>
-<div className="collapse navbar-collapse" id="navbarNavAltMarkup"> */}
+    return (
+      <nav className="navbar bold-text tealBG navbar-expand-lg navbar-dark py-2 fixed-bottom">
+        <div className="container d-flex navbar-nav justify-content-around flex-row px-0">
 
-        <NavLink className="nav-link" to=""><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faHouse} /></NavLink>
-        <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
+          <NavLink className="nav-link" to=""><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faHouse} /></NavLink>
+          <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
 
-        <div className='px-3'> <VetRoBot /> </div>
-        <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
-        <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link>
-        {/* <NavLink className="" to="SignIn" >
-<FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /> 
-{UserDBData ? (
-<img className='circle-round' src={UserDBData.userPFP} alt="" />
-) : (
-<img className='circle-round' src={"https://ssniper.sirv.com/Images/3.png"} alt="" />
-)}
-</NavLink> */}
+          <div className='px-3'> <VetRoBot /> </div>
+          <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
+          <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link>
 
-
-
-
-
-        {/* </div> */}
-      </div>
-    </nav>)
+        </div>
+      </nav>)
 
   }
   return (
     <>
       <VetRoBot />
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
 
         <div className="navbar-brand ps-2 ms-5 d-flex align-items-center" >
 

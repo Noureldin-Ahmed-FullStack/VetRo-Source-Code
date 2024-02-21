@@ -86,10 +86,10 @@ export default function UserHome() {
       {/*********************************************************************************************** */}
 
       <div className='w-100 p1 L1  '>
-        <div className='row'>
-          <div className='col-12'>
-            <h3 className='p2'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
-            <div className='col-11 p3'>
+        <div className=''>
+          <div className=''>
+            <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
+            <div className='pt-4 container pb-2'>
               <input className='form-control p4 py-2' placeholder="search here" />
             </div>
           </div>

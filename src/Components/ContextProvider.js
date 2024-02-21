@@ -39,15 +39,15 @@ const detectDevice = () => {
   }
 };
 
-const device = detectDevice();
 
-  useEffect(() => {
+useEffect(() => {
+    const device = detectDevice();
+    setCurrentDevice(device)
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
         setUserObj(currentUser);
         fetchData(currentUser.uid)
         setMyAuth("Logged in");
-        setCurrentDevice(device)
         setPending(false)
         // console.log(currentUser);
       }else if(currentUser===null){
