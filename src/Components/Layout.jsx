@@ -23,7 +23,7 @@ export default function Layout() {
         <Loading />
       ) : (
         <>
-          <div className='tall bg-body-secondary'>
+          <div className='tall '>
           <NavbarComponent />
             <Outlet />
           </div>

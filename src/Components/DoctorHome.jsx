@@ -3,7 +3,14 @@ import { MyContext } from './ContextProvider';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as fa from '@fortawesome/free-solid-svg-icons'
+/** */
+import OwlCarousel from 'react-owl-carousel2';
+import 'react-owl-carousel2/lib/styles.css';
+import 'react-owl-carousel2/src/owl.theme.default.css'
 
+import '../MyCss/doctorHome.css'
 export default function DoctorHome() {
     const { UserDBData, setUserDBData } = useContext(MyContext);
     const [posts, setPosts] = useState([])
@@ -72,79 +79,145 @@ export default function DoctorHome() {
         }
         fetchCollection();
     }, [])
+
+    /*** */
+    const options = {
+        items: 2,
+        nav: true,
+        rewind: true,
+        autoplay: true,
+        slideBy:true,
+        responsive: {
+            0: {
+              items: 1, // Display 1 item in mobile view
+            },
+            768: {
+              items: 2, // Display 2 items in desktop view
+            },
+          },
+        };
+   
     return (
-        <div className='d-flex text-black justify-content-center align-items-center MainSection text-center'>
+<>
+        <div className='w-100 p1 '>
+        <div className=''>
+          <div className=''>
+            <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
+            <div className='pt-4 container pb-2'>
+              <input className='form-control p4 py-2' placeholder="search here" />
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div className='w-100 '>
-                <h1 className='bigga my-2 mb-3'>Welcome to VetRo</h1>
-                <h2>Doctor</h2>
-                <h2>current Device: {currentDevice}</h2>
-                {UserDBData ? (
-                    <>
-                        <h2>{UserDBData.isDoctor.toString()}</h2>
-                        <h2 >{UserDBData.email.toString()}</h2>
-                    </>
-                ) : (
-                    <h2>null</h2>
-                )
-                }
+      <div className='L1 w-100 d-flex align-items-center justify-content-center'>
+        <div className='noneInphone'>
+          <div className=' text-center text-light'>
+            <h1 className='container text-light'>Empowering Healthy Lives for Your Pets</h1>
+            <div className='pt-4 container pb-2'>
+              <h4>Experience Veterinary Excellence Crafted with Love and Expertise for the Furry Friends We Adore</h4>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                <div className='py-3 container'>
+    
+
+<div className='pp4'>incomming Pet Owner Reservations</div>
+<div className='container'>
+<OwlCarousel options={options}>
+    <div className='container'>
+        <div className='row '>
+            <div className='col-lg-12'>
+            <div class="card cardsize" >
+            <img src={require("../images/port2.png")} alt="nnn" className="circle-round-profile"/>
+            <div class="card-body ">
+            <div className='starRatepp7 justify-content-between align-items-center'>
+                <div className="ms-2">
+                <div className="h4 m-0 " style={{color:'#39434F'}}>sara</div>
+                <div className=" m-0 COLorli">sara@gmail</div>
+                <div className=" m-0 COLorli">0123456789</div>
+                </div>
+               
+                <div className=''><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
+            </div>
+                <hr/>
+                <div className='starRate COLorP '>
+                    <p>Route check-up</p>
+                    <p> Monday-2/5/2024</p>
+                </div>
+                <hr/>
+                <div className='col-12 mt-2 ' >
+                    <button  className="btn buttonDetails1" > 
+                    <FontAwesomeIcon className='' icon={fa.faCheck} style={{ color: '#10E10B', fontSize:'20px' }} />
+                    Accept</button>
+                    <button  className="btn buttonDetails2" >
+                    <FontAwesomeIcon className='' icon={fa.faXmark} style={{ color: '#F93535', fontSize:'20px' }} />    
+                    Delete</button>
+            
+            </div>	
+            </div>
+            
+            
+        </div>
+        </div>
+        </div>  
+    </div>
+
+</OwlCarousel>
+</div>
+
+
+
+
+
+
+
+
+        <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
+
+            <div className='container'>
+
+                <h2 className='postss'>Recent posts from pet owners </h2>
                     {posts.map((post) => (
-                        // <div className='bg-light card text-black' key={post.id}>
-                        //     <p>ID: {post.senderId}</p>
-                        //     <p>ID: {post.id}</p>
-                        //     <img className='circle-round' src={post.SenderPFP} alt="" />
-                        //     <p>Name: {post.senderName}</p>
-                        //     <p>{post.text}</p>
-                        //     <p>{post.createdAt.toString()}</p>
-                        // </div>
-                        <div key={post.id} className="card my-4 text-start gedf-card">
-                            <div className="card-header">
+                        <div key={post.id} className="card1 my-4 text-start gedf-card py-2 px-2">
+                            <div className="card-header cardbag">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div onClick={() => goToProfile(post.senderId)} className="d-flex pointer justify-content-between align-items-center">
                                         <div className="me-2">
                                             <img className="rounded-circle" width={45} src={post.SenderPFP} />
                                         </div>
                                         <div className="ms-2">
-                                            <div className="h5 m-0 lineOnHover">{post.senderName}</div>
-                                            <div className="h7 text-muted lineOnHover">{post.senderName}</div>
+                                            <div className="h5 m-0 namecolor">{post.senderName}</div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div className="dropdown">
-                                            <button className="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i className="fa fa-ellipsis-h" />
-                                            </button>
-                                            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1" x-placement="bottom-end" style={{ position: 'absolute', willChange: 'transform', top: 0, left: 0, transform: 'translate3d(55px, 38px, 0px)' }}>
-                                                <div className="h6 dropdown-header">Configuration</div>
-                                                <a className="dropdown-item" href="#">Save</a>
-                                                <a className="dropdown-item" href="#">Hide</a>
-                                                <a className="dropdown-item" href="#">Report</a>
-                                            </div>
-                                        </div>
+                                <div>
+                                    <div className='starRatepp7 justify-content-between align-items-center'>
+                                    <div className=''>
+                                    <FontAwesomeIcon className='mess' icon={fa.faCommentDots} />
+                                    </div>
+                                </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="card-body">
-                                {/* <div onClick={getTimeSince(post.createdAt.toString())} className="text-muted h7 mb-2"> <i className="fa fa-clock-o" />{post.createdAt.toString()}</div> */}
-                                <div className="text-muted h7 mb-2"> <i className="fa fa-clock-o pe-2" />{getTimeSince(post.createdAt.toString())}</div>
-                                <a className="card-link" href="#">
-                                    <h5 className="card-title">Title</h5>
-                                </a>
-                                <p className="card-text">
+                            <p className="card-text h5">
                                     {post.text}
                                 </p>
+                                <div className="text-muted  mb-4 mt-4" style={{fontSize:'12px'}}> 
+                                <i className="fa fa-clock-o pe-1" />{getTimeSince(post.createdAt.toString())}
+                                </div>
+                                
+                                
                             </div>
-                            <div className="card-footer">
-                                <a href="#" className="card-link"><i className="fa fa-gittip" /> Like</a>
-                                <a href="#" className="card-link"><i className="fa fa-comment" /> Comment</a>
-                                <a href="#" className="card-link"><i className="fa fa-mail-forward" /> Share</a>
-                            </div>
+                           
                         </div>
 
                     ))}
-                </div>
+
+
+
+                
                 <div className="starArea d-flex justify-content-center my-3 align-items-center ">
                     <div className="whiteLine"></div>
                     <div className="whiteLine"></div>
@@ -154,5 +227,6 @@ export default function DoctorHome() {
             </div>
 
         </div>
+        </>
     )
 }
