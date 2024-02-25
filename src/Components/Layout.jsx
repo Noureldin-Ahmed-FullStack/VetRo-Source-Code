@@ -13,6 +13,7 @@ import Sidebar from './Sidebar';
 export default function Layout() {
   // let { profilePhotoURL, setprofilePhotoURL } = useContext(MyContext)
   const { pending, setPending } = useContext(MyContext);
+  const { currentDevice, setCurrentDevice } = useContext(MyContext);
   useEffect(() => {
     console.log("Layout component Updated");
   }, []);
@@ -22,8 +23,9 @@ export default function Layout() {
       {pending ? (
         <Loading />
       ) : (
+        // className={`${currentDevice =='Other' ? 'myPaddingTop' : ''}`}
         <>
-          <div className='tall bg-body-secondary'>
+          <div className={`tall bg-body-secondary ${currentDevice =='Other' ? 'myPaddingTop' : ''}`}>
           <NavbarComponent />
             <Outlet />
           </div>

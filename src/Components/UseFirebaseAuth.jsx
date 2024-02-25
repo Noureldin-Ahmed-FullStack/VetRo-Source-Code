@@ -188,6 +188,7 @@ export function UseFirebaseAuth() {
       await signOut(authentic);
       // await setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png") 
       await setUserObj(null)
+      await setUserDBData(null)
     } catch (error) {
       console.error(error);
     }

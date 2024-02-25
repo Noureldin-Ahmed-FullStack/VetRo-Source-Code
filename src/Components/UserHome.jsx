@@ -33,14 +33,27 @@ export default function UserHome() {
         return DoctorData
       });
       setDoctorData(DoctorDataArray);
-      console.log(DoctorDataArray);
+      
+      sessionStorage.setItem('storedDoctorsData', JSON.stringify(DoctorDataArray));
+      // console.log(DoctorDataArray);
     } catch (error) {
       console.error("Error fetching Doctor data:", error);
     }
   };
   useEffect(() => {
     console.log("home component updated");
-    fetchDoctorData();
+
+
+    const storedDoctorsData = sessionStorage.getItem('storedDoctorsData');
+        if (storedDoctorsData) {
+            console.log("no Fetch");
+            // If user data is already stored, set it in the state
+            setDoctorData(JSON.parse(storedDoctorsData));
+          } else {
+            console.log("Fetch");
+            
+            fetchDoctorData();
+        }
   }, []);
 
   let navigate = useNavigate()

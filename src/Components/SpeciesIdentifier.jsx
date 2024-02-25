@@ -113,9 +113,9 @@ export default function SpeciesIdentifier() {
                 <div className='other'>
                     <h2 className='bold container mt-1 mb-3'>Upload a picture and press Identify to show the result!</h2>
                     {Result == "Try it!" ? (
-                        <h3 className='mt-1 mb-3'>{Result}</h3>
+                        <h3 className='pt-1 mb-3'>{Result}</h3>
                     ) : (
-                        <h3 className='mt-1 mb-3 colorful'>{Result}</h3>
+                        <h3 className='pt-1 mb-3 colorful'>{Result}</h3>
                     )}
                 </div>
                 <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
@@ -151,9 +151,9 @@ export default function SpeciesIdentifier() {
                 <div className='phone'>
                     <h2 className='bold container mt-1'>Upload a picture and press Identify to show the result!</h2>
                     {Result == "Try it!" ? (
-                        <h3 className='mt-4'>{Result}</h3>
+                        <h3 className='mt-4 mb-0'>{Result}</h3>
                     ) : (
-                        <h3 className='mt-4 colorful'>{Result}</h3>
+                        <h3 className='mt-4 mb-0 colorful'>{Result}</h3>
                     )}
                 </div>
             </div>

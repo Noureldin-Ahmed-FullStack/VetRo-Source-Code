@@ -64,13 +64,23 @@ export default function DoctorHome() {
                     id: doc.id,
                     ...doc.data(),
                 }));
+                sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems));
                 setPosts(fetchedItems);
                 console.log(fetchedItems);
             } catch (error) {
                 console.error('Error fetching collection:', error);
             }
         }
-        fetchCollection();
+        const storedUserPostsData = sessionStorage.getItem('userPostsData');
+        if (storedUserPostsData) {
+            console.log("no Fetch");
+            // If user data is already stored, set it in the state
+            setPosts(JSON.parse(storedUserPostsData));
+        } else {
+            console.log("Fetch");
+
+            fetchCollection();
+        }
     }, [])
     return (
         <div className='d-flex text-black justify-content-center align-items-center MainSection text-center'>

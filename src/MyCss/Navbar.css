@@ -8,6 +8,15 @@
     height: 2.6rem;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px rgba(0, 0, 0, 0.107) solid;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.193);
+    outline: 2px rgba(0, 0, 0, 0.107) solid;
+    transition: all 0.3s;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.193); */
+}
+.Nav-PFP:hover{
+    box-shadow: 0 0 60px rgb(84, 146, 227);
+    border: 5px rgba(20, 162, 222, 0.664) solid;
+    outline: 6px rgba(52, 170, 221, 0.469) solid;
+}
+.myPaddingTop{
+    padding-top: 4rem;
 }
