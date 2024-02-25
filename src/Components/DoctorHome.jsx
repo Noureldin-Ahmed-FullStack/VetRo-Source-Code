@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
 /** */
-import OwlCarousel from 'react-owl-carousel2';
-import 'react-owl-carousel2/lib/styles.css';
-import 'react-owl-carousel2/src/owl.theme.default.css'
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+
 
 import '../MyCss/doctorHome.css'
 export default function DoctorHome() {
@@ -81,19 +82,15 @@ export default function DoctorHome() {
     }, [])
 
     /*** */
-    const options = {
-        items: 2,
-        nav: true,
-        rewind: true,
-        autoplay: true,
-        slideBy:true,
-        responsive: {
-            0: {
-              items: 1, // Display 1 item in mobile view
-            },
-            768: {
-              items: 2, // Display 2 items in desktop view
-            },
+        const responsive = {
+          0: {
+            items:  1,
+          },
+          600: {
+            items:  2, // Adjust this value based on your preference for tablet screens
+          },
+          1000: {
+            items:  2, // Adjust this value based on your preference for larger screens
           },
         };
    
@@ -124,49 +121,47 @@ export default function DoctorHome() {
     
 
 <div className='pp4'>incomming Pet Owner Reservations</div>
+
 <div className='container'>
-<OwlCarousel options={options}>
-    <div className='container'>
-        <div className='row '>
-            <div className='col-lg-12'>
-            <div class="card cardsize" >
-            <img src={require("../images/port2.png")} alt="nnn" className="circle-round-profile"/>
-            <div class="card-body ">
-            <div className='starRatepp7 justify-content-between align-items-center'>
-                <div className="ms-2">
-                <div className="h4 m-0 " style={{color:'#39434F'}}>sara</div>
-                <div className=" m-0 COLorli">sara@gmail</div>
-                <div className=" m-0 COLorli">0123456789</div>
-                </div>
-               
-                <div className=''><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
-            </div>
-                <hr/>
-                <div className='starRate COLorP '>
+      <OwlCarousel className='owl-theme' responsive={responsive}  nav>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-lg-12 col-12'>
+              <div className="card cardsize">
+                <img src={require("../images/port2.png")} alt="nnn" className="circle-round-profile"/>
+                <div className="card-body">
+                  <div className='starRatepp7 justify-content-between align-items-center'>
+                    <div className="ms-2">
+                      <div className="h4 m-0" style={{color:'#39434F'}}>sara</div>
+                      <div className="m-0 COLorli">sara@gmail</div>
+                      <div className="m-0 COLorli">0123456789</div>
+                    </div>
+                    <div className=''><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
+                  </div>
+                  <hr/>
+                  <div className='starRated COLorP'>
                     <p>Route check-up</p>
                     <p> Monday-2/5/2024</p>
+                  </div>
+                  <hr/>
+                  <div className='col-12 mt-2'>
+                    <button className="btn buttonDetails1">
+                      <FontAwesomeIcon className='' icon={fa.faCheck} style={{ color: '#10E10B', fontSize:'20px' }} />
+                      Accept
+                    </button>
+                    <button className="btn buttonDetails2">
+                      <FontAwesomeIcon className='' icon={fa.faXmark} style={{ color: '#F93535', fontSize:'20px' }} />
+                      Delete
+                    </button>
+                  </div>
                 </div>
-                <hr/>
-                <div className='col-12 mt-2 ' >
-                    <button  className="btn buttonDetails1" > 
-                    <FontAwesomeIcon className='' icon={fa.faCheck} style={{ color: '#10E10B', fontSize:'20px' }} />
-                    Accept</button>
-                    <button  className="btn buttonDetails2" >
-                    <FontAwesomeIcon className='' icon={fa.faXmark} style={{ color: '#F93535', fontSize:'20px' }} />    
-                    Delete</button>
-            
-            </div>	
+              </div>
             </div>
-            
-            
+          </div>
         </div>
-        </div>
-        </div>  
+       
+      </OwlCarousel>
     </div>
-
-</OwlCarousel>
-</div>
-
 
 
 
