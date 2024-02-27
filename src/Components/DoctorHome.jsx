@@ -137,13 +137,13 @@ export default function DoctorHome() {
 <div className='container'>
       <OwlCarousel className='owl-theme' responsive={responsive}  nav>
         <div className='container'>
-          <div className='row'>
-            <div className='col-lg-12 col-12'>
+          <div className=''>
+            <div className=''>
               <div className="card cardsize">
-                <img src={require("../images/port2.png")} alt="nnn" className="circle-round-profile"/>
                 <div className="card-body">
-                  <div className='starRatepp7 justify-content-between align-items-center'>
-                    <div className="ms-2">
+                  <div className='starRatepp7 align-items-center'>
+                <img src={require("../images/port2.png")} alt="nnn" className="circle-round-profile"/>
+                    <div className="ms-2 w-100">
                       <div className="h4 m-0" style={{color:'#39434F'}}>sara</div>
                       <div className="m-0 COLorli">sara@gmail</div>
                       <div className="m-0 COLorli">0123456789</div>
@@ -156,13 +156,13 @@ export default function DoctorHome() {
                     <p> Monday-2/5/2024</p>
                   </div>
                   <hr/>
-                  <div className='col-12 mt-2'>
-                    <button className="btn buttonDetails1">
-                      <FontAwesomeIcon className='' icon={fa.faCheck} style={{ color: '#10E10B', fontSize:'20px' }} />
+                  <div className='w-100 d-flex justify-content-evenly mt-2'>
+                    <button className=" buttonDetails1">
+                      <FontAwesomeIcon className='pe-2' icon={fa.faCheck} style={{ fontSize:'20px' }} />
                       Accept
                     </button>
-                    <button className="btn buttonDetails2">
-                      <FontAwesomeIcon className='' icon={fa.faXmark} style={{ color: '#F93535', fontSize:'20px' }} />
+                    <button className=" d-flex align-items-center buttonDetails2">
+                      <FontAwesomeIcon className='pe-2' icon={fa.faXmark} style={{ fontSize:'20px' }} />
                       Delete
                     </button>
                   </div>
@@ -187,7 +187,7 @@ export default function DoctorHome() {
 
                 <h2 className='postss'>Recent posts from pet owners </h2>
                     {posts.map((post) => (
-                        <div key={post.id} className="card1 my-4 text-start gedf-card py-2 px-2">
+                        <div key={post.id} className="card1 bg-light my-4 text-start gedf-card py-2 px-3">
                             <div className="card-header cardbag">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div onClick={() => goToProfile(post.senderId)} className="d-flex pointer justify-content-between align-items-center">

@@ -43,7 +43,7 @@
         font-size: 16px;
         border: 1px solid #10E10B;
         border-radius: 20px;
-        box-shadow: 0px 2px 6px #10E10B;
+        box-shadow:0px 0px 6px #10E10B;
         padding:10px 20px ;
 
       }
@@ -57,7 +57,7 @@
         font-size: 16px;
         border: 1px solid red;
         border-radius: 20px;
-        box-shadow: 0px 2px 6px #F93535;
+        box-shadow:0px 0px 6px #F93535;
         padding:10px 20px ;
       }
       .starRated {
@@ -123,7 +123,7 @@
         font-size: 16px;
         border: 1px solid #10E10B;
         border-radius: 20px;
-        box-shadow: 0px 2px 6px #10E10B;
+        box-shadow:0px 0px 6px #10E10B;
         padding:10px 20px ;
       }
       .buttonDetails2 {
@@ -136,7 +136,7 @@
         font-size: 16px;
         border: 1px solid #F93535;
         border-radius: 20px;
-        box-shadow: 0px 2px 6px #F93535;
+        box-shadow:0px 0px 6px #F93535;
         padding:10px 20px ;
       }
       
@@ -190,4 +190,26 @@
   }
   .COLorli{
     color:#606873;
+  }
+  /* 10E10B */
+  .buttonDetails1:hover{
+    background-color: #10E10B;
+    color: white;
+  }
+  .buttonDetails2:hover{
+    background-color: #F93535;
+    color: white;
+  }
+  
+  .buttonDetails1:active{
+    background-color: #10E10B;
+    font-weight: bold;
+    color: white;
+    border: #fff 2px solid;
+  }
+  .buttonDetails2:active{
+    border: #fff 2px solid;
+    background-color: #F93535;
+    font-weight: bold;
+    color: white;
   }
