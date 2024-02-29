@@ -23,18 +23,21 @@ p,
 
 /* Styling for the chat header container */
 .bpw-header-container {
-  margin: 10px;
-  background: #2c3e50;
-  border-radius: 10px;
+  background: #ffffff;
   position: relative;
-  overflow: hidden;
-  border: 1px;
-  border-radius: 10px;
-  color: #ffffff;
+  border: 1.8px;
+  border-bottom-style: solid;
+  border-color: #cfcfcf ;
+  color: #000000;
+}
+
+/* Styling for the exit button*/
+#btn-close{
+  filter: invert(1);
 }
 
 .bpw-header-name{
-  color: #ffffff;
+  color: #000000;
 }
 
 /* Styling for the typing bubble */
@@ -44,7 +47,7 @@ p,
 
 /* Styling for the chat bubble content */
 .bpw-chat-bubble-content {
-  background-color: #f5f5f5;
+  background-color: #d0d0d0;
   border-radius: 3px;
   border: 1px transparent;
 }
@@ -53,17 +56,21 @@ p,
 .bpw-date-container,
 .bpw-header-name,
 .bpw-header-subtitle {
-  color: #ffffff;
+  color: #838383;
 }
 
 /* Styling for the layout of the chat bubble. Width, height, border, position and radius of the chat bubble */
 .bpw-layout {
   width: 360px !important;
   height: 100vh;
-  border-radius: 10px;
+  border-radius: 15px;
   right: 10px;
   bottom: 5px;
   border: 1px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
 }
 /* Responsive design rules for devices with width less than or equal to 767px */
 @media screen and (max-device-width: 767px) {
@@ -131,26 +138,32 @@ a {
   background-color: #ffffff;
   scrollbar-width: thin;
   scrollbar-color: #f5f5f5 #ffffff;
-  border: none;
+  border:#cfcfcf solid 1.8px;
 }
 
 /* Styling for the chat bubble content when it's from the bot */
 .bpw-from-bot .bpw-chat-bubble .bpw-chat-bubble-content {
   background-color: #f5f5f5;
-  color: #000000;
+  color: #252525;
 }
 
 
 /* Styling for the chat bubble content when it's from the user */
 .bpw-from-user .bpw-chat-bubble .bpw-chat-bubble-content {
-  background-color: #1ABC9C;
+  background-color: #1B85F3;
   color: #ffffff;
+  border-radius: 10%;
+  border-bottom-right-radius: 5%;
+  -webkit-border-radius: 10%;
+  -moz-border-radius: 10%;
+  -ms-border-radius: 10%;
+  -o-border-radius: 10%;
 }
 
 /* Styling for the composer section of the chat interface */
 .bpw-composer {
   background-color: #ffffff;
-  border-top: none;
+  border-top:#cfcfcf solid 1.9px;
 }
 
 
@@ -165,8 +178,9 @@ a {
 /* Styling for the avatar of the bot */
 .bpw-bot-avatar img,
 .bpw-bot-avatar svg {
-  background: #698cb0;
-  border: 3px solid #ffffff;
+  background: #1B85F3;
+  padding: 0.2rem;
+  box-shadow: 1px 1px 5px 1.5px lightblue;
 }
 
 /* Styling for the general scrollbar in the web page */
@@ -220,23 +234,27 @@ a {
 }
 
 .bpw-send-button{
-  background: #16a387;
+  background: #1B85F3;
 }
 
 
 /* Change Bot Widget Icon */
 
 .bpw-widget-btn{
-  border-radius: 40%;
-  background:#2c3e50;
+  border-radius: 50%;
+  background:#1B85F3;
   border: 2px white solid;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
 .bpw-widget-btn:hover{  
-  background:#16a387;
+  background:#409cff;
 }
 
 .bpw-floating-button::before {
-background:url("https://ssniper.sirv.com/Images/1.png");
+background:url("https://mostlyflesh.sirv.com/Message%20Bot.png");
 background-repeat: no-repeat;
   background-position: center;
 background-size: contain;
