@@ -162,7 +162,7 @@ export default function UserProfile() {
                                     <div className="row text-center">
                                         <div className="col-12 d-flex justify-content-between">
                                             <p className='px-3'></p>
-                                            <h2 className='py-3'><b>Edit Info</b></h2>
+                                            <h2 className='py-3'style={{color:'#71aef3'}}><b>Edit Info</b></h2>
                                             <div className='d-flex justify-content-end align-items-center'>
                                                 <FontAwesomeIcon onClick={() => setIsOpen(false)} className='myClose' icon={fa.faCircleXmark} />
                                             </div>
@@ -176,7 +176,7 @@ export default function UserProfile() {
                                         <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                                     </div>
                                     <form onSubmit={HandleInfoUpdate}>
-                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial',color:'#71aef3'  }}>
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><span className=''>Name:</span></div>
                                                 <div className='col-sm-10'><input className='form-control' type='text' defaultValue={UserDBData.userName} /></div>
@@ -190,7 +190,7 @@ export default function UserProfile() {
                                                 <div className='col-sm-10'><textarea className='form-control' defaultValue={UserDBData.About} style={{ resize: 'none' }} rows='4' /></div>
                                             </div>
                                             <div className='d-flex justify-content-center'>
-                                                <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
+                                                <button type='submit' className="btn  w-25 py-3 m-3"style={{background:'#1B85F3' , color:'white'}}>submit</button>
                                             </div>
                                         </div>
 
@@ -211,7 +211,7 @@ export default function UserProfile() {
                                     <div className="row text-center">
                                         <div className="col-12 d-flex justify-content-between">
                                             <p className='px-3'></p>
-                                            <h2 className='py-3'><b>Edit Pet Info</b></h2>
+                                            <h2 className='py-3' style={{color:'#71aef3'}}><b>Edit Pet Info</b></h2>
                                             <div className='d-flex justify-content-end align-items-center'>
                                                 <FontAwesomeIcon onClick={() => {setOpen(false);setImageUrl(null)}} className='myClose' icon={fa.faCircleXmark} />
                                             </div>
@@ -226,7 +226,7 @@ export default function UserProfile() {
                                         </div>
                                     <form onSubmit={handlePetUpdate}>
 
-                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' ,color:'#71aef3'}}>
                                             
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='name'>Name:</label></div>
@@ -251,11 +251,11 @@ export default function UserProfile() {
 
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='Type'> Type</label></div>
-                                                <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Type} /></div>
+                                                <div className='col-sm-10'><input className='form-control ' type='text' defaultValue={PetsData[SelectedPet]?.Type} /></div>
 
                                             </div>
-                                            <div className='d-flex justify-content-center'>
-                                                <button type='submit' className="btn btn-outline-success py-3 m-3">submit</button>
+                                            <div className='d-flex justify-content-center d-grid'>
+                                                <button type='submit' className="  btn px-5 py-2 m-3" style={{background:'#1B85F3' , color:'white'}}>submit</button>
                                             </div>
                                         </div>
                                     </form>

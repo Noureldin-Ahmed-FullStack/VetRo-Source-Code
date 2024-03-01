@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import { useContext } from 'react';
 import { db } from '../Firebase/firebase';
 import { MyContext } from './ContextProvider';
-
+import '../MyCss/addPetsForm.css'
+/** */
 export default function Pets() {
 
     const [Name, setName] = useState("");
@@ -62,51 +63,51 @@ export default function Pets() {
         <div className='container'>
         <form onSubmit={handleSubmit} >
             <div className='row'>
-            <div className='text-light '>
+            <div className=' ' style={{color:'#71aef3'}}>
             <h1 className="text-center">PETS</h1> 
             
                 <div className="mb-3 ">
-                <label  > Name</label>
-                <div className="col-lg-12">
-                <input type="text" className="form-control" name='Name' value={Name}
-                    onChange={(event) => setName(event.target.value)} />
+                <label   > Name:</label>
+                <div className="col-lg-12 ">
+                <input type="text" className="form-control myInput" name='Name' value={Name}
+                    onChange={(event) => setName(event.target.value)} placeholder="Name"/>
                 </div>
                 </div>
                 
                 <div className="mb-3  ">
-                <label  > Age</label>
-                <div className="col-lg-12">
-                <input type="number" className="form-control" name='Age' value={Age}
-                    onChange={(event) => setAge(event.target.value)} />
+                <label  > Age:</label>
+                <div className="col-lg-12 ">
+                <input type="number" className="form-control myInput" name='Age' value={Age}   min={0} max={35}
+                    onChange={(event) => setAge(event.target.value)}placeholder="Age" />
                 </div>
                 </div>
 
                 <div className="mb-3  ">
-                <label > Types</label>
-                <div className="col-lg-12">
-                <input type="text" className="form-control" name='Type'  value={Type}
-                    onChange={(event) => setType(event.target.value)} />
+                <label  > Types:</label>
+                <div className="col-lg-12 ">
+                <input type="text" className="form-control myInput" name='Type'  value={Type}
+                    onChange={(event) => setType(event.target.value)} placeholder="Type" />
                 </div>
                 </div>
 
                 <div className="mb-3  ">
-                <label  > Gender</label>
-                <div className="col-lg-12">
-                <input type="text" className="form-control" name='Gender'  value={Gender}
-                    onChange={(event) => setGender(event.target.value)}/>
+                <label > Gender:</label>
+                <div className="col-lg-12 ">
+                <input type="text" className="form-control myInput" name='Gender'  value={Gender}
+                    onChange={(event) => setGender(event.target.value)} placeholder="Gender"/>
                 </div>
                 </div>
                 
                 <div className="mb-3  ">
-                <label  > Breed</label>
-                <div className="col-lg-12">
-                <input type="text" className="form-control" name='Breed' value={Breed}
-                    onChange={(event) => setBreed(event.target.value)} />
+                <label  > Breed:</label>
+                <div className="col-lg-12 ">
+                <input type="text" className="form-control myInput" name='Breed' value={Breed}
+                    onChange={(event) => setBreed(event.target.value)} placeholder="Breed" />
                 </div>
                 </div>
                 
-                <div className='d-grid' onSubmit={handleSubmit}>
-                    <button className='btn btn-dark' >Submit</button>
+                <div className='d-grid sub' onSubmit={handleSubmit}>
+                    <button className='btn sub' >Submit</button>
                 </div>
 
 
