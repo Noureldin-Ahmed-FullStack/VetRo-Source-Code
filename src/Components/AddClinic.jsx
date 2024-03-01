@@ -58,77 +58,78 @@ export default function AddClinic() {
 
     });
     return (<>
+    <div className="d-flex justify-content-center align-items-center Mytall1">
         <div className='container '>
             <form onSubmit={handleSubmit}>
                 <div className="row">
-                    <div className='text-light '>
+                    <div className='' style={{color:'#71aef3'}}>
                         <h1 className="text-center">Clinic</h1>
 
                         <div className="mb-3  ">
-                            <label htmlFor="" > Name</label>
+                            <label htmlFor="" > Name:</label>
                             <div className="col-lg-12">
                                 <input type="text" className="form-control" name='Name' value={name}
-                                    onChange={(event) => setName(event.target.value)} />
+                                    onChange={(event) => setName(event.target.value)}  placeholder="Name"/>
                             </div>
                         </div>
 
                         <div className="mb-3 ">
-                            <label htmlFor="" className='' > phone</label>
+                            <label htmlFor="" className='' > phone:</label>
                             <div className="col-lg-12">
                                 <input type="number" className="form-control" name='phone' value={phone}
-                                    onChange={(event) => setPhone(event.target.value)} />
+                                    onChange={(event) => setPhone(event.target.value)}  placeholder="Phone" />
                             </div>
                         </div>
 
                         <div className="mb-3 ">
-                            <label htmlFor="" > location</label>
+                            <label htmlFor="" > location:</label>
                             <div className="col-lg-12">
                                 <input type="text" className="form-control" name='location' value={location}
-                                    onChange={(event) => setLocation(event.target.value)} />
+                                    onChange={(event) => setLocation(event.target.value)}  placeholder="Location"/>
                             </div>
                         </div>
 
                         <div className="mb-3 ">
-                            <label htmlFor="" > price</label>
+                            <label htmlFor="" > price:</label>
                             <div className="col-lg-12">
                                 <input type="text" className="form-control" name='price' value={price}
-                                    onChange={(event) => setPrice(event.target.value)} />
+                                    onChange={(event) => setPrice(event.target.value)}  placeholder="Price" />
                             </div>
                         </div>
                         <div className="mb-3 ">
-                            <label htmlFor="" > Day</label>
+                            <label htmlFor="" > Day:</label>
                             <div className="col-lg-12">
                                 <input type="day" className="form-control" name='Day' value={Day}
-                                    onChange={(event) => setDay(event.target.value)} />
+                                    onChange={(event) => setDay(event.target.value)}  placeholder="Day" />
                             </div>
                         </div>
 
                         <div className="mb-3 ">
-                            <label htmlFor="" >Available From</label>
+                            <label htmlFor="" >Available From:</label>
                             <div className="col-lg-12">
                                 <input type="time" className="form-control" name='AvailableFrom' value={availableFrom}
-                                    onChange={(event) => setAvailableFrom(event.target.value)} />
+                                    onChange={(event) => setAvailableFrom(event.target.value)}   />
                             </div>
                         </div>
 
                         <div className="mb-3 ">
-                            <label htmlFor="" >Available to</label>
+                            <label htmlFor="" >Available to:</label>
                             <div className="col-lg-12 ">
                                 <input type="time" className="form-control " name='AvailableTo' value={availableTo}
-                                    onChange={(event) => setAvailableTo(event.target.value)} />
+                                    onChange={(event) => setAvailableTo(event.target.value)}  />
                             </div>
                         </div>
 
-                        <div className='d-grid' onSubmit={handleSubmit}>
-                            <button className='btn btn-light' >Submit</button>
+                        <div className='d-grid sub' onSubmit={handleSubmit}>
+                            <button className='btn sub' >Submit</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
 
-
-
+        </div>
+    
 
 
 

@@ -136,7 +136,7 @@ export default function DoctorProfile() {
                                 <div className="row text-center">
                                     <div className="col-12 d-flex justify-content-between">
                                         <p className='px-3'></p>
-                                        <h2 className='py-3'><b>Edit Info</b></h2>
+                                        <h2 className='py-3' style={{color:'#71aef3'}}>Edit Info</h2>
                                         <div className='d-flex justify-content-end align-items-center'>
                                             <FontAwesomeIcon onClick={() => {setIsOpen(false);setImageUrl(null)}} className='myClose' icon={fa.faCircleXmark} />
                                         </div>
@@ -150,7 +150,7 @@ export default function DoctorProfile() {
                                     <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                                 </div>
                                 <form onSubmit={HandleInfoUpdate}>
-                                    <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                    <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial',color:'#71aef3'  }}>
 
                                         <div className='row py-2 align-items-center'>
                                             <div className='col-sm-2'><span className=''>Name:</span></div>
@@ -165,7 +165,7 @@ export default function DoctorProfile() {
                                             <div className='col-sm-10'><textarea className='form-control' defaultValue={UserDBData.About} style={{ resize: 'none' }} rows='4' /></div>
                                         </div>
                                         <div className='d-flex justify-content-center'>
-                                            <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
+                                            <button type='submit' className="btn  w-25 py-3 m-3" style={{background:'#1B85F3' , color:'white'}}>submit</button>
                                         </div>
                                     </div>
 
@@ -185,8 +185,8 @@ export default function DoctorProfile() {
                             <div className="modal-dialog ">
                                 <div className="modal-content">
                                     {/* Modal Header */}
-                                    <div className="modal-header">
-                                        <h4 className="modal-title">Edit Clinic Info</h4>
+                                    <div className="modal-header ">
+                                        <h4 className="modal-title "  style={{color:'#71aef3'}}>Edit Clinic Info</h4>
                                         <button type="button" onClick={()=>setImageUrl(null)} className="btn-close" data-bs-dismiss="modal" />
                                     </div>
                                     {/* Modal body */}
@@ -198,7 +198,7 @@ export default function DoctorProfile() {
                                             <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                                         </div>
                                         <form onSubmit={handleClinicUpdate}>
-                                            <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' }}>
+                                            <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' ,color:'#71aef3' }}>
                                                 
                                                 <div className="row py-2 align-items-center">
                                                     <div className="col-sm-4"><label htmlFor="name">Name:</label></div>
@@ -226,7 +226,7 @@ export default function DoctorProfile() {
                                                 </div>
 
                                                 <div className='d-flex justify-content-center'>
-                                                    <button type='submit' className="btn btn-outline-success w-25 py-3 m-3">submit</button>
+                                                    <button type='submit' className="btn  w-25 py-3 m-3" style={{background:'#1B85F3' , color:'white'}}>submit</button>
                                                 </div>
                                             </div>
                                         </form>
