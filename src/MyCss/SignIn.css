@@ -1,0 +1,187 @@
+.fatema {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.total {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.T1nd {
+    font-family: Catamaran;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 46px;
+    letter-spacing: 0em;
+    text-align: center;
+
+}
+
+.T2nd {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: rgba(128, 139, 154, 1);
+ 
+
+}
+
+.Selections1,
+.Selections2,
+.Selections {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-family: "Noto Sans";
+    border: 1px solid #d9dfe6;
+    flex-direction: column;
+
+}
+
+.Selections1,
+.Selections2 {
+    width: 225px;
+    height: 169px;
+    padding: 25px;
+    border-radius: 14px;
+    gap: 15px;
+    background: rgba(224, 231, 255, 0.31);
+    color: #808b9a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    outline: 0;
+    transition: border-color 0.3s ease;
+
+}
+
+.Selections1:hover,
+.Selections2:hover {
+    border-color: #dbaf1d;
+}
+
+
+.Selections-te {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #000;
+
+}
+
+.card-content h3 {
+    margin-bottom: 10px;
+}
+
+
+.sign_up {
+    width: 1360px;
+    height: 530px;
+    overflow: hidden;
+    display: flex;
+    padding: 24px, 22px, 24px, 22px;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    text-align: center;
+    font-size: 32px;
+    background-color: #fff;
+    font-family: Poppins;
+}
+
+.circular-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 9999px;
+    overflow: hidden;
+
+}
+
+.logo-container11 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    display: none;
+   
+}
+
+/* Responsive styles */
+/*phone*/
+@media only screen and (max-width: 767px) {
+
+    .sign_up {
+        height: 850px;
+        width: 100%;
+        font-size: 14px;
+        padding: 24px;
+
+        background-image: linear-gradient(to bottom, rgba(217, 217, 217, 0)0%,
+                rgba(217, 217, 217, 0.45)50%, rgba(217, 217, 217, 0.938));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .total {
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        gap: 0px;
+
+    }
+
+    .fatema {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 100px;
+    }
+
+    .Selections1,
+    .Selections2 {
+        width: 298.97px;
+        height: 88px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .logo-container11 {
+        display: flex;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 60px;
+       
+
+    }
+
+    .T1nd {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    .T2nd {
+        font-size: 12px;
+    }
+
+
+}
+
+
+
+
