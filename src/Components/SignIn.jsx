@@ -8,6 +8,10 @@ import React, { useContext } from 'react'
 import ProfileComponent from './ProfileComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import '../MyCss/SignIn.css'
+import VetImg from '../images/vet.jpg'
+import UserImg from '../images/User.jpg'
+import logo from '../images/Blue Logo.svg'
 
 
 export default function SignIn() {
@@ -18,86 +22,97 @@ export default function SignIn() {
 
 
 
+
     return (
-        <div className="w-100 d-flex justify-content-center">
-            <div className="row w-100 justify-content-center">
 
+
+        <div className='w-100 d-flex justify-content-center'>
+<div className="row w-100 justify-content-center">
+            
                 {userObj ? (
-                        <ProfileComponent />
+                    <ProfileComponent /> 
                 ) : (
-                    <div className="col-md-6">
-                        <div style={{ border: "#fff" }} className="card my-5">
-                            <div style={{ backgroundColor: "#1abc9c73", fontWeight: "600" }} className="card-header">
-                                Sign In
-                            </div>
-                            <div className="card-body">
-                                <div className="row justify-content-between">
-                                    <div className="col-6 hov">
-                                        <div onClick={() =>signInWithGoogle(false)} className="box d-flex justify-content-center align-items-center">
-                                            <div className='choice'>
-                                                <FontAwesomeIcon className='BiggerIcon w-100' icon={fa.faUser} />
-                                                <h3 className='w-100'>Normal User</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-6 hov">
-                                        <div onClick={() =>signInWithGoogle(true)} className="box d-flex justify-content-center align-items-center">
-                                            <div className='choice'>
-                                                <FontAwesomeIcon className='BiggerIcon w-100' icon={fa.faUserDoctor} />
-                                                <h3 className='w-100'>Doctor</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form >
-                                    <div className="form-group py-2">
-                                        <label htmlFor="Username">Username</label>
-                                        <div className='d-flex align-items-center'>
 
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="Username"
-                                                placeholder="Enter your Username"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="form-group py-2">
-                                        <label htmlFor="email">Email</label>
-                                        <input
-                                            type="email"
-                                            className="form-control"
-                                            id="email"
-                                            placeholder="Enter your email"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group py-2">
-                                        <label htmlFor="password">Password</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            id="password"
-                                            placeholder="Enter your password"
-                                            required
-                                        />
-                                    </div>
-                                    <div className='container'>
-                                        <button type="submit" className="btn btn-primary w-100 mt-4">Sign In</button>
-                                        <button onClick={signInWithGoogle} className="w-100 mt-3 mb-2 MySignIN ">
-                                            {/* <button type='button' className="w-100 mt-3 mb-2 MySignIN "> */}
-                                            <span className='p-2 MyLogo'><img src="https://ssniper.sirv.com/Images/google.svg" alt="" />
+                    <div className="sign_up">
+                        <div className="logo-container11">
+                            <img className="" alt="" src={logo} />
+                        </div>
+                        <div className="fatema" >
+                            <div>
+                                <h1 className="T1nd">  Are you a veterinarian or a pet owner?</h1>
+                                <h1 className='T2nd'>Select your user type to continue</h1>
+                            </div>
+
+                            <div className="total" >
+                                <div onClick={() => signInWithGoogle(false)} className="Selections Selections1 " >
+                                    <img className='circular-image ' src={UserImg} alt="" />
+                                     <h3 className="Selections-te">I’m a Pet owner</h3>
+                                </div>
+
+                                <div onClick={() => signInWithGoogle(true)} className="Selections Selections2 " >
+                                    <img className='circular-image' src={VetImg} alt="" />
+                                    <h3 className="Selections-te">I’m a Veterinarian</h3>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+                )}
+
+            </div>
+            </div>
+    )
+}
+/*
+                                <form >
+                <div className="form-group py-2">
+                    <label htmlFor="Username">Username</label>
+                    <div className='d-flex align-items-center'>
+
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="Username"
+                            placeholder="Enter your Username"
+                            required
+                        />
+                    </div>
+                </div>
+                <div className="form-group py-2">
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    />
+                </div>
+                <div className="form-group py-2">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    />
+                </div>
+                <div className='container'>
+                    <button type="submit" className="btn btn-primary w-100 mt-4">Sign In</button>
+                    <button onClick={signInWithGoogle} className="w-100 mt-3 mb-2 MySignIN ">
+                        COMMENT    " {/* <button type='button' className="w-100 mt-3 mb-2 MySignIN ">" */
+
+
+{/* <span className='p-2 MyLogo'><img src="https://ssniper.sirv.com/Images/google.svg" alt="" />
                                             </span>
                                             Sign In with Google</button>
                                         <p className='text-center'>Already have an account? <a href="">Log in</a></p>
                                     </div>
-                                </form>
-                            </div>
-                        </div></div>
-                )}
-            </div>
-        </div>
-
-    )
-}
+</form>*/}
