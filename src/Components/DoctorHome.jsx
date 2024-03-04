@@ -5,107 +5,33 @@ import { db } from '../Firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
-/** */
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
-
 
 import '../MyCss/doctorHome.css'
+import Postt from './Postt';
 export default function DoctorHome() {
     const { UserDBData, setUserDBData } = useContext(MyContext);
     const [posts, setPosts] = useState([])
     const { currentDevice, setCurrentDevice } = useContext(MyContext);
-    const PostsRef = collection(db, "Posts")
-    const getTimeSince = (time) => {
-        // Create a new Date object with the desired date and time
-        var customDate = new Date(time);
+  
+///
 
-        // Get the current date
-        var currentDate = new Date();
+const navigate = useNavigate();
+/* post */
+const handleClickPost = () => {
+  navigate('/post');
+};
+/* UrgentPost  */
+const handleClickUrgentPost = () => {
+  navigate('/UrgentPost');
+};
 
-        // Get the time in milliseconds since January 1, 1970 for both dates
-        var customTime = customDate.getTime();
-        var currentTime = currentDate.getTime();
-
-        // Calculate the time difference in milliseconds
-        var timeDifference = currentTime - customTime;
-
-        const seconds = Math.floor((timeDifference) / 1000);
-        let interval = Math.floor(seconds / 31536000);
-
-        if (interval >= 1) {
-            return interval + " year" + (interval === 1 ? "" : "s") + " ago";
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval >= 1) {
-            return interval + " month" + (interval === 1 ? "" : "s") + " ago";
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval >= 1) {
-            return interval + " day" + (interval === 1 ? "" : "s") + " ago";
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval >= 1) {
-            return interval + " hour" + (interval === 1 ? "" : "s") + " ago";
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval >= 1) {
-            return interval + " minute" + (interval === 1 ? "" : "s") + " ago";
-        }
-        return Math.floor(seconds) + " second" + (seconds === 1 ? "" : "s") + " ago";
-
-
-    }
-    let navigate = useNavigate()
-    const goToProfile = (Docid) => {
-        navigate('/profile', { state: { id: Docid } });
-    }
-    useEffect(() => {
-        const fetchCollection = async () => {
-            // const queryMessages = query(PostsRef)
-            try {
-                const querywithTime = query(PostsRef, orderBy('createdAt', 'desc'))
-                // const querySnapshot = await getDocs(PostsRef);
-                const querySnapshot = await getDocs(querywithTime);
-                const fetchedItems = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems));
-                setPosts(fetchedItems);
-                console.log(fetchedItems);
-            } catch (error) {
-                console.error('Error fetching collection:', error);
-            }
-        }
-        const storedUserPostsData = sessionStorage.getItem('userPostsData');
-        if (storedUserPostsData) {
-            console.log("no Fetch");
-            // If user data is already stored, set it in the state
-            setPosts(JSON.parse(storedUserPostsData));
-        } else {
-            console.log("Fetch");
-
-            fetchCollection();
-        }
-    }, [])
-
-
+/**Book */
+const handleClickBook = () => {
+  navigate('/book');
+};
 
     /**** */
-    const responsive = {
-        0: {
-          items:  1,
-        },
-        600: {
-          items:  2, // Adjust this value based on your preference for tablet screens
-        },
-        1000: {
-          items:  2, // Adjust this value based on your preference for larger screens
-        },
-      };
-    
+  
     return (
 <>
 <div className='w-100 p1 '>
@@ -132,108 +58,35 @@ export default function DoctorHome() {
 
     
 
-<div className='pp4'>incomming Pet Owner Reservations</div>
 
+
+<div className='container py-5'>
+<div className='row text-center'>
+
+  <div className=' py-2 col-lg-4 col-7 col-md-4'>
+  <button type="button" class="btn btn-info px-5 py-2" onClick={handleClickPost}>Posts</button>
+  </div>
+
+  <div className=' py-2 col-lg-4 col-2 col-md-4'>
+  <button type="button" class="btn btn-danger px-5 py-2 " onClick={handleClickBook} >Book</button>
+  </div>
+
+  <div className=' py-2 col-lg-4 col-7 col-md-4'>
+  <button type="button" class="btn btn-success px-4 py-2 " onClick={handleClickUrgentPost} >UrgentPost</button>
+  </div>
+
+</div>
+</div>
+
+<div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
 <div className='container'>
-      <OwlCarousel className='owl-theme' responsive={responsive}  nav>
-        <div className='container'>
-          <div className=''>
-            <div className=''>
-              <div className="card cardsize">
-                <div className="card-body">
-                  <div className='starRatepp7 align-items-center'>
-                <img src={require("../images/port2.png")} alt="nnn" className="circle-round-profile"/>
-                    <div className="ms-2 w-100">
-                      <div className="h4 m-0" style={{color:'#39434F'}}>sara</div>
-                      <div className="m-0 COLorli">sara@gmail</div>
-                      <div className="m-0 COLorli">0123456789</div>
-                    </div>
-                    <div className=''><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
-                  </div>
-                  <hr/>
-                  <div className='starRated COLorP'>
-                    <p>Route check-up</p>
-                    <p> Monday-2/5/2024</p>
-                  </div>
-                  <hr/>
-                  <div className='w-100 d-flex justify-content-evenly mt-2'>
-                    <button className=" buttonDetails1">
-                      <FontAwesomeIcon className='pe-2' icon={fa.faCheck} style={{ fontSize:'20px' }} />
-                      Accept
-                    </button>
-                    <button className=" d-flex align-items-center buttonDetails2">
-                      <FontAwesomeIcon className='pe-2' icon={fa.faXmark} style={{ fontSize:'20px' }} />
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       
-      </OwlCarousel>
+<div className="starArea d-flex justify-content-center my-3 align-items-center ">
+        <div className="whiteLine"></div>
+        <div className="whiteLine"></div>
     </div>
-
-
-
-
-
-
-
-        <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
-
-            <div className='container'>
-
-                <h2 className='postss'>Recent posts from pet owners </h2>
-                    {posts.map((post) => (
-                        <div key={post.id} className="card1 bg-light my-4 text-start gedf-card py-2 px-3">
-                            <div className="card-header cardbag">
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div onClick={() => goToProfile(post.senderId)} className="d-flex pointer justify-content-between align-items-center">
-                                        <div className="me-2">
-                                            <img className="rounded-circle" width={45} src={post.SenderPFP} />
-                                        </div>
-                                        <div className="ms-2">
-                                            <div className="h5 m-0 namecolor">{post.senderName}</div>
-                                        </div>
-                                    </div>
-                                <div>
-                                    <div className='starRatepp7 justify-content-between align-items-center'>
-                                    <div className=''>
-                                    <FontAwesomeIcon className='mess' icon={fa.faCommentDots} />
-                                    </div>
-                                </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card-body">
-                            <p className="card-text h5">
-                                    {post.text}
-                                </p>
-                                <div className="text-muted  mb-4 mt-4" style={{fontSize:'12px'}}> 
-                                <i className="fa fa-clock-o pe-1" />{getTimeSince(post.createdAt.toString())}
-                                </div>
-                                
-                                
-                            </div>
-                        
-                        </div>
-
-                    ))}
-
-
-
-                
-                <div className="starArea d-flex justify-content-center my-3 align-items-center ">
-                    <div className="whiteLine"></div>
-                    <div className="whiteLine"></div>
-                </div>
-                <p>Your Expert Veterinary assitant</p>
-
-            </div>
-
-        </div>
+    <p>Your Expert Veterinary assitant</p>
+</div>
+</div>
 
 </>
     )
