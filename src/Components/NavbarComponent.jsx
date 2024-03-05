@@ -22,7 +22,7 @@ export default function NavbarComponent() {
           <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
 
           <div className='px-3'> <VetRoBot /> </div>
-          <NavLink className="nav-link" to="room" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
+          <NavLink className="nav-link" to="contacts" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
           <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link>
 
         </div>

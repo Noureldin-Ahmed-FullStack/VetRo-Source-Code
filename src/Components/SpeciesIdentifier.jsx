@@ -107,7 +107,7 @@ export default function SpeciesIdentifier() {
 
     };
     return (
-        <div className='background tall'>
+        <div className='background tall vh100'>
             <div>
                 <h1 className='start'>Animal <span style={{ color: '#B95F00 ' }} > <b>Breed </b></span> Identification Program</h1>
                 <div className='other'>

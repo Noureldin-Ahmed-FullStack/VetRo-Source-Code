@@ -165,6 +165,11 @@
   display: flex;
   flex-direction: column;
 }
+.Chatvh100{
+  height: calc(100vh - 5rem);
+  display: flex;
+  flex-direction: column;
+}
 .otherV100{
   display: flex;
   flex-direction: column;
@@ -397,7 +402,21 @@
   background-color: #1782FF;
   color: rgba(255, 255, 255, 0.85);
 }
-
+.MyArrow{
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #00000000;
+}
+.MyArrow:hover{
+  border-radius: 5px;
+  border: 1px solid #18222cb0;
+}
+.MyArrow:active{
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #18222c;
+  border: 1px solid #fff;
+}
 .wordBreaker {
   word-wrap: break-word;
   max-width: 70%;

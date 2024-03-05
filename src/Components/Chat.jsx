@@ -137,10 +137,10 @@ export default function Chat(props) {
         scrollToBottom();
     }
     return (
-        <div className=' w-100 v100'>
-            <div className='w-100 d-flex align-items-center border-bottom'>
-                <FontAwesomeIcon onClick={() => setSelectedContactData(null)} className=' mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
-                <img src={reciverPFP} className='mx-2 mb-1 mainOtherchatBubblePhoto ' /><span className='mainOtherchatBubbleName'>{reciverName}</span>
+        <div className=' w-100 Chatvh100'>
+            <div className='w-100 bg-light py-2 d-flex align-items-center border-bottom'>
+                <FontAwesomeIcon onClick={() => setSelectedContactData(null)} className='MyArrow mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
+                <img src={reciverPFP} className='mx-1 mb-1 mainOtherchatBubblePhoto ' /><span className='ps-3 mainOtherchatBubbleName'>{reciverName}</span>
             </div>
             <div ref={ChatRoom} className='w-100 bg-light tall py-3 flower container'>
                 <div>{messages.map((messages) => (messages.IsImage ? (
