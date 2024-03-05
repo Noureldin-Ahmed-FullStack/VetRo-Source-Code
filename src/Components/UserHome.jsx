@@ -21,6 +21,8 @@ export default function UserHome() {
   const [PostText, setPostText] = useState("")
   const PostsRef = collection(db, "Posts")
 
+  const [postType, setPostType] = useState('regular');
+
   const fetchDoctorData = async () => {
     try {
       const response = collection(db, 'Users');
@@ -33,7 +35,7 @@ export default function UserHome() {
         return DoctorData
       });
       setDoctorData(DoctorDataArray);
-      
+
       sessionStorage.setItem('storedDoctorsData', JSON.stringify(DoctorDataArray));
       // console.log(DoctorDataArray);
     } catch (error) {
@@ -45,15 +47,15 @@ export default function UserHome() {
 
 
     const storedDoctorsData = sessionStorage.getItem('storedDoctorsData');
-        if (storedDoctorsData) {
-            console.log("no Fetch");
-            // If user data is already stored, set it in the state
-            setDoctorData(JSON.parse(storedDoctorsData));
-          } else {
-            console.log("Fetch");
-            
-            fetchDoctorData();
-        }
+    if (storedDoctorsData) {
+      console.log("no Fetch");
+      // If user data is already stored, set it in the state
+      setDoctorData(JSON.parse(storedDoctorsData));
+    } else {
+      console.log("Fetch");
+
+      fetchDoctorData();
+    }
   }, []);
 
   let navigate = useNavigate()
@@ -65,20 +67,28 @@ export default function UserHome() {
 
 
 
-
   const handlePostSubmit = async (e) => {
-    e.preventDefault()
-    if (PostText === "") return
+    e.preventDefault();
+    if (PostText === "") return;
     console.log(PostText);
-    const dateTimeVar = new Date().toString()
-    await addDoc(PostsRef, {
+    const dateTimeVar = new Date().toString();
+    let collectionRef;
+    if (postType === 'urgent') {
+      collectionRef = collection(db, "UrgentPosts");
+    } else {
+      collectionRef = collection(db, "Posts");
+    }
+
+
+    await addDoc(collectionRef, {
       text: PostText,
       createdAt: dateTimeVar.slice(0, 21),
       senderName: UserDBData.userName,
       senderId: UserDBData.uid,
       SenderPFP: UserDBData.userPFP,
       photos: "",
-    })
+    });
+
 
     setPostText("")
     setIsOpen(false)
@@ -153,6 +163,15 @@ export default function UserHome() {
                       <h2 className='usrText pot1'>{UserDBData?.userName}</h2>
                     </div>
                   </div>
+                  
+                  <div className="form-group">
+                    <label >Post Type </label>
+                    <select onChange={(e) => setPostType(e.target.value)} className="form-control">
+                      <option value="regular"> Regular Post</option>
+                      <option value="urgent">Urgent Post</option>
+                    </select>
+                  </div>
+
                   <div className='input-area '>
                     <textarea onChange={(e) => setPostText(e.target.value)} className='form-control  bg-light' rows="6" placeholder="What's on your mind?"></textarea>
                   </div>
@@ -162,6 +181,7 @@ export default function UserHome() {
                   </div>
                 </div>
               </form>
+
             </div>
           </div>
         </div>
