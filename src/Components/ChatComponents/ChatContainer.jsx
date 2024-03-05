@@ -14,20 +14,20 @@ export default function ChatContainer() {
 
   if (currentDevice == "Other") {
     return (
-      <div className='p-3 bg-danger MyHeight'>
-        <div className='row'>
+      <div className='p-3 vh100 '>
+        <div className='row h-100'>
           <div className='col-4 bg-light-subtle'>
             <div className='w-100 h-100 d-flex flex-column'>
               <h2>Messages</h2>
               <input type="search" className='form-control my-2' placeholder='🔍 search' />
-              <div className=' flex-grow-1 bg-info'>
+              <div className=' flex-grow-1 w-100 MyScroller scrollable-container'>
 
               <Contacts />
               </div>
             </div>
 
           </div>
-          <div className='col-8 bg-secondary text-secondary-emphasis'>
+          <div className='col-8  text-secondary-emphasis'>
             {SelectedContactData ? (
               <Chat room={SelectedContactData.ChatRoomID} reciverName={SelectedContactData.OtherPersonName} reciverPFP={SelectedContactData.otherPersonPic} />
             ) : (

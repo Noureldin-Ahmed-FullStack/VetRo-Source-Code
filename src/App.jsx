@@ -59,7 +59,7 @@ function App() {
   return (
     <MyContextProvider>
       <ToastContainer />
-      <div className='myWidth vh100'>
+      <div className='myWidth '>
         <RouterProvider router={Routes} />
       </div>
     </MyContextProvider>

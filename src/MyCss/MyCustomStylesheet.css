@@ -157,10 +157,24 @@
 }
 
 .tall {
-  min-height: calc(100vh - 4rem);
+  /* min-height: calc(100vh - 4rem); */
+  flex-grow: 1;
 }
 .vh100{
-  min-height: 100vh;
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+}
+.otherV100{
+  display: flex;
+  flex-direction: column;
+
+}
+.v100{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
 }
 .Mytall {
   height: 100vh;
@@ -381,7 +395,7 @@
   border-radius: 2rem;
   border-bottom-right-radius: 0;
   background-color: #1782FF;
-  ;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .wordBreaker {
@@ -766,6 +780,17 @@
 
 .myCard {
   border: rgba(0, 0, 0, 0.175) 1px solid;
+}
+.myCard2 {
+  background-color: #fcfcfd;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.myCard2:hover {
+  background-color: #d8d8d8;
+}
+.myCard2:active {
+  background-color: #bcbcbc;
 }
 
 .icon {

@@ -45,17 +45,17 @@ export default function Contacts() {
 
     }, [])
   return (
-    <div className='w-100 MyScroller'>
+    <div className='w-100 '>
         {
             UserContacts?.map((Contacts, index) => (
                 <div onClick={()=>setSelectedContactData(Contacts)} key={Contacts?.ChatRoomID} className='d-flex justify-content-center '>
-                  <div className="bg-light myCard p-3 rounded-3 w-100 row bordcard " >
+                  <div className=" myCard2 p-3 w-100 row  " >
                     <div className='col-3 p-0 d-flex align-items-center'>
                       <img className="circle-round-2" src={Contacts?.otherPersonPic} alt="Card image" />
                     </div>
                     <div className='p-0 col-9'>
                       <div className="h-100">
-                        <h4 className="card-title pb-2">Dr.{Contacts?.OtherPersonName}</h4>
+                        <h5 className="card-title pb-2">Dr.{Contacts?.OtherPersonName}</h5>
                         
                         <div className='d-flex justify-content-between'>
                         <span className='text-secondary text-truncate'>{Contacts?.LastMessage}</span>

@@ -67,7 +67,7 @@ export default function Chat(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+
         if (newMessage === "") return
         console.log(userObj);
         await addDoc(messagesRef, {
@@ -137,12 +137,12 @@ export default function Chat(props) {
         scrollToBottom();
     }
     return (
-        <div className=' w-100 '>
+        <div className=' w-100 v100'>
             <div className='w-100 d-flex align-items-center border-bottom'>
-            <FontAwesomeIcon onClick={()=>setSelectedContactData(null)} className=' mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
+                <FontAwesomeIcon onClick={() => setSelectedContactData(null)} className=' mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
                 <img src={reciverPFP} className='mx-2 mb-1 mainOtherchatBubblePhoto ' /><span className='mainOtherchatBubbleName'>{reciverName}</span>
             </div>
-            <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>
+            <div ref={ChatRoom} className='w-100 bg-light tall py-3 flower container'>
                 <div>{messages.map((messages) => (messages.IsImage ? (
                     messages.senderId === userObj.uid ? (
                         <div key={messages.id} className='d-flex align-items-end my-2 justify-content-end'>
@@ -177,9 +177,9 @@ export default function Chat(props) {
                 <div className="row gx-1 w-100">
                     <div className='col-1'>
                         <button ref={btnRef} className='d-none' onClick={handleUpload}>handleUpload</button>
-                            <label className='btn' htmlFor="imgUploader"><FontAwesomeIcon className='' icon={fa.faImage} /></label>
-                            <input onChange={handleImageUpload} accept="image/*" id='imgUploader' capture="environment" className='d-none' text="hi" type="file" />
-                            {/* <button onClick={handleImageUpload} type='button' className='btn btn-success w-100'>Upload Image</button> */}
+                        <label className='btn' htmlFor="imgUploader"><FontAwesomeIcon className='' icon={fa.faImage} /></label>
+                        <input onChange={handleImageUpload} accept="image/*" id='imgUploader' capture="environment" className='d-none' text="hi" type="file" />
+                        {/* <button onClick={handleImageUpload} type='button' className='btn btn-success w-100'>Upload Image</button> */}
                     </div>
                     <div className="col-9">
                         <input

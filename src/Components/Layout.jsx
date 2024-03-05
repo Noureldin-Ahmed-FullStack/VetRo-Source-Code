@@ -25,7 +25,7 @@ export default function Layout() {
       ) : (
         // className={`${currentDevice =='Other' ? 'myPaddingTop' : ''}`}
         <>
-          <div className={`h-100 bg-body-secondary ${currentDevice =='Other' ? 'myPaddingTop' : ''}`}>
+          <div className={` bg-body-secondary ${currentDevice =='Other' ? 'myPaddingTop' : ''}`}>
           <NavbarComponent />
             <Outlet />
           </div>
