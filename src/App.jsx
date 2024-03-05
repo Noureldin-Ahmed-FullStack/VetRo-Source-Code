@@ -20,8 +20,6 @@ import SpeciesIdentifier from './Components/SpeciesIdentifier';
 import { useEffect } from 'react';
 import Profile from './Components/Profile';
 import Sidebar from './Components/Sidebar';
-import Postt from './Components/Postt';
-import Booking from './Components/Booking';
 
 
 const useLogging = (componentName) => {
@@ -48,8 +46,6 @@ function App() {
         { path: "SignIn/clinic", element: <AddClinic/>},
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},
         { path: "profile", element: <Profile />},
-        { path: "post", element: <Postt />},
-        { path: "book", element: <Booking />},
         { path: "*", element: <PageMissing /> },
 
       ]
