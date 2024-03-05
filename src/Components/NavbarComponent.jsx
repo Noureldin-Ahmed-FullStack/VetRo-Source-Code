@@ -52,7 +52,7 @@ export default function NavbarComponent() {
               <NavLink className="nav-link" to="speciesidentifier">speciesidentifier</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="room">Chat</NavLink>
+              <NavLink className="nav-link" to="Contacts">Chat</NavLink>
             </li>
           </ul>
           <div className='d-flex justify-content-center'>

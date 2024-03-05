@@ -159,7 +159,9 @@
 .tall {
   min-height: calc(100vh - 4rem);
 }
-
+.vh100{
+  min-height: 100vh;
+}
 .Mytall {
   height: 100vh;
 }
@@ -281,17 +283,21 @@
 }
 
 .circle-round {
-  border-radius: 50%;
+  border-radius: 50% !important;
   object-fit: cover;
   width: 2.7rem;
   height: 2.7rem;
 }
-
+.circle-round-2 {
+  border-radius: 50% !important;
+  object-fit: cover;
+  width: 3.5rem;
+  height: 3.5rem;
+}
 .circle-round-profile {
   border-radius: 8%;
   object-fit: cover;
-  width: 6.5rem;
-  height: 6.5rem;
+  width: 100%;
 }
 /* chat bot */
 

@@ -20,6 +20,8 @@ import SpeciesIdentifier from './Components/SpeciesIdentifier';
 import { useEffect } from 'react';
 import Profile from './Components/Profile';
 import Sidebar from './Components/Sidebar';
+import Contacts from './Components/ChatComponents/Contacts';
+import ChatContainer from './Components/ChatComponents/ChatContainer';
 
 
 const useLogging = (componentName) => {
@@ -41,6 +43,7 @@ function App() {
         { path: "chat", element: <Chat /> },
         { path: "room", element: <Room /> },
         { path: "about", element: <About /> },
+        { path: "Contacts", element: <ChatContainer /> },
         { path: "contact", element: <Contact /> },
         { path: "SignIn/pets", element: <Pets /> },
         { path: "SignIn/clinic", element: <AddClinic/>},
@@ -56,7 +59,7 @@ function App() {
   return (
     <MyContextProvider>
       <ToastContainer />
-      <div className='myWidth'>
+      <div className='myWidth vh100'>
         <RouterProvider router={Routes} />
       </div>
     </MyContextProvider>

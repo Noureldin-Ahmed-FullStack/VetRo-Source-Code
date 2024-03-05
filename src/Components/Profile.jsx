@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../Firebase/firebase";
@@ -27,17 +27,27 @@ export default function Profile(props) {
   const chatFunc = () => {
     let RID
     if (ProfileData?.isDoctor) {
-        RID = userObj.uid+ " " + ProfileData.uid;        
-    }else{
-        RID = ProfileData.uid+ " " + userObj.uid;     
+      RID = userObj.uid + " " + ProfileData.uid;
+    } else {
+      RID = ProfileData.uid + " " + userObj.uid;
     }
     console.log(RID);
     goToRoom(RID);
   };
   let navigate = useNavigate();
-  const goToRoom = (RID) => {
-    
-    navigate("/Room", { state: { RID: RID ,reciverPFP:ProfileData.userPFP,reciverName: ProfileData.userName} });
+  const goToRoom = async (RID) => {
+
+    const userChatsRef = collection(db, "UserChats");
+    const userChatDoc = await doc(userChatsRef, userObj.uid);
+    updateDoc(userChatDoc, {
+      ChatRooms: arrayUnion({
+        ChatRoomID: RID,
+        OtherPersonName: ProfileData.userName,
+        otherPersonPic: ProfileData.userPFP
+      })
+
+    })
+    navigate("/Room", { state: { RID: RID, reciverPFP: ProfileData.userPFP, reciverName: ProfileData.userName } });
   };
 
   const fetchProfileData = async () => {

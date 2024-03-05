@@ -9,6 +9,12 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 export default function Chat(props) {
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+    const { SelectedContactData, setSelectedContactData } = useContext(MyContext);
+    // const temporary= {
+    //     room:"12312",
+    //     reciverName:"namead",
+    //     reciverPFP:"23123"
+    // }
     const { room, reciverName, reciverPFP } = props;
 
     const dummy = useRef()
@@ -56,7 +62,7 @@ export default function Chat(props) {
             clearTimeout(delayedAction);
         }
 
-    }, [])
+    }, [room])
 
 
     const handleSubmit = async (e) => {
@@ -133,7 +139,7 @@ export default function Chat(props) {
     return (
         <div className=' w-100 '>
             <div className='w-100 d-flex align-items-center border-bottom'>
-            <FontAwesomeIcon className=' mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
+            <FontAwesomeIcon onClick={()=>setSelectedContactData(null)} className=' mx-3 f-size-2 pointer' icon={fa.faArrowLeft} />
                 <img src={reciverPFP} className='mx-2 mb-1 mainOtherchatBubblePhoto ' /><span className='mainOtherchatBubbleName'>{reciverName}</span>
             </div>
             <div ref={ChatRoom} className='w-100 bg-light rounded-top-4 py-3 flower container'>

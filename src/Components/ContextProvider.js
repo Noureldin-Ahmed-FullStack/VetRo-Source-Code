@@ -12,6 +12,7 @@ export default function MyContextProvider(props) {
   const [userObj, setUserObj] = useState();
   const [UserDBData, setUserDBData] = useState();
   const [currentDevice, setCurrentDevice] = useState();
+  const [SelectedContactData, setSelectedContactData] = useState(null);
   const [pending, setPending] = useState(true);
   var [myAuth, setMyAuth] = useState("false");
 
@@ -69,7 +70,9 @@ useEffect(() => {
     UserDBData,
     setUserDBData,
     currentDevice,
-    setCurrentDevice
+    setCurrentDevice,
+    SelectedContactData,
+    setSelectedContactData
   };
  
   return (
