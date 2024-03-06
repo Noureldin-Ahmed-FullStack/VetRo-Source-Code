@@ -58,9 +58,9 @@ function Sidebar({ children }) {
 
                 </li>
                 <li className="nav-item py-1">
-                    <NavLink to="Room" className="nav-link text-white">
+                    <NavLink to="Contacts" className="nav-link text-white">
                         <i className="bi bi-speedometer me-2 fs-5"> <FontAwesomeIcon className='BigIcon px-2' icon={fa.faComments} /></i>
-                        <span className="fs-5">Room</span>
+                        <span className="fs-5">Chat</span>
                     </NavLink>
 
                 </li>

@@ -1,4 +1,4 @@
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, runTransaction, setDoc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../Firebase/firebase";
@@ -21,6 +21,7 @@ export default function Profile(props) {
   const [PetsData, setPetsData] = useState([]);
   const [clinicData, setClinicData] = useState([]);
   const { userObj, setUserObj } = useContext(MyContext);
+  const { UserDBData, setUserDBData } = useContext(MyContext);
   {
     /*chat */
   }
@@ -38,15 +39,59 @@ export default function Profile(props) {
   const goToRoom = async (RID) => {
 
     const userChatsRef = collection(db, "UserChats");
-    const userChatDoc = await doc(userChatsRef, userObj.uid);
-    updateDoc(userChatDoc, {
-      ChatRooms: arrayUnion({
-        ChatRoomID: RID,
-        OtherPersonName: ProfileData.userName,
-        otherPersonPic: ProfileData.userPFP
-      })
+    // updateDoc(userChatDoc, {
+    //   ChatRooms: arrayUnion({
+    //     ChatRoomID: RID,
+    //     OtherPersonName: ProfileData.userName,
+    //     otherPersonPic: ProfileData.userPFP
+    //   })
+    // })
+    try {
+      await runTransaction(db, async (transaction) => {
+        const userChatDoc = await doc(userChatsRef, userObj.uid);
+        const OtherUserChatDoc = await doc(userChatsRef, ProfileData.uid);
+        const userChatDocSnap = await transaction.get(userChatDoc);
+        const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
 
-    })
+        if (userChatDocSnap.exists()) {
+          transaction.update(userChatDoc, {
+            ChatRooms: arrayUnion({
+              ChatRoomID: RID,
+              OtherPersonName: ProfileData.userName,
+              otherPersonPic: ProfileData.userPFP
+            })
+          });
+        } else {
+          transaction.set(userChatDoc, {
+            ChatRooms: [{
+              ChatRoomID: RID,
+              OtherPersonName: ProfileData.userName,
+              otherPersonPic: ProfileData.userPFP
+            }]
+          });
+        }
+        
+        if (OtherUserChatDocSnap.exists()) {
+          transaction.update(OtherUserChatDoc, {
+            ChatRooms: arrayUnion({
+              ChatRoomID: RID,
+              OtherPersonName: UserDBData.userName,
+              otherPersonPic: UserDBData.userPFP
+            })
+          });
+        } else {
+          transaction.set(OtherUserChatDoc, {
+            ChatRooms: [{
+              ChatRoomID: RID,
+              OtherPersonName: UserDBData.userName,
+              otherPersonPic: UserDBData.userPFP
+            }]
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
     navigate("/Room", { state: { RID: RID, reciverPFP: ProfileData.userPFP, reciverName: ProfileData.userName } });
   };
 
