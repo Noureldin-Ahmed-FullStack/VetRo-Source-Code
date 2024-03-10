@@ -44,6 +44,7 @@ const detectDevice = () => {
 useEffect(() => {
     const device = detectDevice();
     setCurrentDevice(device)
+    console.log("context update");
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser !== null) {
         setUserObj(currentUser);

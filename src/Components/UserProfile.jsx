@@ -296,7 +296,7 @@ export default function UserProfile() {
 
                                     {/* {console.log(UserDBData.pets[0].petRef._key.path.segments[6])} */}
                                     {/* {console.log(UserDBData.pets[0])} */}
-                                    <div className='row gy-3 justify-content-center'>
+                                    <div className='row justify-content-center'>
                                         {
                                             PetsData.map((pets, index) => (
                                                 <div key={index} onClick={() => setSelectedPet(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">

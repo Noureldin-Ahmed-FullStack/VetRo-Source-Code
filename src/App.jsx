@@ -22,6 +22,7 @@ import Profile from './Components/Profile';
 import Sidebar from './Components/Sidebar';
 import Contacts from './Components/ChatComponents/Contacts';
 import ChatContainer from './Components/ChatComponents/ChatContainer';
+import UserChoicePage from './Components/UserChoicePage';
 
 
 const useLogging = (componentName) => {
@@ -45,6 +46,7 @@ function App() {
         { path: "about", element: <About /> },
         { path: "Contacts", element: <ChatContainer /> },
         { path: "contact", element: <Contact /> },
+        { path: "choice", element: <UserChoicePage /> },
         { path: "SignIn/pets", element: <Pets /> },
         { path: "SignIn/clinic", element: <AddClinic/>},
         { path: "SpeciesIdentifier", element: <SpeciesIdentifier/>},

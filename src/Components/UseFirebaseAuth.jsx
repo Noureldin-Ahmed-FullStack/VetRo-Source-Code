@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { MyContext } from './ContextProvider'
 import { auth, provider, app, db } from '../Firebase/firebase';
 import { InsertUserData } from './InsertToUsers';
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,13 +37,14 @@ export function UseFirebaseAuth() {
             userPFP: trig.photoURL,
             pets: null,
             isDoctor: false,
-
+            decided:false,
+            createdAt: serverTimestamp()
           }
           );
         } else if (docSnapshot.exists()) {
           const isDoc = docSnapshot.data().isDoctor
-          if (!isDoc) {
-            toast.success("Welcome!", {
+          if (isDoc) {
+            toast.success(`Welcome Dr. ${docSnapshot.data().userName}!`, {
               position: "top-center",
               autoClose: 5000,
               hideProgressBar: false,
@@ -54,7 +55,7 @@ export function UseFirebaseAuth() {
               theme: "light",
             });
           } else {
-            toast.warn("you already have an accout as a Doctor", {
+            toast.success(`Welcome ${docSnapshot.data().userName}!`, {
               position: "top-center",
               autoClose: 5000,
               hideProgressBar: false,
@@ -70,64 +71,64 @@ export function UseFirebaseAuth() {
     });
   }
 
-  const InsertDocData = () => {
-    console.log(userObj);
-    auth.onAuthStateChanged(async (trig) => {
-      if (trig) {
-        const documentRef = doc(db, 'Users', trig.uid);
-        const docSnapshot = await getDoc(documentRef);
+  // const InsertDocData = () => {
+  //   console.log(userObj);
+  //   auth.onAuthStateChanged(async (trig) => {
+  //     if (trig) {
+  //       const documentRef = doc(db, 'Users', trig.uid);
+  //       const docSnapshot = await getDoc(documentRef);
         
 
-        if (!docSnapshot.exists()) {
-          const userDoc = doc(usersRef, trig.uid);
+  //       if (!docSnapshot.exists()) {
+  //         const userDoc = doc(usersRef, trig.uid);
 
-          setDoc(userDoc, {
-            uid: trig.uid,
-            DoctorName: trig.displayName,
-            availableFrom: null,
-            availableTill: null,
-            clinics:null,
-            phoneNumber: null,
-            email: trig.email,
-            userPFP: trig.photoURL,
-            isDoctor: true
-          })
+  //         setDoc(userDoc, {
+  //           uid: trig.uid,
+  //           DoctorName: trig.displayName,
+  //           availableFrom: null,
+  //           availableTill: null,
+  //           clinics:null,
+  //           phoneNumber: null,
+  //           email: trig.email,
+  //           userPFP: trig.photoURL,
+  //           isDoctor: true
+  //         })
 
-        } else if (docSnapshot.exists()) {
-          const isDoc = docSnapshot.data().isDoctor
+  //       } else if (docSnapshot.exists()) {
+  //         const isDoc = docSnapshot.data().isDoctor
 
-          if (isDoc) {
-            toast.success("Welcome!", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+  //         if (isDoc) {
+  //           toast.success("Welcome!", {
+  //             position: "top-center",
+  //             autoClose: 5000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
 
-          } else {
-            toast.warn("you already have an accout as a user", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+  //         } else {
+  //           toast.warn("you already have an accout as a user", {
+  //             position: "top-center",
+  //             autoClose: 5000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
 
-          }
-          // console.log("you are a user silly!")
-          // toast("you are a user silly!")
+  //         }
+  //         // console.log("you are a user silly!")
+  //         // toast("you are a user silly!")
 
-        }
-      }
-    });
-  }
+  //       }
+  //     }
+  //   });
+  // }
   async function updatePetsFieldForUser(newPetsData) {
     const usersCollection = collection(db, 'Users');
 
@@ -157,32 +158,22 @@ export function UseFirebaseAuth() {
 
 
   /////////////////
-  const signInWithGoogle = async (isDoctor) => {
+  const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(authentic, provider);
       // setUserObj(authentic)
-      if (isDoctor) {
-        InsertDocData()
-      } else {
-        InsertUserData()
-      }
+      await InsertUserData()
+      // if (isDoctor) {
+      //   InsertDocData()
+      // } else {
+      //   InsertUserData()
+      // }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const signInWithGoogleAsDoctor = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(authentic, provider);
-      // setUserObj(authentic)
-
-      InsertDocData()
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const signOutUser = async () => {
     try {
       await signOut(authentic);
@@ -194,5 +185,5 @@ export function UseFirebaseAuth() {
     }
   };
 
-  return { user, signInWithGoogle, signOutUser, updatePetsFieldForUser, signInWithGoogleAsDoctor };
+  return { user, signInWithGoogle, signOutUser, updatePetsFieldForUser };
 }

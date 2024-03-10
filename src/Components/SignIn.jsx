@@ -11,12 +11,12 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 import '../MyCss/SignIn.css'
 import VetImg from '../images/vet.jpg'
 import UserImg from '../images/User.jpg'
-import logo from '../images/Blue Logo.svg'
+import logo from '../images/Blue Logo.png'
 
 
 export default function SignIn() {
     const { userObj, setUserObj } = useContext(MyContext);
-    const { signInWithGoogle, signInWithGoogleAsDoctor } = UseFirebaseAuth();
+    const { signInWithGoogle } = UseFirebaseAuth();
 
 
 
@@ -37,6 +37,7 @@ export default function SignIn() {
                         <div className="logo-container11">
                             <img className="" alt="" src={logo} />
                         </div>
+                        
                         <div className="fatema" >
                             <div>
                                 <h1 className="T1nd">  Are you a veterinarian or a pet owner?</h1>
@@ -44,12 +45,12 @@ export default function SignIn() {
                             </div>
 
                             <div className="total" >
-                                <div onClick={() => signInWithGoogle(false)} className="Selections Selections1 " >
+                                <div onClick={() => signInWithGoogle()} className="Selections Selections1 " >
                                     <img className='circular-image ' src={UserImg} alt="" />
                                      <h3 className="Selections-te">I’m a Pet owner</h3>
                                 </div>
 
-                                <div onClick={() => signInWithGoogle(true)} className="Selections Selections2 " >
+                                <div onClick={() => signInWithGoogle()} className="Selections Selections2 " >
                                     <img className='circular-image' src={VetImg} alt="" />
                                     <h3 className="Selections-te">I’m a Veterinarian</h3>
 

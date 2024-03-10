@@ -12,6 +12,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import Loading from './Loading';
 import UserProfile from './UserProfile';
 import DoctorProfile from './DoctorProfile';
+import UserChoicePage from './UserChoicePage';
 
 export default function ProfileComponent() {
     // const userObj = props.userData;
@@ -89,17 +90,22 @@ export default function ProfileComponent() {
         return <Loading />; // Render loading state while data is being fetched
     }
     if (UserDBData) {
-        if (UserDBData.isDoctor) {
-            return (
+        if (UserDBData.decided) {
+            if (UserDBData.isDoctor) {
+                return (
 
-                <DoctorProfile />
-            )
-        } else {
-            return (
-                <UserProfile />
-            )
+                    <DoctorProfile />
+                )
+            } else {
+                return (
+                    <UserProfile />
+                )
 
+            }
+        }else{
+            return <UserChoicePage />
         }
+
     } else {
         return (
             <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
@@ -113,25 +119,5 @@ export default function ProfileComponent() {
 
         )
     }
-    // return (
-    //     <div style={{ border: "#fff" }} className="card w-100 p-3 my-5">
-    //         <div className='container'>
-    //             <div className="row">
-    //                 {UserDBData ? (
-    //                     UserDBData.isDoctor ? (
-    //                         <DoctorProfile />
-    //                     ) : (
-    //                         <UserProfile />
-    //                     )
-    //                 ) : (
-    //                     <>
-    //                         <Loading />
-    //                     </>
-    //                 )}
 
-    //             </div>
-    //         </div>
-    //     </div>
-
-    // )
 }
