@@ -107,7 +107,7 @@ export default function Profile(props) {
     } catch (error) {
       console.error("Error updating document: ", error);
     }
-    navigate("/Contacts", { state: { RID: RID, reciverPFP: ProfileData?.userPFP, reciverName: ProfileData?.userName } });
+    navigate("/room", { state: { RID: RID, reciverPFP: ProfileData?.userPFP, reciverName: ProfileData?.userName } });
   };
 
   const fetchProfileData = async () => {
