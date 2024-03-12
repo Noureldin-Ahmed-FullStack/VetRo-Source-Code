@@ -5,7 +5,6 @@ import About from './Components/About';
 import Contact from './Components/Contact';
 import Layout from './Components/Layout';
 import Main from './Components/Main';
-import Portfolio from './Components/Portfolio';
 import SignIn from './Components/SignIn';
 import VetRoBot from './Components/VetRoBot';
 import { RouterProvider, createHashRouter } from "react-router-dom"
@@ -23,6 +22,7 @@ import Sidebar from './Components/Sidebar';
 import Contacts from './Components/ChatComponents/Contacts';
 import ChatContainer from './Components/ChatComponents/ChatContainer';
 import UserChoicePage from './Components/UserChoicePage';
+import Login from './Components/LogIn';
 
 
 const useLogging = (componentName) => {
@@ -39,8 +39,8 @@ function App() {
         { path: "/", element: <Main /> },
         { path: "home", element: <Main /> },
         { path: "SignIn", element: <SignIn /> },
+        { path: "Login", element: <Login /> },
         { path: "VetRoBot", element: <VetRoBot /> },
-        { path: "portfolio", element: <Portfolio /> },
         { path: "chat", element: <Chat /> },
         { path: "room", element: <Room /> },
         { path: "about", element: <About /> },

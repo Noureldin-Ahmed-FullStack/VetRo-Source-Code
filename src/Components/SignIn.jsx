@@ -13,10 +13,7 @@ import VetImg from '../images/vet.jpg'
 import UserImg from '../images/User.jpg'
 import logo from '../images/Blue Logo.png'
 import { useNavigate } from 'react-router-dom';
-import Logo from '../images/Blue Logo.png'
-import Facebook from '../images/Facebook_logo.png'
-import Google from '../images/googlelogo.png'
-import SignInPage from './Log In';
+import SignUp from './SignUp';
 
 
  export default function SignUpPage() {
@@ -26,63 +23,14 @@ import SignInPage from './Log In';
 
 
 return (
-  <div className='w-100 d-flex justify-content-center'>
+  <div className='w-100 d-flex justify-content-center my-vh-100'>
                  {userObj ? (
                    <ProfileComponent /> 
                 ) : (
 
+  <SignUp />
   
-  
-   <div className="container justify-content-center align-items-center min-vh-100">
-      <div className='row featured-image mx-auto ' style={{width: "150px" }}>
-              <img src={Logo} className="img-fluid "  alt="" />
-          </div>
-    <h1 className="my-4 text-center">Sign Up</h1>
-    <div className="row justify-content-center">
-      <div className="col-md-6">
-          
-        <form>
-        <div className="input-group mb-3">
-            
-            <input
-              type="email"
-              className="form-control form-control-lg bg-light fs-6"
-              placeholder='Your email'
-              id="email"
-              aria-describedby="emailHelp"
-            />
-          </div>
-
-          <div className='input-group mb-3'>
-              <button className='btn btn-lg btn-primary w-100 fs-6'>
-                  Continue With Email
-              </button>
-          </div>
-          <div id="emailHelp" className="form-text text-center py-3">
-              Or use one of these options.
-            </div>
-            <div className='input-group mb-3'>
-              <div onClick={() => signInWithGoogle()} className="btn btn-lg btn-light w-100 fs-6 ">
-                  <img src={Google}  className='me-2' style={{width: '20px'}}/>
-                  <small>Continue With Gmail</small>
-              </div>
-          </div>
-          <div className='input-group mb-3'>
-              <button className='btn btn-lg btn-primary w-100 fs-6'>
-              <img src={Facebook}  className='me-2' style={{width: '20px'}}/>
-                  Continue With Facebook
-              </button>
-          </div>
-          <div id="emailHelp" className="form-text text-center ">
-              Already have an account ? 
-              <small>
-              <a href='#' className='px-2'>Sign in</a>
-              </small>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div> )}
+   )}
   </div>
   
 );

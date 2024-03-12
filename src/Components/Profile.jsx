@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import * as fa from "@fortawesome/free-solid-svg-icons";
 import { MyContext } from "./ContextProvider";
+import { toast } from "react-toastify";
 
 export default function Profile(props) {
   const location = useLocation();
@@ -26,11 +27,25 @@ export default function Profile(props) {
     /*chat */
   }
   const chatFunc = () => {
+    if (!userObj) {
+      toast.error("you need to log in to use this feature", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      return
+    }
     let RID
     if (ProfileData?.isDoctor) {
-      RID = userObj.uid + " " + ProfileData.uid;
+      RID = userObj.uid + " " + ProfileData?.uid;
     } else {
-      RID = ProfileData.uid + " " + userObj.uid;
+      RID = ProfileData?.uid + " " + userObj.uid;
     }
     console.log(RID);
     goToRoom(RID);
@@ -42,14 +57,14 @@ export default function Profile(props) {
     // updateDoc(userChatDoc, {
     //   ChatRooms: arrayUnion({
     //     ChatRoomID: RID,
-    //     OtherPersonName: ProfileData.userName,
-    //     otherPersonPic: ProfileData.userPFP
+    //     OtherPersonName: ProfileData?.userName,
+    //     otherPersonPic: ProfileData?.userPFP
     //   })
     // })
     try {
       await runTransaction(db, async (transaction) => {
         const userChatDoc = await doc(userChatsRef, userObj.uid);
-        const OtherUserChatDoc = await doc(userChatsRef, ProfileData.uid);
+        const OtherUserChatDoc = await doc(userChatsRef, ProfileData?.uid);
         const userChatDocSnap = await transaction.get(userChatDoc);
         const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
 
@@ -57,20 +72,20 @@ export default function Profile(props) {
           transaction.update(userChatDoc, {
             ChatRooms: arrayUnion({
               ChatRoomID: RID,
-              OtherPersonName: ProfileData.userName,
-              otherPersonPic: ProfileData.userPFP
+              OtherPersonName: ProfileData?.userName,
+              otherPersonPic: ProfileData?.userPFP
             })
           });
         } else {
           transaction.set(userChatDoc, {
             ChatRooms: [{
               ChatRoomID: RID,
-              OtherPersonName: ProfileData.userName,
-              otherPersonPic: ProfileData.userPFP
+              OtherPersonName: ProfileData?.userName,
+              otherPersonPic: ProfileData?.userPFP
             }]
           });
         }
-        
+
         if (OtherUserChatDocSnap.exists()) {
           transaction.update(OtherUserChatDoc, {
             ChatRooms: arrayUnion({
@@ -92,7 +107,7 @@ export default function Profile(props) {
     } catch (error) {
       console.error("Error updating document: ", error);
     }
-    navigate("/Room", { state: { RID: RID, reciverPFP: ProfileData.userPFP, reciverName: ProfileData.userName } });
+    navigate("/Contacts", { state: { RID: RID, reciverPFP: ProfileData?.userPFP, reciverName: ProfileData?.userName } });
   };
 
   const fetchProfileData = async () => {
@@ -100,8 +115,9 @@ export default function Profile(props) {
       const documentRef = doc(db, "Users", location.state.id);
       const docSnapshot = await getDoc(documentRef);
       const userData = docSnapshot.data();
+      console.log(docSnapshot.data());
       setProfileData(userData);
-      if (userData.isDoctor) {
+      if (userData?.isDoctor) {
         fetchClinicData();
       } else {
         fetchPetsData();
@@ -154,10 +170,10 @@ export default function Profile(props) {
                   <div className="row">
                     <div className="">
                       <img
-                        src={ProfileData.userPFP}
+                        src={ProfileData?.userPFP}
                         className="avatar circle-round"
                       />
-                      <h4>Dr.{ProfileData.userName}</h4>
+                      <h4>Dr.{ProfileData?.userName}</h4>
                       <div className="about-info d-flex justify-content-center">
                         {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
                         <div className="text-warning pe-2">
@@ -183,7 +199,7 @@ export default function Profile(props) {
                       <div className=" py-1"></div>
                       <hr className="w-100" />
                       <div>
-                        <h4>Dr.{ProfileData.userName}'s Clinics</h4>
+                        <h4>Dr.{ProfileData?.userName}'s Clinics</h4>
                       </div>
                     </div>
                     {/**chat  */}
