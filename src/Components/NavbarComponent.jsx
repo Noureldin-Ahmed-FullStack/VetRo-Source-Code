@@ -60,7 +60,7 @@ export default function NavbarComponent() {
               <li className='text-center'>
                 <div className="position-relative">
                   {/* <FontAwesomeIcon className='cartIcon' icon={fa.faCartShopping} /> */}
-                  <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><img src={UserDBData?.userPFP} className='Nav-PFP' alt="" /></Link>
+                  <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><img src={UserDBData?.userPFP || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRLRMXynnc7D6-xfdpeaoEUeon2FaU0XtPg&usqp=CAU"} className='Nav-PFP' alt="" /></Link>
                   {/* <span className="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger">
                   {cart?.numOfCartItems? (<>{cart?.numOfCartItems}</>):(<>0</>)}
                                     <span className="visually-hidden">unread messages</span>

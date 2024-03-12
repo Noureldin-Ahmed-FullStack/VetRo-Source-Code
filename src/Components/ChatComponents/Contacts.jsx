@@ -12,6 +12,13 @@ export default function Contacts() {
     const [UserContacts, setUserContacts] = useState()
     const { SelectedContactData, setSelectedContactData } = useContext(MyContext);
     const { userObj, setUserObj } = useContext(MyContext);
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value); // Update search query state
+    };
+    const filteredData = UserContacts?.filter(item =>
+        item.OtherPersonName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
      const getDocumentById = async (collectionName, documentId) => {
         try {
           const docRef = doc(db, collectionName, documentId);
@@ -45,9 +52,14 @@ export default function Contacts() {
 
     }, [])
   return (
-    <div className='w-100 '>
+    <div className='w-100 h-100 d-flex flex-column'>
+              <h2>Messages</h2>
+              <input type="text" value={searchQuery} onChange={handleSearch} className='form-control my-2' placeholder='🔍 search' />
+              <div className=' flex-grow-1 w-100 MyScroller scrollable-container'>
+
+              <div className='w-100 '>
         {
-            UserContacts?.map((Contacts, index) => (
+            filteredData?.map((Contacts, index) => (
                 <div onClick={()=>setSelectedContactData(Contacts)} key={Contacts?.ChatRoomID} className='d-flex justify-content-center '>
                   <div className=" myCard2 p-3 w-100 row  " >
                     <div className='col-3 p-0 d-flex align-items-center'>
@@ -55,12 +67,12 @@ export default function Contacts() {
                     </div>
                     <div className='p-0 col-9'>
                       <div className="h-100">
-                        <h5 className="card-title pb-2">Dr.{Contacts?.OtherPersonName}</h5>
+                        <h5 className="card-title pb-2">Dr. {Contacts?.OtherPersonName}</h5>
                         
                         <div className='d-flex justify-content-between'>
-                        <span className='text-secondary text-truncate'>{Contacts?.LastMessage}</span>
+                        <span className='text-secondary text-truncate'>{Contacts?.LastMsg}</span>
                           <div className=' ps-5'>
-                            <span className='text-secondary'>16:20</span>
+                            <span className='text-secondary'>{Contacts?.LastMsgTimeStamp}</span>
                           </div>
                         </div>
                       </div>
@@ -71,5 +83,8 @@ export default function Contacts() {
               ))
         }
     </div>
+              </div>
+            </div>
+    
   )
 }

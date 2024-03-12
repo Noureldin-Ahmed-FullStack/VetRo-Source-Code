@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, onSnapshot, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
+import { addDoc, collection, doc, onSnapshot, orderBy, query, runTransaction, serverTimestamp, where } from 'firebase/firestore';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { db, getDownloadURL, ref, storage, uploadBytes } from '../Firebase/firebase';
@@ -22,6 +22,7 @@ export default function Chat(props) {
     const [newMessage, setNewMessage] = useState("")
     const [messages, setMessages] = useState([])
     const messagesRef = collection(db, "messages")
+    const userChatsref = collection(db, "UserChats")
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
 
@@ -32,6 +33,28 @@ export default function Chat(props) {
             ChatRoom.current.scrollTop = ChatRoom.current.scrollHeight;
         }
     };
+
+    function formatTimeAgo(timestamp) {
+        const now = new Date();
+        const diff = now - timestamp;
+    
+        // Convert milliseconds to minutes
+        const minutes = Math.floor(diff / (1000 * 60));
+    
+        if (minutes < 1440) { // Less than a day (24 hours)
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            
+            if (hours > 0) {
+                return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+            } else {
+                return `${mins} ${mins === 1 ? 'minute' : 'minutes'} ago`;
+            }
+        } else {
+            // More than a day, return the date string
+            return timestamp.toDateString();
+        }
+    }
 
     useEffect(() => {
         let delayedAction;
@@ -67,9 +90,8 @@ export default function Chat(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const userChatDocRef = doc(userChatsref, userObj.uid);
 
-        if (newMessage === "") return
-        console.log(userObj);
         await addDoc(messagesRef, {
             text: newMessage,
             createdAt: serverTimestamp(),
@@ -79,9 +101,53 @@ export default function Chat(props) {
             IsImage: false,
             room,
         })
+        if (newMessage === "") return
+        await runTransaction(db, async (transaction) => {
+            const userChatDocSnap = await transaction.get(userChatDocRef);
+            // const newMessageData = {
+            //     text: newMessage,
+            //     createdAt: serverTimestamp(),
+            //     senderName: userObj.displayName,
+            //     senderId: userObj.uid,
+            //     SenderPFP: UserDBData.userPFP,
+            //     IsImage: false,
+            //     room,
+            // };
+            // transaction.add(messagesRef, newMessageData)
+            if (userChatDocSnap.exists()) {
+                const chatRooms = userChatDocSnap.data().ChatRooms;
+    
+                // Find the index of the array item with ID
+                const index = chatRooms.findIndex(r => r.ChatRoomID === room);
+                const timestamp = new Date();
+                if (index !== -1) {
+                    // Edit the array item with ID
+                    chatRooms[index] = {
+                        ...chatRooms[index],
+                        // Modify the properties as needed
+                        LastMsg: "you: "+ newMessage,
+                        LastMsgTimeStamp: formatTimeAgo(timestamp)
+                    };
+    
+                    // Update the document within the transaction
+                    transaction.update(userChatDocRef, {
+                        ChatRooms: chatRooms
+                    });
+                }
+            }
+        })
+        // await addDoc(messagesRef, {
+        //     text: newMessage,
+        //     createdAt: serverTimestamp(),
+        //     senderName: userObj.displayName,
+        //     senderId: userObj.uid,
+        //     SenderPFP: UserDBData.userPFP,
+        //     IsImage: false,
+        //     room,
+        // })
         setNewMessage("")
         scrollToBottom();
-    };
+    }
 
     const handleImageUpload = async (e) => {
 

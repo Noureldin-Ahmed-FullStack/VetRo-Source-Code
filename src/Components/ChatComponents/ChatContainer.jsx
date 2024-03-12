@@ -9,22 +9,21 @@ export default function ChatContainer() {
 
   const [ViewContacts, setViewContacts] = useState(true)
   const { SelectedContactData, setSelectedContactData } = useContext(MyContext);
+  const { userObj, setUserObj } = useContext(MyContext);
 
   const { currentDevice, setCurrentDevice } = useContext(MyContext);
-
+  if (!userObj) {
+    return (
+      <h1>log in ya negm</h1> //Make a log in warning please
+    )
+  }
   if (currentDevice == "Other") {
     return (
       <div className='p-3 vh100 '>
         <div className='row h-100'>
           <div className='col-4 bg-light-subtle'>
-            <div className='w-100 h-100 d-flex flex-column'>
-              <h2>Messages</h2>
-              <input type="search" className='form-control my-2' placeholder='🔍 search' />
-              <div className=' flex-grow-1 w-100 MyScroller scrollable-container'>
-
-              <Contacts />
-              </div>
-            </div>
+            
+            <Contacts />
 
           </div>
           <div className='col-8  text-secondary-emphasis'>
