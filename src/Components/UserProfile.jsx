@@ -133,7 +133,7 @@ export default function UserProfile() {
             Breed: event.target[3].value,
             Type: event.target[4].value
         };
-        
+
 
         if (imageUrl) {
             updatedPetInfo.image = imageUrl
@@ -152,8 +152,7 @@ export default function UserProfile() {
     return (
 
 
-        <div className="card w-100 p-3 mt-2 myBottomMargin">
-            <div className='container'>
+            <div className='container mt-4'>
                 <div className="row">
                     <>
                         {isOpen ? (
@@ -162,7 +161,7 @@ export default function UserProfile() {
                                     <div className="row text-center">
                                         <div className="col-12 d-flex justify-content-between">
                                             <p className='px-3'></p>
-                                            <h2 className='py-3'style={{color:'#71aef3'}}><b>Edit Info</b></h2>
+                                            <h2 className='py-3' style={{ color: '#71aef3' }}><b>Edit Info</b></h2>
                                             <div className='d-flex justify-content-end align-items-center'>
                                                 <FontAwesomeIcon onClick={() => setIsOpen(false)} className='myClose' icon={fa.faCircleXmark} />
                                             </div>
@@ -176,7 +175,7 @@ export default function UserProfile() {
                                         <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                                     </div>
                                     <form onSubmit={HandleInfoUpdate}>
-                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial',color:'#71aef3'  }}>
+                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial', color: '#71aef3' }}>
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><span className=''>Name:</span></div>
                                                 <div className='col-sm-10'><input className='form-control' type='text' defaultValue={UserDBData.userName} /></div>
@@ -190,7 +189,7 @@ export default function UserProfile() {
                                                 <div className='col-sm-10'><textarea className='form-control' defaultValue={UserDBData.About} style={{ resize: 'none' }} rows='4' /></div>
                                             </div>
                                             <div className='d-flex justify-content-center'>
-                                                <button type='submit' className="btn  w-25 py-3 m-3"style={{background:'#1B85F3' , color:'white'}}>submit</button>
+                                                <button type='submit' className="btn  w-25 py-3 m-3" style={{ background: '#1B85F3', color: 'white' }}>submit</button>
                                             </div>
                                         </div>
 
@@ -211,23 +210,23 @@ export default function UserProfile() {
                                     <div className="row text-center">
                                         <div className="col-12 d-flex justify-content-between">
                                             <p className='px-3'></p>
-                                            <h2 className='py-3' style={{color:'#71aef3'}}><b>Edit Pet Info</b></h2>
+                                            <h2 className='py-3' style={{ color: '#71aef3' }}><b>Edit Pet Info</b></h2>
                                             <div className='d-flex justify-content-end align-items-center'>
-                                                <FontAwesomeIcon onClick={() => {setOpen(false);setImageUrl(null)}} className='myClose' icon={fa.faCircleXmark} />
+                                                <FontAwesomeIcon onClick={() => { setOpen(false); setImageUrl(null) }} className='myClose' icon={fa.faCircleXmark} />
                                             </div>
                                         </div>
                                         <hr />
                                     </div>
                                     <div className='d-flex w-100 justify-content-center'>
-                                            <label htmlFor="imgUpload">
-                                                <img src={imageUrl || PetsData[SelectedPet]?.image} className='avatar-sm circle-round pointer' alt="" />
-                                            </label>
-                                            <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
-                                        </div>
+                                        <label htmlFor="imgUpload">
+                                            <img src={imageUrl || PetsData[SelectedPet]?.image} className='avatar-sm circle-round pointer' alt="" />
+                                        </label>
+                                        <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
+                                    </div>
                                     <form onSubmit={handlePetUpdate}>
 
-                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial' ,color:'#71aef3'}}>
-                                            
+                                        <div className='container' style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial', color: '#71aef3' }}>
+
                                             <div className='row py-2 align-items-center'>
                                                 <div className='col-sm-2'><label htmlFor='name'>Name:</label></div>
                                                 <div className='col-sm-10'><input className='form-control' type='text' defaultValue={PetsData[SelectedPet]?.Name} /></div>
@@ -255,7 +254,7 @@ export default function UserProfile() {
 
                                             </div>
                                             <div className='d-flex justify-content-center d-grid'>
-                                                <button type='submit' className="  btn px-5 py-2 m-3" style={{background:'#1B85F3' , color:'white'}}>submit</button>
+                                                <button type='submit' className="  btn px-5 py-2 m-3" style={{ background: '#1B85F3', color: 'white' }}>submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -325,45 +324,50 @@ export default function UserProfile() {
                                 <div className="card w-100 bg-white rounded shadow pt-3 mt-3">
                                     <div className='text-center'><h3 >Pet Profile</h3></div>
                                     <div className='d-flex justify-content-center'>
-                                        <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
-                                            <div className='col-md-5 align-items-center d-flex'>
-                                                <div className=''>
-                                                    <img src={PetsData[SelectedPet]?.image} className="pet-pic2" />
-                                                </div>
-                                                <div className=' ps-3'>
-                                                    <div className=" align-items-center d-flex" >
-                                                        <p className='mb-0 me-3'>{PetsData[SelectedPet]?.Name}</p>
-                                                        <FontAwesomeIcon onClick={() => EditPetData(PetsData[SelectedPet]?.PetID)} className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                        {PetsData.length != 0 ? (
+                                            <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
+                                                <div className='col-md-5 align-items-center d-flex'>
+                                                    <div className=''>
+                                                        <img src={PetsData[SelectedPet]?.image} className="pet-pic2" />
                                                     </div>
-                                                    {PetsData ? (
-                                                        <p>{PetsData[SelectedPet]?.Type}: {PetsData[SelectedPet]?.Breed}</p>
-                                                    ) : (<></>)
-                                                    }
+                                                    <div className=' ps-3'>
+                                                        <div className=" align-items-center d-flex" >
+                                                            <p className='mb-0 me-3'>{PetsData[SelectedPet]?.Name}</p>
+                                                            <FontAwesomeIcon onClick={() => EditPetData(PetsData[SelectedPet]?.PetID)} className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                                        </div>
+                                                        {PetsData ? (
+                                                            <p>{PetsData[SelectedPet]?.Type}: {PetsData[SelectedPet]?.Breed}</p>
+                                                        ) : (<></>)
+                                                        }
+                                                    </div>
                                                 </div>
+                                                <div className='col-md-7 '>
+                                                    <div className='w-100 MyLeftBorder'>
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <h6 className='mb-0 text-secondary'>gender</h6>
+                                                            <span className='me-5 title'>{PetsData[SelectedPet]?.Gender}</span>
+                                                        </div>
+                                                        <hr className='my-2' />
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <h6 className='mb-0 text-secondary'>age</h6>
+                                                            <span className='me-5 title'>{PetsData[SelectedPet]?.Age}</span>
+                                                        </div>
+                                                        <hr className='my-2' />
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <h6 className='mb-0 text-secondary'>breed</h6>
+                                                            <span className='me-5 title'>{PetsData[SelectedPet]?.Breed}</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+
                                             </div>
-                                            <div className='col-md-7 '>
-                                                <div className='w-100 MyLeftBorder'>
-                                                    <div className="d-flex align-items-center justify-content-between">
-                                                        <h6 className='mb-0 text-secondary'>gender</h6>
-                                                        <span className='me-5 title'>{PetsData[SelectedPet]?.Gender}</span>
-                                                    </div>
-                                                    <hr className='my-2' />
-                                                    <div className="d-flex align-items-center justify-content-between">
-                                                        <h6 className='mb-0 text-secondary'>age</h6>
-                                                        <span className='me-5 title'>{PetsData[SelectedPet]?.Age}</span>
-                                                    </div>
-                                                    <hr className='my-2' />
-                                                    <div className="d-flex align-items-center justify-content-between">
-                                                        <h6 className='mb-0 text-secondary'>breed</h6>
-                                                        <span className='me-5 title'>{PetsData[SelectedPet]?.Breed}</span>
-                                                    </div>
 
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
+                                        ) : (
+                                            <>no pets? <Link className="ms-1" to="Pets">add some</Link></>
+                                        )}
                                     </div>
 
 
@@ -374,6 +378,5 @@ export default function UserProfile() {
 
                 </div>
             </div>
-        </div>
     )
 }

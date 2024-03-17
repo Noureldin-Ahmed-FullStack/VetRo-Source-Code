@@ -236,6 +236,7 @@ export default function Profile(props) {
                     <h3>Clinic Profile</h3>
                   </div>
                   <div className="d-flex justify-content-center">
+                    {clinicData.length != 0? (
                     <div className="w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center">
                       <div className="col-md-5 align-items-center d-flex">
                         <div className="">
@@ -295,6 +296,10 @@ export default function Profile(props) {
                         </div>
                       </div>
                     </div>
+
+                    ):(
+                      <>This doctor has no clinics</>
+                    )}
                   </div>
                 </div>
               </div>
@@ -366,6 +371,7 @@ export default function Profile(props) {
                       <h3>Pet Profile</h3>
                     </div>
                     <div className="d-flex justify-content-center">
+                      {PetsData.length !=0? (
                       <div className="w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center">
                         <div className="col-md-5 align-items-center d-flex">
                           <div className="">
@@ -412,6 +418,9 @@ export default function Profile(props) {
                           </div>
                         </div>
                       </div>
+                      ):(
+                        <>This user has no pets</>
+                      )}
                     </div>
                   </div>
                 </div>
