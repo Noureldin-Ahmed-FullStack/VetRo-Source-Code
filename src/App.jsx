@@ -61,7 +61,7 @@ function App() {
   return (
     <MyContextProvider>
       <ToastContainer />
-      <div className='myWidth '>
+      <div className='App-header '>
         <RouterProvider router={Routes} />
       </div>
     </MyContextProvider>

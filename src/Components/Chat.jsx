@@ -34,27 +34,27 @@ export default function Chat(props) {
         }
     };
 
-    function formatTimeAgo(timestamp) {
-        const now = new Date();
-        const diff = now - timestamp;
+    // function formatTimeAgo(timestamp) {
+    //     const now = new Date();
+    //     const diff = now - timestamp;
     
-        // Convert milliseconds to minutes
-        const minutes = Math.floor(diff / (1000 * 60));
+    //     // Convert milliseconds to minutes
+    //     const minutes = Math.floor(diff / (1000 * 60));
     
-        if (minutes < 1440) { // Less than a day (24 hours)
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
+    //     if (minutes < 1440) { // Less than a day (24 hours)
+    //         const hours = Math.floor(minutes / 60);
+    //         const mins = minutes % 60;
             
-            if (hours > 0) {
-                return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-            } else {
-                return `${mins} ${mins === 1 ? 'minute' : 'minutes'} ago`;
-            }
-        } else {
-            // More than a day, return the date string
-            return timestamp.toDateString();
-        }
-    }
+    //         if (hours > 0) {
+    //             return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+    //         } else {
+    //             return `${mins} ${mins === 1 ? 'minute' : 'minutes'} ago`;
+    //         }
+    //     } else {
+    //         // More than a day, return the date string
+    //         return timestamp.toDateString();
+    //     }
+    // }
 
     useEffect(() => {
         let delayedAction;
@@ -126,7 +126,7 @@ export default function Chat(props) {
                         ...chatRooms[index],
                         // Modify the properties as needed
                         LastMsg: "you: "+ newMessage,
-                        LastMsgTimeStamp: formatTimeAgo(timestamp)
+                        LastMsgTimeStamp: timestamp.toString()
                     };
     
                     // Update the document within the transaction

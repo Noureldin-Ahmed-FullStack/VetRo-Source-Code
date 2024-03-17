@@ -90,9 +90,9 @@ export default function Postt() {
 
   return (
     <>
-<div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
+<div className='text-black justify-content-center align-items-center MainSection text-center  mt-5'>
 
-<div className='container'>
+<div className='container-fluid'>
 
     <h2 className='postss'> <b> Regular Posts</b> </h2>
         {posts.map((post) => (
@@ -101,7 +101,7 @@ export default function Postt() {
                     <div className="d-flex justify-content-between align-items-center">
                         <div onClick={() => goToProfile(post.senderId)} className="d-flex pointer justify-content-between align-items-center">
                             <div className="me-2">
-                                <img className="rounded-circle" width={45} src={post.SenderPFP} />
+                                <img className="rounded-circle postPfp" width={45} src={post.SenderPFP} />
                             </div>
                             <div className="ms-2">
                                 <div className="h5 m-0 namecolor">{post.senderName}</div>

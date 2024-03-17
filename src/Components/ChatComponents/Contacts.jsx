@@ -9,6 +9,31 @@ import '../../MyCss/Chat.css'
 export default function Contacts() {
      // const UserChatsRef = collection(db, "UserChats")
      
+    function formatTimeAgo(timestamp) {
+      const test = new Date(timestamp);
+      const now = new Date();
+      const diff = now - test;
+  
+      // Convert milliseconds to minutes
+      const minutes = Math.floor(diff / (1000 * 60));
+  
+      if (minutes < 1440) { // Less than a day (24 hours)
+          const hours = Math.floor(minutes / 60);
+          const mins = minutes % 60;
+          
+          if (hours > 0) {
+              return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+          } else {
+              return `${mins} ${mins === 1 ? 'minute' : 'minutes'} ago`;
+          }
+      } else {
+          // More than a day, return the date string
+          if (test.toString() == "Invalid Date") {
+            return null
+          }
+          return test.toString();
+      }
+  }
     const [UserContacts, setUserContacts] = useState()
     const { SelectedContactData, setSelectedContactData } = useContext(MyContext);
     const { userObj, setUserObj } = useContext(MyContext);
@@ -72,7 +97,7 @@ export default function Contacts() {
                         <div className='d-flex justify-content-between'>
                         <span className='text-secondary text-truncate'>{Contacts?.LastMsg}</span>
                           <div className=' ps-5'>
-                            <span className='text-secondary'>{Contacts?.LastMsgTimeStamp}</span>
+                            <span className='text-secondary'>{formatTimeAgo(Contacts?.LastMsgTimeStamp)}</span>
                           </div>
                         </div>
                       </div>

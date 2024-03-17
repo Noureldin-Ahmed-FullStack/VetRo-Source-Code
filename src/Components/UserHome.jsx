@@ -131,7 +131,7 @@ export default function UserHome() {
       </div>
       <div className='d-flex mt-4 justify-content-center'>
         <form className=' w-75 bg-light MyShadow rounded-5'>
-          <div className="form-group ppp10  ">
+          <div className="form-group p-3  ">
             <h5 className='text-center'>Create Post</h5>
             <input type="email" onClick={() => setIsOpen(true)} className="form-control inpo" placeholder='write here' />
           </div>

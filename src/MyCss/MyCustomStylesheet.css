@@ -596,7 +596,11 @@
   animation: heartbeat 1s ease-in-out infinite;
   /* Adjust duration for speed */
 }
-
+.postPfp{
+  object-fit: cover;
+  height: 3rem;
+  width: 3rem;
+}
 .myOverlay {
   position: fixed;
   top: 0;

@@ -21,17 +21,19 @@ import SignUp from './SignUp';
     const { signInWithGoogle } = UseFirebaseAuth();
     const navigate = useNavigate();
 
+if (userObj) {
+  return <ProfileComponent /> 
+}
+return (<SignUp />
+  // <div className=''>
+  //                {userObj ? (
+  //                  <ProfileComponent /> 
+  //               ) : (
 
-return (
-  <div className='w-100 d-flex justify-content-center my-vh-100'>
-                 {userObj ? (
-                   <ProfileComponent /> 
-                ) : (
-
-  <SignUp />
+  // <SignUp />
   
-   )}
-  </div>
+  //  )}
+  // </div>
   
 );
 };

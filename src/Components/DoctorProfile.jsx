@@ -127,8 +127,7 @@ export default function DoctorProfile() {
 
     return (
 
-        <div className="card w-100 p-3 mt-2 myBottomMargin">
-            <div className='container'>
+            <div className='container mt-3'>
                 <div className="row">
                     {isOpen ? (
                         <div className='myOverlay d-flex justify-content-center align-items-center'>
@@ -304,10 +303,11 @@ export default function DoctorProfile() {
                                 </div>
 
                             </div>
-                            <div className="card w-100 bg-white rounded shadow pt-3 mt-3">
+                            <div className="card w-100 bg-white rounded shadow pt-3 my-3">
                                 <div className='text-center'><h3 >Clinic Profile</h3></div>
                                 <div className='d-flex justify-content-center'>
-                                    <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
+                                    {clinicData.length != 0?(
+                                        <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
                                         <div className='col-md-5 align-items-center d-flex'>
                                             <div className=''>
                                                 <img src={clinicData[SelectedClinic]?.image} className="pet-pic2" />
@@ -349,6 +349,11 @@ export default function DoctorProfile() {
 
 
                                     </div>
+                                    ):(
+                                        <>no clinics? <Link className="ms-1" to="clinic">add one</Link></>
+                                        
+                                    )}
+                                    
                                 </div>
 
 
@@ -358,7 +363,6 @@ export default function DoctorProfile() {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
 // samy was here

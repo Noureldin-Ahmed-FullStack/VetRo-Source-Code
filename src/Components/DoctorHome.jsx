@@ -11,27 +11,27 @@ import Postt from './Postt';
 import Booking from './Booking';
 import UrgentPost from './UrgentPost';
 export default function DoctorHome() {
-    const { UserDBData, setUserDBData } = useContext(MyContext);
-    const [posts, setPosts] = useState([])
-    const { currentDevice, setCurrentDevice } = useContext(MyContext);
-  
-///
+  const { UserDBData, setUserDBData } = useContext(MyContext);
+  const [posts, setPosts] = useState([])
+  const { currentDevice, setCurrentDevice } = useContext(MyContext);
+
+  ///
 
 
-const [Condition , setCondition]=useState(0)
-
-
-
+  const [Condition, setCondition] = useState(0)
 
 
 
 
 
-    /**** */
 
-    return (
-<>
-<div className='w-100 p1 '>
+
+
+  /**** */
+
+  return (
+    <>
+      <div className='w-100 p1 '>
         <div className=''>
           <div className=''>
             <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
@@ -55,39 +55,39 @@ const [Condition , setCondition]=useState(0)
 
       <div className='container py-5 text-center ' >
         <div className='row'>
-        <div className='col-lg-3 col-3 col-md-3 '>
-          <FontAwesomeIcon  onClick={() => setCondition(1)} className='buttbar' icon={fa.faSignsPost} style={{fontSize:'40px'}} />
-        </div>
-        <div className='col-lg-3 col-3 col-md-3'>
-        <FontAwesomeIcon  onClick={() => setCondition(2)} className='buttbar' icon={fa.faCalendarCheck} style={{fontSize:'40px'}} />
-        </div>
-        <div className='col-lg-3 col-3 col-md-3'>
-        <FontAwesomeIcon  onClick={() => setCondition(3)} className='buttbar' icon={fa.faBell} style={{fontSize:'40px'}} />
-        </div>
-        <div className='col-lg-3 col-3 col-md-3'>
-        <FontAwesomeIcon  onClick={() => setCondition(0)} className='close' icon={fa.faXmark} style={{fontSize:'50px', marginTop:'16px',color:'red'}} />
-        </div>
+          <div className='col-lg-3 col-3 col-md-3 '>
+            <FontAwesomeIcon onClick={() => setCondition(1)} className='buttbar' icon={fa.faSignsPost} style={{ fontSize: '40px' }} />
+          </div>
+          <div className='col-lg-3 col-3 col-md-3'>
+            <FontAwesomeIcon onClick={() => setCondition(2)} className='buttbar' icon={fa.faCalendarCheck} style={{ fontSize: '40px' }} />
+          </div>
+          <div className='col-lg-3 col-3 col-md-3'>
+            <FontAwesomeIcon onClick={() => setCondition(3)} className='buttbar' icon={fa.faBell} style={{ fontSize: '40px' }} />
+          </div>
+          <div className='col-lg-3 col-3 col-md-3'>
+            <FontAwesomeIcon onClick={() => setCondition(0)} className='close' icon={fa.faXmark} style={{ fontSize: '50px', marginTop: '16px', color: 'red' }} />
+          </div>
         </div>
       </div>
 
       <div>
-      {Condition === 1 && <Postt />}
-      {Condition === 2 && <Booking />}
-      {Condition === 3 && <UrgentPost/>}
+        {Condition === 1 && <Postt />}
+        {Condition === 2 && <Booking />}
+        {Condition === 3 && <UrgentPost />}
       </div>
-  
-<div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
-<div className='container'>
-<div className="starArea d-flex justify-content-center my-3 align-items-center ">
-        <div className="whiteLine"></div>
-        <div className="whiteLine"></div>
-    </div>
-    <p>Your Expert Veterinary assitant</p>
-</div>
-</div>
 
-</>
+      <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
+        <div className='container'>
+          <div className="starArea d-flex justify-content-center my-3 align-items-center ">
+            <div className="whiteLine"></div>
+            <div className="whiteLine"></div>
+          </div>
+          <p>Your Expert Veterinary assitant</p>
+        </div>
+      </div>
 
-    )
+    </>
+
+  )
 }
 
