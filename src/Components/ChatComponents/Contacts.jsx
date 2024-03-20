@@ -79,8 +79,11 @@ export default function Contacts() {
   return (
     <div className='w-100 h-100 d-flex flex-column'>
               <h2>Messages</h2>
-              <input type="text" value={searchQuery} onChange={handleSearch} className='form-control my-2' placeholder='🔍 search' />
-              <div className=' flex-grow-1 w-100 MyScroller scrollable-container'>
+              <div className='position-relative p-1 rounded-1 searchBG d-flex align-items-center my-2'>
+              <FontAwesomeIcon className='px-1' icon={fa.faMagnifyingGlass} />
+              <input type="text" value={searchQuery} onChange={handleSearch} className='w-100  myInput' placeholder='   search' />
+              </div>
+              <div className=' w-100 MyScroller scrollable-container'>
 
               <div className='w-100 '>
         {

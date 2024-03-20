@@ -1,6 +1,10 @@
 .MyScroller{
     overflow-y: scroll;
-    height: 100px;
+    height: 100%
+}
+.max1{
+min-height: 100%;
+max-height: 100%;
 }
 .MyHeight{
     /* min-height: calc(100vh - 12rem); */
@@ -26,4 +30,32 @@
 .scrollable-container::-webkit-scrollbar-track {
     background-color: #f0f0f0; /* Color of the track */
     border-radius: 4px; /* Rounded corners */
+}
+
+.input-container {
+    position: relative;
+    /* width: 300px; Adjust width as needed */
+}
+
+.input-icon {
+    position: absolute;
+    left: 5px; /* Adjust position as needed */
+    top: 50%;
+    transform: translateY(-50%);
+}
+.myInput{
+    padding-left: 10px;
+    background-color: transparent;
+    border: 0px;
+    outline: 0px;
+    box-shadow: 0px;
+    appearance: none;
+}
+.myInput:active{
+    border: 0px;
+    outline: 0px;
+    box-shadow: 0px;
+}
+.searchBG{
+    background-color: #f0f2f5;
 }

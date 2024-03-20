@@ -20,8 +20,8 @@ export default function ChatContainer() {
   if (currentDevice == "Other") {
     return (
       <div className='p-3 vh100 '>
-        <div className='row h-100'>
-          <div className='col-4 bg-light-subtle'>
+        <div className='row max1'>
+          <div className='col-4 max1 bg-light-subtle'>
             
             <Contacts />
 
