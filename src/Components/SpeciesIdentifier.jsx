@@ -79,7 +79,18 @@ export default function SpeciesIdentifier() {
                 throw error;
             });
     }
-
+const warnUser = ()=>{
+    toast.warning("You need to upload an image first", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+}
     // Example usage
     function call() {
         identifyImage(imageUrl)
@@ -113,9 +124,9 @@ export default function SpeciesIdentifier() {
                 <div className='other'>
                     <h2 className='bold container mt-1 mb-3'>Upload a picture and press Identify to show the result!</h2>
                     {Result == "Try it!" ? (
-                        <h3 className='pt-1 mb-3'>{Result}</h3>
+                        <h3 className='pt-1 mb-5'>{Result}</h3>
                     ) : (
-                        <h3 className='pt-1 mb-3 colorful'>{Result}</h3>
+                        <h3 className='pt-1 mb-5 colorful'>{Result}</h3>
                     )}
                 </div>
                 <input ref={inputRef} accept="image/*" capture="environment" className='d-none' type="file" onChange={handleImageChange} />
@@ -142,7 +153,11 @@ export default function SpeciesIdentifier() {
                     </div>
                 ) : (
                     <div className='py-3'>
-                        {imageUrl == "https://iili.io/JEijWG4.png" ? (<button className='btn btn-orange' disabled={true} onClick={call}>Identify!</button>):(
+                        {imageUrl == "https://iili.io/JEijWG4.png" ? (
+                            <div onClick={warnUser}>
+                                <button className='btn btn-orange' title='hey' disabled={true} onClick={call}>Identify!</button>
+                            </div>
+                        ):(
                             <button className='btn btn-orange' onClick={call}>Identify!</button>
                         )}
                     </div >

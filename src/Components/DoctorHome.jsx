@@ -53,7 +53,7 @@ export default function DoctorHome() {
         </div>
       </div>
 
-      <div className='container py-5 text-center ' >
+      {/* <div className='container py-5 text-center ' >
         <div className='row'>
           <div className='col-lg-3 col-3 col-md-3 '>
             <FontAwesomeIcon onClick={() => setCondition(1)} className='buttbar' icon={fa.faSignsPost} style={{ fontSize: '40px' }} />
@@ -68,7 +68,44 @@ export default function DoctorHome() {
             <FontAwesomeIcon onClick={() => setCondition(0)} className='close' icon={fa.faXmark} style={{ fontSize: '50px', marginTop: '16px', color: 'red' }} />
           </div>
         </div>
-      </div>
+      </div> */}
+      {Condition == 0 ? (
+
+        <div className="container mt-3 text-center">
+          <div className="row g-3">
+            <div className="col-6">
+              <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
+                <FontAwesomeIcon onClick={() => setCondition(1)} className='sqIcon' icon={fa.faSignsPost}  />
+                Posts
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
+                <FontAwesomeIcon onClick={() => setCondition(2)} className='sqIcon' icon={fa.faCalendarCheck}  />
+                Appointment
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
+                <FontAwesomeIcon onClick={() => setCondition(3)} className='sqIcon' icon={fa.faBell}  />
+                Urgent posts
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
+                <FontAwesomeIcon onClick={() => setCondition(0)} className='sqIcon' icon={fa.faUserDoctor}  />
+                Profile
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className='container'>
+          <FontAwesomeIcon onClick={() => setCondition(0)} className='pointer arrowIcon' icon={fa.faArrowLeft}  />
+          <hr />
+        </div>
+      )}
+
 
       <div>
         {Condition === 1 && <Postt />}
