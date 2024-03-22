@@ -73,27 +73,27 @@ export default function DoctorHome() {
 
         <div className="container mt-3 text-center">
           <div className="row g-3">
-            <div className="col-6">
+            <div className="col-6" onClick={() => setCondition(1)}>
               <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon onClick={() => setCondition(1)} className='sqIcon' icon={fa.faSignsPost}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faSignsPost}  />
                 Posts
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-6" onClick={() => setCondition(2)}>
               <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon onClick={() => setCondition(2)} className='sqIcon' icon={fa.faCalendarCheck}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faCalendarCheck}  />
                 Appointment
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-6" onClick={() => setCondition(3)}>
               <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon onClick={() => setCondition(3)} className='sqIcon' icon={fa.faBell}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faBell}  />
                 Urgent posts
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-6" onClick={() => setCondition(0)}>
               <div className="p-4 py-5 MyDropshadow squareButtons pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon onClick={() => setCondition(0)} className='sqIcon' icon={fa.faUserDoctor}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faUserDoctor}  />
                 Profile
               </div>
             </div>

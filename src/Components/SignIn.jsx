@@ -24,17 +24,11 @@ import SignUp from './SignUp';
 if (userObj) {
   return <ProfileComponent /> 
 }
-return (<SignUp />
-  // <div className=''>
-  //                {userObj ? (
-  //                  <ProfileComponent /> 
-  //               ) : (
+return (
+  <div className='take-up d-flex align-items-center'>
 
-  // <SignUp />
-  
-  //  )}
-  // </div>
-  
+<SignUp /> 
+  </div>
 );
 };
 
