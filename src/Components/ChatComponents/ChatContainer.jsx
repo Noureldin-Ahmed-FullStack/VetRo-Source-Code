@@ -4,6 +4,8 @@ import { db } from '../../Firebase/firebase'
 import { MyContext } from '../ContextProvider';
 import Contacts from './Contacts';
 import Chat from '../Chat';
+import SignIn from '../SignIn';
+import { toast } from 'react-toastify';
 
 export default function ChatContainer() {
 
@@ -13,9 +15,17 @@ export default function ChatContainer() {
 
   const { currentDevice, setCurrentDevice } = useContext(MyContext);
   if (!userObj) {
-    return (
-      <h1>log in ya negm</h1> //Make a log in warning please
-    )
+    toast.error(`You need to LogIn first`, {
+      position: "top-center",
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    return(<SignIn/>)
   }
   if (currentDevice == "Other") {
     return (

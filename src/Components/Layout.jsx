@@ -16,6 +16,7 @@ export default function Layout() {
   const { currentDevice, setCurrentDevice } = useContext(MyContext);
   useEffect(() => {
     console.log("Layout component Updated");
+    sessionStorage.clear();
   }, []);
 
   return (
