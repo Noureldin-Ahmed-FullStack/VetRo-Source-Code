@@ -217,11 +217,11 @@ export default function DoctorProfile() {
                                                 </div>
                                                 <div className="row py-2 align-items-center">
                                                     <div className="col-sm-4"><label htmlFor="availableFrom">availableFrom:</label></div>
-                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableFrom} type="text" /></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableFrom} type="time" /></div>
                                                 </div>
                                                 <div className="row py-2 align-items-center">
                                                     <div className="col-sm-4"><label htmlFor="availableTo"> availableTo:</label></div>
-                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableTo} type="text" /></div>
+                                                    <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableTo} type="time" /></div>
                                                 </div>
 
                                                 <div className='d-flex justify-content-center'>
