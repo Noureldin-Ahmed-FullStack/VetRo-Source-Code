@@ -104,23 +104,32 @@ export default function Booking() {
 
     return (
         <>
-            <div className='pp4'>incomming Pet Owner Reservations</div>
+            <div className='pp4'>Incoming Pet Owner Reservations</div>
             <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
 
                 <div className='container'>
-                    <OwlCarousel className='owl-theme' responsive={responsive} nav>
+                    {/* <OwlCarousel className='owl-theme' responsive={responsive} nav> */}
                         {bookings?.map((Appointment, index) => (
-                            <div className='container' key={index}>
-                                <div className="card cardsize">
+                            <div className='container mb-2' key={index}>
+                            <div className='row justify-content-center'>
+                                <div className="card cardsize col-lg-8 col-md-10 col-sm-12">
                                     <div className="card-body">
-                                        <div className='starRatepp7 align-items-center'>
-                                            <img src={Appointment.UserData?.userPFP} alt="nnn" className="circle-round-profile" />
-                                            <div className="ms-2 w-100">
-                                                <div className="h4 m-0" style={{ color: '#39434F' }}>{Appointment.UserData?.userName}</div>
-                                                <div className="m-0 COLorli">{Appointment.UserData?.email}</div>
-                                                <div className="m-0 COLorli">{Appointment?.phoneNumber}</div>
+                                        <div className='starRatepp7 d-flex flex-column flex-sm-row'>
+                                            <div>
+                                            <img src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0" style={{ maxWidth: '100%', height: 'auto', maxHeight: '160px' }} />
                                             </div>
-                                            <div className=''><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
+                                            <div>
+                                                <div className='row'>
+                                                    <div className="h4 mb-1 text-start">{Appointment.UserData?.userName}</div>
+                                                </div>
+                                                <div className='row '>
+                                                    <div className="mb-1 COLorli text-start">{Appointment.UserData?.email}</div>
+                                                </div>
+                                                <div className='row'>
+                                                    <div className="mb-1 COLorli text-start">{Appointment?.phoneNumber}</div>
+                                                </div>
+                                            </div>
+                                            <div className='ms-auto mt-2 mt-sm-0'><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
                                         </div>
                                         <hr />
                                         <div className='starRated COLorP'>
@@ -128,19 +137,20 @@ export default function Booking() {
                                             <p>{GetTime(Appointment?.Appointment)}</p>
                                         </div>
                                         <hr />
-                                        <div className='w-100 d-flex justify-content-evenly mt-2'>
-                                            <button className=" buttonDetails1">
-                                                <FontAwesomeIcon className='pe-2' icon={fa.faCheck} style={{ fontSize: '20px' }} />
-                                                Accept
+                                        <div className='justify-content-center row mt-2'>
+                                            <button className="buttonDetails1 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck}/>
+                                                <span className="d-none d-sm-inline">Accept</span>
                                             </button>
-                                            <button className=" d-flex align-items-center buttonDetails2">
-                                                <FontAwesomeIcon className='pe-2' icon={fa.faXmark} style={{ fontSize: '20px' }} />
-                                                Delete
+                                            <button className="buttonDetails2 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark}/>
+                                                <span className="d-none d-sm-inline">Delete</span>
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         ))}
                         {/* <div className='container'>
                             <div className="card cardsize">
@@ -162,11 +172,11 @@ export default function Booking() {
                                     <hr />
                                     <div className='w-100 d-flex justify-content-evenly mt-2'>
                                         <button className=" buttonDetails1">
-                                            <FontAwesomeIcon className='pe-2' icon={fa.faCheck} style={{ fontSize: '20px' }} />
+                                            <FontAwesomeIcon className='pe-2' icon={fa.faCheck}/>
                                             Accept
                                         </button>
                                         <button className=" d-flex align-items-center buttonDetails2">
-                                            <FontAwesomeIcon className='pe-2' icon={fa.faXmark} style={{ fontSize: '20px' }} />
+                                            <FontAwesomeIcon className='pe-2' icon={fa.faXmark}/>
                                             Delete
                                         </button>
                                     </div>
@@ -174,7 +184,7 @@ export default function Booking() {
                             </div>
                         </div> */}
 
-                    </OwlCarousel>
+                    {/* </OwlCarousel> */}
                 </div>
             </div>
         </>
