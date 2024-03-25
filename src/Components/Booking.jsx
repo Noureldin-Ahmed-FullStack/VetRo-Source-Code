@@ -88,7 +88,11 @@ export default function Booking() {
 
         const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
         const formattedTime = date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-        return `${formattedDate} ${formattedTime}`
+        const Format = {
+            Date:formattedDate,
+            Time:formattedTime
+        }
+        return Format
     }
     const responsive = {
         0: {
@@ -105,18 +109,18 @@ export default function Booking() {
     return (
         <>
             <div className='pp4'>Incoming Pet Owner Reservations</div>
-            <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
+            <div className='text-black justify-content-center align-items-center MainSection text-center container mt-5'>
 
-                <div className='container'>
+                <div className='row'>
                     {/* <OwlCarousel className='owl-theme' responsive={responsive} nav> */}
-                        {bookings?.map((Appointment, index) => (
-                            <div className='container mb-2' key={index}>
-                            <div className='row justify-content-center'>
-                                <div className="card cardsize col-lg-8 col-md-10 col-sm-12">
+                    {bookings?.map((Appointment, index) => (
+                        <div className='col-md-6 mb-2 d-flex justify-content-center' key={index}>
+                            <div className='row justify-content-center w-100'>
+                                <div className="card cardsize ">
                                     <div className="card-body">
                                         <div className='starRatepp7 d-flex flex-column flex-sm-row'>
                                             <div>
-                                            <img src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0" style={{ maxWidth: '100%', height: 'auto', maxHeight: '160px' }} />
+                                                <img src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0" style={{ maxWidth: '100%', height: 'auto', maxHeight: '160px' }} />
                                             </div>
                                             <div>
                                                 <div className='row'>
@@ -132,27 +136,44 @@ export default function Booking() {
                                             <div className='ms-auto mt-2 mt-sm-0'><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
                                         </div>
                                         <hr />
-                                        <div className='starRated COLorP'>
+                                        <div className='d-flex justify-content-between COLorP'>
+                                            <p>Pet name: </p>
+                                            <h6>{Appointment?.PetName}</h6>
+                                        </div>
+                                        <div className='d-flex justify-content-between COLorP'>
+                                            <p>breed: </p>
+                                            <h6>{Appointment?.PetBreed}</h6>
+                                        </div>
+                                        <div className='d-flex justify-content-between COLorP'>
                                             <p>{Appointment?.Issue}</p>
-                                            <p>{GetTime(Appointment?.Appointment)}</p>
+                                            <p >
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCalendarAlt} />{GetTime(Appointment?.Appointment).Date} <FontAwesomeIcon className='pe-1 fs-5 ' icon={fa.faClock} />{GetTime(Appointment?.Appointment).Time}</p>
                                         </div>
                                         <hr />
-                                        <div className='justify-content-center row mt-2'>
-                                            <button className="buttonDetails1 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck}/>
-                                                <span className="d-none d-sm-inline">Accept</span>
+                                        <div className='justify-content-around row mt-2'>
+                                            <button className='btn btn-outline-success col-5 py-3 px-0'>
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
+                                                <span>Accept Appointment</span>
+                                            </button>
+                                            <button className='btn btn-outline-danger col-5 py-3'>
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
+                                                <span>Delete</span>
+                                            </button>
+                                            {/* <button className="buttonDetails1 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
+                                                <span className="d-none d-sm-inline">Accept Appointment</span>
                                             </button>
                                             <button className="buttonDetails2 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark}/>
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
                                                 <span className="d-none d-sm-inline">Delete</span>
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        ))}
-                        {/* <div className='container'>
+                    ))}
+                    {/* <div className='container'>
                             <div className="card cardsize">
                                 <div className="card-body">
                                     <div className='starRatepp7 align-items-center'>

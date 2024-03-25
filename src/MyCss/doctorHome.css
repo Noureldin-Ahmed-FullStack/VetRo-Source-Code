@@ -199,8 +199,8 @@
 }
 
 .cardsize {
-  max-width: 30em;
-  flex-direction: row;
+  /* max-width: 30em; */
+  /* flex-direction: row; */
   box-shadow: 4px 4px 4px #ECEFF2;
   background-color: #ffff;
   border-radius: 20px;
@@ -219,7 +219,7 @@
 
 .COLorP {
   color: #808B9A;
-
+font-size: 13px;
 }
 
 .COLorli {
