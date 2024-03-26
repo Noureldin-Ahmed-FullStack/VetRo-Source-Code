@@ -194,10 +194,25 @@
 }
 .ProfTitle:hover{
   cursor: pointer;
-  text-decoration: underline solid 2px black;
+  text-decoration: underline solid 2px black; 
 }
-.ProfImg{
+.ProfTitle{
   
+  max-height: 1.2em; /* Adjust according to your font size and line height */
+  overflow: hidden;
+  /* Truncate text with ellipsis if it overflows */
+  text-overflow: ellipsis;
+  /* Ensure the text wraps properly */
+  white-space: nowrap;
+}
+.ProfImg:hover{
+  /* Set initial brightness */
+  filter: brightness(100%);
+  /* Add transition for smooth effect */
+  transition: filter 0.1s ;
+  filter: brightness(150%);
+  cursor: pointer;
+  outline: black 2px solid;
 }
 .namecolor {
   color: #39434F;
@@ -224,8 +239,8 @@
 }
 
 .cardsize img {
-  max-width: 25%;
-  padding: 1em;
+  /* max-width: 25%;
+  padding: 1em; */
   border-radius: 50px;
 }
 

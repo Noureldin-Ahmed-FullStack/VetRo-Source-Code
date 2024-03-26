@@ -86,6 +86,7 @@ export default function UserHome() {
       senderName: UserDBData.userName,
       senderId: UserDBData.uid,
       SenderPFP: UserDBData.userPFP,
+      UserData: UserDBData,
       photos: "",
     });
 

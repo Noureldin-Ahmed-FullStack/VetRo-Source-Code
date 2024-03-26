@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
+import { arrayUnion, collection, doc, getDocs, orderBy, query, runTransaction, updateDoc, where } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Booking() {
     const { userObj, setUserObj } = useContext(MyContext);
+    const { UserDBData, setUserDBData } = useContext(MyContext);
     const getTimeSince = (time) => {
         // Create a new Date object with the desired date and time
         var customDate = new Date(time);
@@ -79,17 +80,17 @@ export default function Booking() {
         var splitTime = timeString.split(':');
         var hours = parseInt(splitTime[0]);
         var minutes = parseInt(splitTime[1]);
-    
+
         // Determine AM or PM based on hours
         var period = hours >= 12 ? 'PM' : 'AM';
-    
+
         // Convert hours from 24-hour format to 12-hour format
         hours = hours % 12;
         hours = hours ? hours : 12; // Handle midnight (0 hours) as 12 AM
-    
+
         // Add leading zero to minutes if necessary
         minutes = minutes < 10 ? '0' + minutes : minutes;
-    
+
         // Return the formatted time
         return hours + ':' + minutes + ' ' + period;
     }
@@ -122,6 +123,76 @@ export default function Booking() {
             console.error(error)
         }
     }
+
+    const chatFunc = (userData) => {        
+        let RID
+        if (userData?.isDoctor) {
+          RID = userObj.uid + " " + userData?.uid;
+        } else {
+          RID = userData?.uid + " " + userObj.uid;
+        }
+        console.log(RID);
+        goToRoom(RID , userData);
+      };
+      const goToRoom = async (RID , userData) => {
+    
+        const userChatsRef = collection(db, "UserChats");
+        // updateDoc(userChatDoc, {
+        //   ChatRooms: arrayUnion({
+        //     ChatRoomID: RID,
+        //     OtherPersonName: userData?.userName,
+        //     otherPersonPic: userData?.userPFP
+        //   })
+        // })
+        try {
+          await runTransaction(db, async (transaction) => {
+            const userChatDoc = await doc(userChatsRef, userObj.uid);
+            const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
+            const userChatDocSnap = await transaction.get(userChatDoc);
+            const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
+    
+            if (userChatDocSnap.exists()) {
+              transaction.update(userChatDoc, {
+                ChatRooms: arrayUnion({
+                  ChatRoomID: RID,
+                  OtherPersonName: userData?.userName,
+                  otherPersonPic: userData?.userPFP
+                })
+              });
+            } else {
+              transaction.set(userChatDoc, {
+                ChatRooms: [{
+                  ChatRoomID: RID,
+                  OtherPersonName: userData?.userName,
+                  otherPersonPic: userData?.userPFP
+                }]
+              });
+            }
+    
+            if (OtherUserChatDocSnap.exists()) {
+              transaction.update(OtherUserChatDoc, {
+                ChatRooms: arrayUnion({
+                  ChatRoomID: RID,
+                  OtherPersonName: UserDBData.userName,
+                  otherPersonPic: UserDBData.userPFP
+                })
+              });
+            } else {
+              transaction.set(OtherUserChatDoc, {
+                ChatRooms: [{
+                  ChatRoomID: RID,
+                  OtherPersonName: UserDBData.userName,
+                  otherPersonPic: UserDBData.userPFP
+                }]
+              });
+            }
+          });
+        } catch (error) {
+          console.error("Error updating document: ", error);
+        }
+        navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+      };
+
     const GetTime = (timestamp) => {
         const date = new Date(timestamp);
 
@@ -158,11 +229,11 @@ export default function Booking() {
                             <div className='row justify-content-center w-100'>
                                 <div className="card cardsize ">
                                     <div className="card-body">
-                                        <div className=' d-flex flex-column flex-sm-row'>
-                                            <div>
-                                                <img onClick={() => goToProfile(Appointment.UserData?.uid)} src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0 ProfImg" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
+                                        <div className='row align-items-center d-flex'>
+                                            <div className=' col-md-3 col-sm-3 col-12'>
+                                                <img onClick={() => goToProfile(Appointment.UserData?.uid)} src={Appointment.UserData?.userPFP} alt="nnn" className=" ProfImg" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
                                             </div>
-                                            <div>
+                                            <div className=' col-md-6 col-sm-6 col-10'>
                                                 <div className='row'>
                                                     <div className="h4 mb-1 text-start ProfTitle" onClick={() => goToProfile(Appointment.UserData?.uid)}>{Appointment.UserData?.userName}</div>
                                                 </div>
@@ -173,7 +244,7 @@ export default function Booking() {
                                                     <div className="mb-1 COLorli text-start">{Appointment?.phoneNumber}</div>
                                                 </div>
                                             </div>
-                                            <div className='ms-auto mt-2 mt-sm-0'><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
+                                            <div onClick={()=> chatFunc(Appointment?.UserData)} className=' col-md-3 col-sm-3 col-2'><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
                                         </div>
                                         <hr />
                                         <div className='d-flex justify-content-between COLorP'>
