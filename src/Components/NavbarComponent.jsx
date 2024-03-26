@@ -45,13 +45,13 @@ export default function NavbarComponent() {
           <div></div>
           <ul className="navbar-nav ">
             <li className="nav-item active">
-              <NavLink className="nav-link" to="">Home</NavLink>
+              <NavLink className="nav-link p-1 mx-1" to="">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="speciesidentifier">speciesidentifier</NavLink>
+              <NavLink className="nav-link p-1 mx-1" to="speciesidentifier">speciesidentifier</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="Contacts">Chat</NavLink>
+              <NavLink className="nav-link p-1 mx-1" to="Contacts">Chat</NavLink>
             </li>
           </ul>
           <div className='d-flex justify-content-center'>
