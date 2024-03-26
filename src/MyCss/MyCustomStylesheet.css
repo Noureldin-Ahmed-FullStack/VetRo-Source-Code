@@ -257,7 +257,10 @@
 
 .navbar-nav .nav-link.active {
   border-radius: 0.6rem;
+  outline: solid #9999992c;
+  background-image: linear-gradient(to bottom right, #84bfff79, #0055af94); /* Gradient from top left to bottom right */
 }
+
 .navIcon{
   color: #636363;
 }

@@ -120,7 +120,7 @@ export default function Booking() {
                                     <div className="card-body">
                                         <div className='starRatepp7 d-flex flex-column flex-sm-row'>
                                             <div>
-                                                <img src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0" style={{ maxWidth: '100%', height: 'auto', maxHeight: '160px' }} />
+                                                <img src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
                                             </div>
                                             <div>
                                                 <div className='row'>
@@ -151,7 +151,7 @@ export default function Booking() {
                                         </div>
                                         <hr />
                                         <div className='justify-content-around row mt-2'>
-                                            <button className='btn btn-outline-success col-5 py-3 px-0'>
+                                            <button className='btn btn-outline-success col-5 py-3 px-1'>
                                                 <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
                                                 <span>Accept Appointment</span>
                                             </button>
