@@ -113,7 +113,7 @@ export default function UserHome() {
           <div className=''>
             <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
             <div className='pt-4 container pb-2'>
-              <input className='form-control p4 py-2' placeholder="search here" />
+              <input className='form-control mb-2' placeholder="search here" />
             </div>
           </div>
         </div>
@@ -264,11 +264,6 @@ export default function UserHome() {
 
 
             <div className="starArea d-flex justify-content-center my-5 align-items-center ">
-              <div className="whiteLine"></div>
-              <div className="whiteLine"></div>
-              <div className="whiteLine"></div>
-              <div className="whiteLine"></div>
-              <div className="whiteLine"></div>
             </div>
             {/*** <p className='text-black'>Your Expert Veterinary assitant</p> */}
 

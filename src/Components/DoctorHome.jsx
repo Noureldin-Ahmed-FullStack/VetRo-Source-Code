@@ -36,7 +36,7 @@ export default function DoctorHome() {
           <div className=''>
             <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
             <div className='pt-4 container pb-2'>
-              <input className='form-control p4 py-2' placeholder="search here" />
+              <input className='form-control mb-2' placeholder="search here" />
             </div>
           </div>
         </div>
@@ -116,8 +116,6 @@ export default function DoctorHome() {
       <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
         <div className='container'>
           <div className="starArea d-flex justify-content-center my-3 align-items-center ">
-            <div className="whiteLine"></div>
-            <div className="whiteLine"></div>
           </div>
           <p>Your Expert Veterinary assitant</p>
         </div>

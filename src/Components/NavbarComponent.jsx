@@ -32,12 +32,11 @@ export default function NavbarComponent() {
   return (
     <>
       <VetRoBot />
-      <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light p-0">
 
         <div className="navbar-brand ps-2 ms-5 d-flex align-items-center" >
 
           <img src="/logo192.png" className='Nav-Image' alt="" />
-          <NavLink className="nav-link" to=""><h3 className=' my-0'>VetRo</h3></NavLink>
         </div>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
@@ -46,13 +45,13 @@ export default function NavbarComponent() {
           <div></div>
           <ul className="navbar-nav ">
             <li className="nav-item active">
-              <NavLink className="nav-link" to="">Home</NavLink>
+              <NavLink className="nav-link p-1 mx-1" to="">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="speciesidentifier">speciesidentifier</NavLink>
+              <NavLink className="nav-link p-1 mx-1" to="speciesidentifier">speciesidentifier</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="Contacts">Chat</NavLink>
+              <NavLink className="nav-link p-1 mx-1" to="Contacts">Chat</NavLink>
             </li>
           </ul>
           <div className='d-flex justify-content-center'>

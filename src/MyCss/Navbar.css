@@ -1,7 +1,7 @@
 .Nav-Image{
-    width: 2rem;
-    height: 2rem;
-    object-fit: cover;
+    width: auto;
+    height: 4rem;
+    overflow: visible; 
 }
 .Nav-PFP{
     width: 2.6rem;
@@ -14,8 +14,8 @@
 }
 .Nav-PFP:hover{
     box-shadow: 0 0 60px rgb(84, 146, 227);
-    border: 5px rgba(20, 162, 222, 0.664) solid;
-    outline: 6px rgba(52, 170, 221, 0.469) solid;
+    border: 5px #1f71ecdc solid;
+    outline: 6px #4a88e599 solid;
 }
 .myPaddingTop{
     padding-top: 4rem;

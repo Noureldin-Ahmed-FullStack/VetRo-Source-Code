@@ -114,7 +114,7 @@
   .pp4 {
     font-size: 40px;
     font-weight: 600;
-    font-family: Poppins;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow';
     color: #39434F;
     text-align: center;
     margin: 20px;
@@ -193,12 +193,14 @@
 /**/
 @media only screen and (max-width: 767px) {
   .p1 {
-    background-color: rgba(23, 130, 255, 0.8);
+    background: linear-gradient(to bottom, #144d87, #1e85f3, rgba(23, 130, 255, 0.35));
 
     border-bottom-left-radius: 10%;
     border-bottom-right-radius: 10%;
+}
 
-  }
+
+
 
   .L1 {
     display: none;
@@ -229,7 +231,7 @@
   .pp4 {
     font-size: 20px;
     font-weight: 600;
-    font-family: Poppins;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow';
     color: #39434F;
     padding: 30px 5px;
     text-align: center;

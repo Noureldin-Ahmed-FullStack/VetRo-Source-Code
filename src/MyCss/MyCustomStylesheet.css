@@ -257,7 +257,10 @@
 
 .navbar-nav .nav-link.active {
   border-radius: 0.6rem;
+  outline: solid #3183ff;
+  font-weight: 600;
 }
+
 .navIcon{
   color: #636363;
 }
