@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
 /** */
@@ -9,6 +8,7 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { MyContext } from './ContextProvider';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Booking() {
@@ -55,6 +55,10 @@ export default function Booking() {
     }
     const BookingRef = collection(db, "Booking")
     const [bookings, setBooking] = useState([])
+    let navigate = useNavigate()
+    const goToProfile = (Docid) => {
+        navigate('/profile', { state: { id: Docid } });
+    }
     const fetchCollection = async () => {
         try {
             const querywithTime = query(BookingRef, orderBy('PostDate', 'desc'), where('Doctor', "==", userObj.uid))
@@ -70,7 +74,25 @@ export default function Booking() {
             console.error('Error fetching collection:', error);
         }
     }
-
+    function convertTimeToAMPM(timeString) {
+        // Split the time string into hours and minutes
+        var splitTime = timeString.split(':');
+        var hours = parseInt(splitTime[0]);
+        var minutes = parseInt(splitTime[1]);
+    
+        // Determine AM or PM based on hours
+        var period = hours >= 12 ? 'PM' : 'AM';
+    
+        // Convert hours from 24-hour format to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Handle midnight (0 hours) as 12 AM
+    
+        // Add leading zero to minutes if necessary
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+    
+        // Return the formatted time
+        return hours + ':' + minutes + ' ' + period;
+    }
     useEffect(() => {
         const storedUserBookingData = sessionStorage.getItem('UserBookingData');
         if (storedUserBookingData) {
@@ -83,14 +105,32 @@ export default function Booking() {
             fetchCollection();
         }
     }, [])
+    const updateBooking = async (condition, id, index) => {
+        const temporaryBooking = bookings
+        temporaryBooking[index].Status = condition
+        const documentRef = doc(db, 'Booking', id);
+        try {
+            await updateDoc(documentRef, {
+                Status: condition
+            })
+
+            sessionStorage.setItem('UserBookingData', JSON.stringify(temporaryBooking));
+
+            const storedUserBookingData = sessionStorage.getItem('UserBookingData');
+            setBooking(JSON.parse(storedUserBookingData));
+        } catch (error) {
+            console.error(error)
+        }
+    }
     const GetTime = (timestamp) => {
         const date = new Date(timestamp);
 
         const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
         const formattedTime = date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        const time = convertTimeToAMPM(formattedTime)
         const Format = {
-            Date:formattedDate,
-            Time:formattedTime
+            Date: formattedDate,
+            Time: time
         }
         return Format
     }
@@ -114,20 +154,20 @@ export default function Booking() {
                 <div className='row'>
                     {/* <OwlCarousel className='owl-theme' responsive={responsive} nav> */}
                     {bookings?.map((Appointment, index) => (
-                        <div className='col-md-6 mb-2 d-flex justify-content-center' key={index}>
+                        <div className='col-md-6 mb-2 d-flex justify-content-center' key={Appointment.id}>
                             <div className='row justify-content-center w-100'>
                                 <div className="card cardsize ">
                                     <div className="card-body">
-                                        <div className='starRatepp7 d-flex flex-column flex-sm-row'>
+                                        <div className=' d-flex flex-column flex-sm-row'>
                                             <div>
-                                                <img src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
+                                                <img onClick={() => goToProfile(Appointment.UserData?.uid)} src={Appointment.UserData?.userPFP} alt="nnn" className="mb-2 mb-sm-0 ProfImg" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
                                             </div>
                                             <div>
                                                 <div className='row'>
-                                                    <div className="h4 mb-1 text-start">{Appointment.UserData?.userName}</div>
+                                                    <div className="h4 mb-1 text-start ProfTitle" onClick={() => goToProfile(Appointment.UserData?.uid)}>{Appointment.UserData?.userName}</div>
                                                 </div>
                                                 <div className='row '>
-                                                    <div className="mb-1 COLorli text-start">{Appointment.UserData?.email}</div>
+                                                    <div className="mb-1 COLorli text-start ProfTitle" onClick={() => goToProfile(Appointment.UserData?.uid)}>{Appointment.UserData?.email}</div>
                                                 </div>
                                                 <div className='row'>
                                                     <div className="mb-1 COLorli text-start">{Appointment?.phoneNumber}</div>
@@ -147,27 +187,33 @@ export default function Booking() {
                                         <div className='d-flex justify-content-between COLorP'>
                                             <p>{Appointment?.Issue}</p>
                                             <p >
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCalendarAlt} />{GetTime(Appointment?.Appointment).Date} <FontAwesomeIcon className='pe-1 fs-5 ' icon={fa.faClock} />{GetTime(Appointment?.Appointment).Time}</p>
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCalendarAlt} />{GetTime(Appointment?.Appointment).Date} <FontAwesomeIcon className='pe-1 ps-2 fs-5 ' icon={fa.faClock} />{GetTime(Appointment?.Appointment).Time}</p>
                                         </div>
                                         <hr />
-                                        <div className='justify-content-around row mt-2'>
-                                            <button className='btn btn-outline-success col-5 py-3 px-1'>
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
-                                                <span>Accept Appointment</span>
-                                            </button>
-                                            <button className='btn btn-outline-danger col-5 py-3'>
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
-                                                <span>Delete</span>
-                                            </button>
-                                            {/* <button className="buttonDetails1 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
-                                                <span className="d-none d-sm-inline">Accept Appointment</span>
-                                            </button>
-                                            <button className="buttonDetails2 col-6 col-sm-4 mx-2 my-1 d-flex justify-content-center align-items-center">
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
-                                                <span className="d-none d-sm-inline">Delete</span>
-                                            </button> */}
-                                        </div>
+                                        {Appointment?.Status == 'no response yet' ? (
+                                            <div className='justify-content-around row mt-2'>
+                                                <button className='btn btn-outline-success col-5 py-3 px-1' onClick={() => updateBooking(true, Appointment.id, index)}>
+                                                    <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
+                                                    <span>Accept Appointment</span>
+                                                </button>
+                                                <button className='btn btn-outline-danger col-5 py-3' onClick={() => updateBooking(false, Appointment.id, index)}>
+                                                    <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
+                                                    <span>Delete</span>
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            Appointment?.Status == true ? (
+                                                <div className='d-flex flex-column bg-success-subtle justify-content-center align-items-center p-2 rounded-4 text-success-emphasis'>
+                                                    <h6>Appointment accepted</h6>
+                                                    <p>would you like to <span className='cancelSpan' onClick={() => updateBooking(false, Appointment.id, index)}>cancel</span>?</p>
+                                                </div>
+
+                                            ) : (
+                                                <div className='d-flex flex-column bg-danger-subtle justify-content-center align-items-center p-2 rounded-4 text-danger-emphasis'>
+                                                    <h6>Appointment Rejected</h6>
+                                                </div>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             </div>

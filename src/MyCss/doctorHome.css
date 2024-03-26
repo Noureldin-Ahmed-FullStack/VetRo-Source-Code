@@ -192,12 +192,28 @@
 
 
 }
-
+.ProfTitle:hover{
+  cursor: pointer;
+  text-decoration: underline solid 2px black;
+}
+.ProfImg{
+  
+}
 .namecolor {
   color: #39434F;
-
+  
 }
-
+.cancelSpan{
+  font-weight: 500;
+  color: #971d29;
+  cursor: pointer;
+}
+.cancelSpan:hover{
+  color: red;
+}
+.cancelSpan:active{
+  color: #58151c;
+}
 .cardsize {
   /* max-width: 30em; */
   /* flex-direction: row; */
