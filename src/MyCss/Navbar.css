@@ -1,7 +1,7 @@
 .Nav-Image{
-    width: auto;
-    height: 4rem;
-    overflow: visible; 
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
 }
 .Nav-PFP{
     width: 2.6rem;
