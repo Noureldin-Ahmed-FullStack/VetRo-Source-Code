@@ -613,7 +613,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   /* Adjust the transparency by changing the last value */
-  z-index: 9999;
+  z-index: 9000;
   /* Adjust the z-index as needed */
 }
 

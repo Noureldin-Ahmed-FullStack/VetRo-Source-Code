@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import React, { useContext, useEffect, useState } from 'react'
+import { arrayUnion, collection, doc, getDocs, orderBy, query, runTransaction } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { MyContext } from './ContextProvider';
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import { toast } from 'react-toastify';
 /** */
 
 
@@ -12,6 +14,8 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 export default function UrgentPost() {
 
     const [UrgentPosts, setUrgentPosts] = useState([])
+    const { userObj, setUserObj } = useContext(MyContext);
+    const { UserDBData, setUserDBData } = useContext(MyContext);
     const UrgentPostsRef = collection(db, "UrgentPosts")
 
     const getTimeSince = (time) => {
@@ -89,6 +93,87 @@ export default function UrgentPost() {
     }, [])
 
 
+    const chatFunc = (userData) => {
+        if (!userObj) {
+          toast.error(`You need to Login First!`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          return
+        }
+        let RID
+        if (userData?.isDoctor) {
+          RID = userObj?.uid + " " + userData?.uid;
+        } else {
+          RID = userData?.uid + " " + userObj?.uid;
+        }
+        console.log(RID);
+        goToRoom(RID, userData);
+      };
+      const goToRoom = async (RID, userData) => {
+    
+        const userChatsRef = collection(db, "UserChats");
+        // updateDoc(userChatDoc, {
+        //   ChatRooms: arrayUnion({
+        //     ChatRoomID: RID,
+        //     OtherPersonName: userData?.userName,
+        //     otherPersonPic: userData?.userPFP
+        //   })
+        // })
+        try {
+          await runTransaction(db, async (transaction) => {
+            const userChatDoc = await doc(userChatsRef, userObj.uid);
+            const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
+            const userChatDocSnap = await transaction.get(userChatDoc);
+            const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
+    
+            if (userChatDocSnap.exists()) {
+              transaction.update(userChatDoc, {
+                ChatRooms: arrayUnion({
+                  ChatRoomID: RID,
+                  OtherPersonName: userData?.userName,
+                  otherPersonPic: userData?.userPFP
+                })
+              });
+            } else {
+              transaction.set(userChatDoc, {
+                ChatRooms: [{
+                  ChatRoomID: RID,
+                  OtherPersonName: userData?.userName,
+                  otherPersonPic: userData?.userPFP
+                }]
+              });
+            }
+    
+            if (OtherUserChatDocSnap.exists()) {
+              transaction.update(OtherUserChatDoc, {
+                ChatRooms: arrayUnion({
+                  ChatRoomID: RID,
+                  OtherPersonName: UserDBData.userName,
+                  otherPersonPic: UserDBData.userPFP
+                })
+              });
+            } else {
+              transaction.set(OtherUserChatDoc, {
+                ChatRooms: [{
+                  ChatRoomID: RID,
+                  OtherPersonName: UserDBData.userName,
+                  otherPersonPic: UserDBData.userPFP
+                }]
+              });
+            }
+          });
+        } catch (error) {
+          console.error("Error updating document: ", error);
+        }
+        navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+      };
     return (
         <>
             <div className='text-black justify-content-center align-items-center MainSection text-center container px-5 mt-5'>
@@ -112,7 +197,7 @@ export default function UrgentPost() {
                                     </div>
                                     <div>
                                         <div className='starRatepp7 justify-content-between align-items-center'>
-                                            <div className=''>
+                                            <div className='' onClick={()=>chatFunc(Upost.UserData)}>
                                                 <FontAwesomeIcon className='mess' icon={fa.faCommentDots} />
                                             </div>
                                         </div>

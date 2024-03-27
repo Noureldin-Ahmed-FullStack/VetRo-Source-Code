@@ -13,6 +13,7 @@ import VetRoBot from './VetRoBot'
 export default function NavbarComponent() {
   const { currentDevice, setCurrentDevice } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
+  const { userObj, setUserObj } = useContext(MyContext);
   if (currentDevice != 'Other') {
     return (
       <nav className="navbar bold-text tealBG navbar-expand-lg navbar-dark py-2 fixed-bottom">
@@ -60,7 +61,13 @@ export default function NavbarComponent() {
               <li className='text-center'>
                 <div className="position-relative">
                   {/* <FontAwesomeIcon className='cartIcon' icon={fa.faCartShopping} /> */}
-                  <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><img src={UserDBData?.userPFP || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRLRMXynnc7D6-xfdpeaoEUeon2FaU0XtPg&usqp=CAU"} className='Nav-PFP' alt="" /></Link>
+                  {userObj ? (
+                    <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><img src={UserDBData?.userPFP || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRLRMXynnc7D6-xfdpeaoEUeon2FaU0XtPg&usqp=CAU"} className='Nav-PFP' alt="" /></Link>
+                  ) : (
+                    <>
+                      <NavLink className="nav-link  my-3" to="signin">Sign in</NavLink>
+                    </>
+                  )}
                   {/* <span className="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger">
                   {cart?.numOfCartItems? (<>{cart?.numOfCartItems}</>):(<>0</>)}
                                     <span className="visually-hidden">unread messages</span>

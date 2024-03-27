@@ -9,11 +9,13 @@ import { faHippo } from '@fortawesome/free-solid-svg-icons';
 import { faPaw } from '@fortawesome/free-solid-svg-icons';
 
 import { db } from '../Firebase/firebase';
-import { Timestamp, addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { Timestamp, addDoc, arrayUnion, collection, doc, getDocs, query, runTransaction, where } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 import '../MyCss/userHome.css'
+import { toast } from 'react-toastify';
 
 export default function UserHome() {
+  const { userObj, setUserObj } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
   const { currentDevice, setCurrentDevice } = useContext(MyContext);
   const [isOpen, setIsOpen] = useState(false)
@@ -35,7 +37,6 @@ export default function UserHome() {
         return DoctorData
       });
       setDoctorData(DoctorDataArray);
-
       sessionStorage.setItem('storedDoctorsData', JSON.stringify(DoctorDataArray));
       // console.log(DoctorDataArray);
     } catch (error) {
@@ -69,6 +70,19 @@ export default function UserHome() {
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
+    if (!userObj) {
+      toast.error(`You need to Login First!`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
     if (PostText === "") return;
     console.log(PostText);
     const dateTimeVar = new Date().toString();
@@ -96,6 +110,87 @@ export default function UserHome() {
   };
   /****************************************FRONT***********************************************/
 
+  const chatFunc = (userData) => {
+    if (!userObj) {
+      toast.error(`You need to Login First!`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+    let RID
+    if (userData?.isDoctor) {
+      RID = userObj?.uid + " " + userData?.uid;
+    } else {
+      RID = userData?.uid + " " + userObj?.uid;
+    }
+    console.log(RID);
+    goToRoom(RID, userData);
+  };
+  const goToRoom = async (RID, userData) => {
+
+    const userChatsRef = collection(db, "UserChats");
+    // updateDoc(userChatDoc, {
+    //   ChatRooms: arrayUnion({
+    //     ChatRoomID: RID,
+    //     OtherPersonName: userData?.userName,
+    //     otherPersonPic: userData?.userPFP
+    //   })
+    // })
+    try {
+      await runTransaction(db, async (transaction) => {
+        const userChatDoc = await doc(userChatsRef, userObj.uid);
+        const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
+        const userChatDocSnap = await transaction.get(userChatDoc);
+        const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
+
+        if (userChatDocSnap.exists()) {
+          transaction.update(userChatDoc, {
+            ChatRooms: arrayUnion({
+              ChatRoomID: RID,
+              OtherPersonName: userData?.userName,
+              otherPersonPic: userData?.userPFP
+            })
+          });
+        } else {
+          transaction.set(userChatDoc, {
+            ChatRooms: [{
+              ChatRoomID: RID,
+              OtherPersonName: userData?.userName,
+              otherPersonPic: userData?.userPFP
+            }]
+          });
+        }
+
+        if (OtherUserChatDocSnap.exists()) {
+          transaction.update(OtherUserChatDoc, {
+            ChatRooms: arrayUnion({
+              ChatRoomID: RID,
+              OtherPersonName: UserDBData.userName,
+              otherPersonPic: UserDBData.userPFP
+            })
+          });
+        } else {
+          transaction.set(OtherUserChatDoc, {
+            ChatRooms: [{
+              ChatRoomID: RID,
+              OtherPersonName: UserDBData.userName,
+              otherPersonPic: UserDBData.userPFP
+            }]
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
+    navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+  };
 
 
 
@@ -130,10 +225,10 @@ export default function UserHome() {
           </div>
         </div>
       </div>
-      <div className='d-flex mt-4 justify-content-center'>
-        <form className=' w-75 bg-light MyShadow rounded-5'>
+      <div className='d-flex mt-4 justify-content-center container'>
+        <form className=' w-100 bg-light MyShadow rounded-4'>
           <div className="form-group p-3  ">
-            <h5 className='text-center'>Create Post</h5>
+            <h5 className='text-center'>Create a post</h5>
             <input type="email" onClick={() => setIsOpen(true)} className="form-control inpo" placeholder='write here' />
           </div>
         </form>
@@ -160,14 +255,14 @@ export default function UserHome() {
                 <div className="post-box container y1">
                   <div className="user-profile row">
                     <div className='d-flex align-items-center py-2'>
-                      <img className='circle-round' src={UserDBData?.userPFP} alt="Profile Picture" />
+                      <img className='circle-round' src={UserDBData?.userPFP || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRLRMXynnc7D6-xfdpeaoEUeon2FaU0XtPg&usqp=CAU"} alt="Profile Picture" />
                       <h2 className='usrText pot1'>{UserDBData?.userName}</h2>
                     </div>
                   </div>
-                  
+
                   <div className="form-group">
                     <label >Post Type </label>
-                    <select onChange={(e) => setPostType(e.target.value)} className="form-control">
+                    <select onChange={(e) => setPostType(e.target.value)} className="form-control my-2">
                       <option value="regular"> Regular Post</option>
                       <option value="urgent">Urgent Post</option>
                     </select>
@@ -176,9 +271,9 @@ export default function UserHome() {
                   <div className='input-area '>
                     <textarea onChange={(e) => setPostText(e.target.value)} className='form-control  bg-light' rows="6" placeholder="What's on your mind?"></textarea>
                   </div>
-                  <div className="action-buttons" style={{ margin: '10px' }}>
-                    <button type='button' className="btn buttonAddImage"> < label style={{ fontSize: '30px', color: '#1268cc' }}>+</label>Add Image</button>
-                    <button type='submit' className="btn buttonSubmit" >submit</button>
+                  <div className=" mt-3">
+                    <button type='button' className="btn me-3 btn-outline-primary p-3 bold mb-2"><FontAwesomeIcon icon={fa.faImage} /> Add Image</button>
+                    <button type='submit' className="btn mx-3 btn-primary p-3 bold mb-2" ><FontAwesomeIcon icon={fa.faPaperPlane} /> submit</button>
                   </div>
                 </div>
               </form>
@@ -223,7 +318,7 @@ export default function UserHome() {
                           </div>
                           <div className='starRatepp7 justify-content-between align-items-center'>
                             <button onClick={() => goToProfile(doctors.DoctorID)} className="btn btn-primary pp5">Details</button>
-                            <div className=''>
+                            <div className='' onClick={() => chatFunc(doctors)}>
                               <FontAwesomeIcon className='mess' icon={fa.faCommentDots} />
                             </div>
                           </div>

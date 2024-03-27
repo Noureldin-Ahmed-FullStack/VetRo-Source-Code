@@ -32,6 +32,19 @@ export default function Profile(props) {
 
   const handleBooking = async(event) => {
     event.preventDefault()
+    if (!userObj) {
+      toast.error("Login First!", {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }); 
+      return
+    }
     let BookingData = {
       userID: userObj.uid,
       Doctor: ProfileData.uid,
