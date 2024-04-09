@@ -12,14 +12,18 @@ import Booking from './Booking';
 import UrgentPost from './UrgentPost';
 export default function DoctorHome() {
   const { UserDBData, setUserDBData } = useContext(MyContext);
-  const [posts, setPosts] = useState([])
-  const { currentDevice, setCurrentDevice } = useContext(MyContext);
 
   ///
 
 
   const [Condition, setCondition] = useState(0)
 
+  let navigate = useNavigate()
+  const goToProfile = () => {
+    console.log("lol")
+    setCondition(0)
+    navigate('/SignIn');
+  }
 
 
 
@@ -75,25 +79,25 @@ export default function DoctorHome() {
           <div className="row g-3">
             <div className="col-6" onClick={() => setCondition(1)}>
               <div className="p-4 py-5 MyDropshadow squareButtons DemoGradient pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon className='sqIcon' icon={fa.faSignsPost}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faSignsPost} />
                 Posts
               </div>
             </div>
             <div className="col-6" onClick={() => setCondition(2)}>
               <div className="p-4 py-5 MyDropshadow squareButtons DemoGradient pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon className='sqIcon' icon={fa.faCalendarCheck}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faCalendarCheck} />
                 Appointment
               </div>
             </div>
             <div className="col-6" onClick={() => setCondition(3)}>
               <div className="p-4 py-5 MyDropshadow squareButtons DemoGradient pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon className='sqIcon' icon={fa.faBell}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faBell} />
                 Urgent posts
               </div>
             </div>
-            <div className="col-6" onClick={() => setCondition(0)}>
+            <div className="col-6" onClick={goToProfile}>
               <div className="p-4 py-5 MyDropshadow squareButtons DemoGradient pointer rounded-3 border bg-light d-flex flex-column">
-                <FontAwesomeIcon className='sqIcon' icon={fa.faUserDoctor}  />
+                <FontAwesomeIcon className='sqIcon' icon={fa.faUserDoctor} />
                 Profile
               </div>
             </div>
@@ -101,7 +105,7 @@ export default function DoctorHome() {
         </div>
       ) : (
         <div className='container'>
-          <FontAwesomeIcon onClick={() => setCondition(0)} className='pointer arrowIcon' icon={fa.faArrowLeft}  />
+          <FontAwesomeIcon onClick={() => setCondition(0)} className='pointer arrowIcon' icon={fa.faArrowLeft} />
           <hr />
         </div>
       )}

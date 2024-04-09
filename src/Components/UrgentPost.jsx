@@ -94,6 +94,8 @@ export default function UrgentPost() {
 
 
     const chatFunc = (userData) => {
+      console.log(userData);
+
         if (!userObj) {
           toast.error(`You need to Login First!`, {
             position: "top-center",
