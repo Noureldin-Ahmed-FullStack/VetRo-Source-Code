@@ -6,6 +6,7 @@ import '../MyCss/userHome.css'
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 
 export default function MakeAPost() {
     const { userObj, setUserObj } = useContext(MyContext);
@@ -18,6 +19,9 @@ export default function MakeAPost() {
     const [postType, setPostType] = useState('regular');
 
 
+    const headers = {
+        'token': localStorage.getItem('token'),
+    };
     const handlePostSubmit = async (e) => {
         e.preventDefault();
         if (!userObj) {
@@ -34,30 +38,60 @@ export default function MakeAPost() {
             return
         }
         if (PostText === "") return;
-        console.log(PostText);
-        const dateTimeVar = new Date().toString();
-        let collectionRef;
-        if (postType === 'urgent') {
-            collectionRef = collection(db, "UrgentPosts");
-        } else {
-            collectionRef = collection(db, "Posts");
+        // console.log(PostText);
+        // const dateTimeVar = new Date().toString();
+        // let collectionRef;
+        // if (postType === 'urgent') {
+        //     collectionRef = collection(db, "UrgentPosts");
+        // } else {
+        //     collectionRef = collection(db, "Posts");
+        // }
+
+
+        // await addDoc(collectionRef, {
+        //     text: PostText,
+        //     createdAt: dateTimeVar.slice(0, 21),
+        //     senderName: UserDBData.userName,
+        //     senderId: UserDBData.uid,
+        //     SenderPFP: UserDBData.userPFP,
+        //     UserData: UserDBData,
+        //     photos: "",
+        // });
+        const body = {
+            title: e.target[1].value,
+            content: e.target[2].value,
+            urgent: e.target[0].value
         }
-
-
-        await addDoc(collectionRef, {
-            text: PostText,
-            createdAt: dateTimeVar.slice(0, 21),
-            senderName: UserDBData.userName,
-            senderId: UserDBData.uid,
-            SenderPFP: UserDBData.userPFP,
-            UserData: UserDBData,
-            photos: "",
-        });
-
-
+        console.log(body , headers);
+        let res = await axios.post(`https://vetro-server.onrender.com/post`, body, { headers: headers }).catch((err) => {
+            toast.error(err, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        })
+        if (res) {
+            console.log(res);
+            toast.success("Posted!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
         setPostText("")
         setIsOpen(false)
-    };
+    }
+    
     return (
         <div>
             {isOpen ? (
@@ -82,13 +116,16 @@ export default function MakeAPost() {
                                             <h2 className='usrText pot1'>{UserDBData?.userName}</h2>
                                         </div>
                                     </div>
-
                                     <div className="form-group">
                                         <label >Post Type </label>
                                         <select onChange={(e) => setPostType(e.target.value)} className="form-control my-2">
-                                            <option value="regular"> Regular Post</option>
-                                            <option value="urgent">Urgent Post</option>
+                                            <option value={false}> Regular Post</option>
+                                            <option value={true}>Urgent Post</option>
                                         </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label >Title </label>
+                                        <input type="text" className='form-control mb-3' placeholder='Title' />
                                     </div>
 
                                     <div className='input-area '>

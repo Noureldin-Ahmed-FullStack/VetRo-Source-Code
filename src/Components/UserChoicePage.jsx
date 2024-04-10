@@ -8,34 +8,48 @@ import logo from '../images/Blue Logo.svg'
 import { MyContext } from './ContextProvider'
 import { collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../Firebase/firebase'
+import axios from 'axios'
 
 export default function UserChoicePage() {
     const { userObj, setUserObj } = useContext(MyContext);
     const usersRef = collection(db, "Users");
 
+    const token = localStorage.getItem('token');
 
+    const headers = {
+        'token': token,
+    };
+
+    // const SetDecided = async (Choice) => {
+    //     const userDoc = doc(usersRef, userObj.uid);
+    //     if (Choice) {
+    //         await updateDoc(userDoc, {
+    //             isDoctor: true,
+    //             decided: true
+    //         })
+    //         setTimeout(() => {
+    //             window.location.reload();
+    //         }, 1000); // Delay of 5 seconds (1000 milliseconds)
+
+    //     }else{            
+    //         await updateDoc(userDoc, {
+    //             isDoctor: false,
+    //             decided: true
+    //         })
+    //         setTimeout(() => {
+    //             window.location.reload();
+    //         }, 1000); // Delay of 5 seconds (1000 milliseconds)
+    //     }
+    // }
     const SetDecided = async (Choice) => {
-        const userDoc = doc(usersRef, userObj.uid);
-        if (Choice) {
-            await updateDoc(userDoc, {
-                isDoctor: true,
-                decided: true
-            })
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000); // Delay of 5 seconds (1000 milliseconds)
-
-        }else{            
-            await updateDoc(userDoc, {
-                isDoctor: false,
-                decided: true
-            })
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000); // Delay of 5 seconds (1000 milliseconds)
+        const body ={
+            isDoctor: Choice
         }
+            await axios.post('http://localhost:3000/userRole', body, { headers: headers })
+            // setTimeout(() => {
+                window.location.reload();
+            // }, 1000); 
     }
-
 
     return (
 

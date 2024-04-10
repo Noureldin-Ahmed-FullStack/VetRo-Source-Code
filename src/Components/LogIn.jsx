@@ -13,11 +13,72 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../images/Blue Logo.svg'
 import Facebook from '../images/Facebook_logo.png'
 import Google from '../images/googlelogo.png'
+import axios from 'axios'
+import { toast } from 'react-toastify';
+import { jwtDecode } from 'jwt-decode';
 export default function Login() {
   const { userObj, setUserObj } = useContext(MyContext);
+  const { UserDBData, setUserDBData } = useContext(MyContext);
   const { signInWithGoogle } = UseFirebaseAuth();
-  const navigate = useNavigate();
+  var token = localStorage.getItem('token');
 
+
+  const fetchUserData = async (userId) => {
+    console.log(userId);
+    try {
+      await axios.get(`http://localhost:3000/getSingleUser/${userId}`)
+        .then(response => {
+          console.log(response.data.message);
+          setUserDBData(response.data.message)
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+
+
+      // setUserDBData(userData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    
+  };
+  }
+  let navigate = useNavigate()
+  const headers = {
+    'token': token,
+  };
+  const handleSubmit = async (e) => {
+    const body = {
+      email: e.target[0].value,
+      password: e.target[1].value,
+    }
+    let res = await axios.post(`http://localhost:3000/signIn`, body, { headers: headers }).catch((err) => {
+      console.log(err.response);
+    })
+    console.log(res.data.token);
+    await localStorage.setItem('token', res.data.token)
+    toast.success(`logged in!`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token, 'key');
+      console.log(decoded)
+      setUserObj(decoded);
+      fetchUserData(decoded.uid)
+  
+    } else {
+      console.log("no token");
+    }
+    navigate('/signIn');
+  }
   return (
     <div className='w-100 d-flex justify-content-center Log-vh-100'>
       <div className="container justify-content-center align-items-center">
@@ -29,7 +90,7 @@ export default function Login() {
         <div className="row justify-content-center">
           <div className="col-md-6 ">
 
-            <form className=''>
+            <form onSubmit={handleSubmit} className=''>
               <div className="input-group mb-3">
 
                 <input
@@ -57,7 +118,7 @@ export default function Login() {
                 </button>
               </div>
               <div className='input-group mb5 d-flex justify-content-between'>
-                <div className='form-check'>
+                {/* <div className='form-check'>
                   <input
                     type="checkbox"
                     className="form-check-input"
@@ -67,14 +128,14 @@ export default function Login() {
                   <label htmlFor="formCheck" className="form-check-label text-secondary"><small>Keep me Singed in</small></label>
 
 
-                </div>
+                </div> */}
                 <div>
                   <small>
                     <a href='#'>Forgot Password</a>
                   </small>
                 </div>
               </div>
-              <div id="emailHelp" className="form-text text-center mb-3">
+              {/* <div id="emailHelp" className="form-text text-center mb-3">
                 Or use one of these options.
               </div>
               <div className='input-group mb-3'>
@@ -88,7 +149,7 @@ export default function Login() {
                   <img src={Facebook} className='me-2' style={{ width: '20px' }} />
                   Continue With Facebook
                 </button>
-              </div>
+              </div> */}
               <div id="emailHelp" className="form-text text-center">
                 don't have an account?
                 <small className='ms-2 pb-4'>

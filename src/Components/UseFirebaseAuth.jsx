@@ -8,6 +8,7 @@ import { addDoc, collection, doc, getDoc, getDocs, query, serverTimestamp, setDo
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 
 const authentic = getAuth(app);
@@ -174,12 +175,14 @@ export function UseFirebaseAuth() {
     }
   };
 
+
   const signOutUser = async () => {
     try {
-      await signOut(authentic);
+      // await signOut(authentic);
       // await setprofilePhotoURL("https://ssniper.sirv.com/Images/3.png") 
       await setUserObj(null)
       await setUserDBData(null)
+      await localStorage.clear()
     } catch (error) {
       console.error(error);
     }

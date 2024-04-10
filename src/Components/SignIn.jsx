@@ -26,7 +26,7 @@ if (userObj) {
 }
 return (
   <div className='take-up d-flex align-items-center'>
-
+<h1>{userObj?.email}</h1>
 <SignUp /> 
   </div>
 );

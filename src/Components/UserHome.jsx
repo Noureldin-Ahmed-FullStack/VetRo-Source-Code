@@ -233,7 +233,7 @@ export default function UserHome() {
       )}
       <div>
         {Condition === 1 && <VetsInYourArea />}
-        {Condition === 2 && <><MakeAPost /> <Postt /></>}
+        {Condition === 2 && <Postt />}
         {Condition === 3 && <YourPosts />}
       </div>
       {/*********************************************************************************************** */}

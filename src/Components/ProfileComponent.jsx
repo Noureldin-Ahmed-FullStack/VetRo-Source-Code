@@ -15,79 +15,63 @@ import DoctorProfile from './DoctorProfile';
 import UserChoicePage from './UserChoicePage';
 
 export default function ProfileComponent() {
-    // const userObj = props.userData;
-    // let [userObj, setuserObj] = useState();
+    
     const { signOutUser } = UseFirebaseAuth();
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
 
 
-    const fetchData = async (userId) => {
-        try {
-            const documentRef = doc(db, 'Users', userId);
-            const docSnapshot = await getDoc(documentRef);
-            if (!docSnapshot.exists()) {
-                // Snapshot is empty, wait five seconds and log
-                toast.warn("you dont have an account. Signing you in!", {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                setTimeout(() => {
-                    window.location.reload();
-                }, 5000); // Delay of 5 seconds (5000 milliseconds)
-            } else {
-                console.log('Snapshot is not empty');
-                // Handle the case when the snapshot is not empty
-                const userData = docSnapshot.data();
-                console.log(userData);
-                console.log("fetch update");
-                setUserDBData(userData);
-                setLoading(false);
-            }
+    // const fetchData = async (userId) => {
+    //     try {
+    //         const documentRef = doc(db, 'Users', userId);
+    //         const docSnapshot = await getDoc(documentRef);
+    //         if (!docSnapshot.exists()) {
+    //             // Snapshot is empty, wait five seconds and log
+    //             toast.warn("you dont have an account. Signing you in!", {
+    //                 position: "top-center",
+    //                 autoClose: 5000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "light",
+    //             });
+    //             setTimeout(() => {
+    //                 window.location.reload();
+    //             }, 5000); // Delay of 5 seconds (5000 milliseconds)
+    //         } else {
+    //             console.log('Snapshot is not empty');
+    //             // Handle the case when the snapshot is not empty
+    //             const userData = docSnapshot.data();
+    //             console.log(userData);
+    //             console.log("fetch update");
+    //             setUserDBData(userData);
+    //             setLoading(false);
+    //         }
 
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            setLoading(false);
-        } finally {
-            setLoading(false);
-        }
-    };
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //         setLoading(false);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
 
-    useEffect(() => {
-        console.log("Profile component Updated");
-        console.log(userObj.uid);
+    // useEffect(() => {
+    //     console.log("Profile component Updated");
+    //     console.log(userObj.uid);
 
-        fetchData(userObj.uid)
-        console.log(UserDBData);
-        // const fetchDataAfterDelay = () => {
-        //     console.log("fetcher");
-        //     setTimeout(() => {
-        //         if (UserDBData === null) {         
-        //             console.log("timer");           
-        //             fetchData(userObj.uid);
-        //         }
-        //     }, 5000);
-        // };
-
-        // fetchDataAfterDelay();
-
-        // return () => {
-        //     // Clear any pending timeouts when the component unmounts (optional)
-        //     clearTimeout(fetchDataAfterDelay);
-        // };
-    }, []);
+    //     fetchData(userObj.uid)
+    //     console.log(UserDBData);
+   
+    // }, []);
 
     if (loading) {
-        return <Loading />; // Render loading state while data is being fetched
+        return <Loading />;
     }
     if (UserDBData) {
         if (UserDBData.decided) {
