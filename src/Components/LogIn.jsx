@@ -48,14 +48,33 @@ export default function Login() {
     'token': token,
   };
   const handleSubmit = async (e) => {
+    e.preventDefault();
     const body = {
       email: e.target[0].value,
       password: e.target[1].value,
     }
-    let res = await axios.post(`http://localhost:3000/signIn`, body, { headers: headers }).catch((err) => {
+    try {
+      var res = await axios.post(`http://localhost:3000/signIn`, body, { headers: headers })
+    } catch (err) {
       console.log(err.response);
-    })
-    console.log(res.data.token);
+      toast.error(err.response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      
+    return; // Throw the error to stop further execution
+    }
+    
+      
+    console.log(res);
+   
+    // console.log(res.data.token);
     await localStorage.setItem('token', res.data.token)
     toast.success(`logged in!`, {
       position: "top-center",

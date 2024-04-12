@@ -23,33 +23,40 @@ export default function AddClinic() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const day_from = e.target[5].value
+        const day_till = e.target[6].value
 
-        const day_from = e.target[4].value
-        const day_till = e.target[5].value
-
-        const time_from = e.target[6].value
-        const time_till = e.target[7].value
+        const time_from = e.target[7].value
+        const time_till = e.target[8].value
         const body = {
-            clinicName: e.target[0].value,
+            clinicName: e.target[1].value,
             userID: userObj.uid,
-            phoneNumber: e.target[1].value,
-            address: e.target[2].value,
-            appointmentPrice: e.target[3].value,
+            phoneNumber: e.target[2].value,
+            address: e.target[3].value,
+            appointmentPrice: e.target[4].value,
             schedule: day_from + " to " + day_till,
             availability: time_from + " to " + time_till
         };
+        for (let key in body) {
+            // Check if the property exists and is not inherited from prototype
+            if (body.hasOwnProperty(key)) {
+                // Append the property value to FormData with the corresponding key
+                formData.append(key, body[key]);
+            }
+        }
         // console.log(body);
         if (image) {
-            formData.append('file', image);
+            await formData.append('file', image);
         }
+        console.log(formData);
         
-        
-        let res = await axios.post(`http://localhost:3000/clinic`, body,  { headers: headers }, formData).catch((err) => {
+        let res = await axios.post(`http://localhost:3000/clinic`, formData,  { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         if (res) {
             console.log(res);
         }
+
         // try {
         //     // Save clinic data to Firestore
         //     const docRef = await addDoc(collection(db, "Clinics"), clinicData);
@@ -66,14 +73,26 @@ export default function AddClinic() {
         // }
 
     };
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setImage(file);
+    };
     return (<>
-        <div className="d-flex justify-content-center align-items-center Mytall1">
+        <div className="d-flex justify-content-center align-items-center  mb-3">
             <div className='container '>
                 <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className='' style={{ color: '#71aef3' }}>
                             <h1 className="text-center">Clinic</h1>
 
+                            <div className="mb-3 d-flex justify-content-center ">
+                                <div className="w-25">
+                                <label htmlFor="img" className="pointer"> 
+                                {image? <img className="w-100" src={URL.createObjectURL(image)} alt="" /> : <img className="w-100" src={'https://ssniper.sirv.com/Images/clinic.jpg'} alt="" />}
+                                </label>
+                                    <input className="d-none" type="file" onChange={handleImageChange} id="img" />
+                                </div>
+                            </div>
                             <div className="mb-3  ">
                                 <label htmlFor="" > Name:</label>
                                 <div className="col-lg-12">

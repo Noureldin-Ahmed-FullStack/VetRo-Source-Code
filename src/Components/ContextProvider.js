@@ -25,6 +25,7 @@ export default function MyContextProvider(props) {
       const userData = docSnapshot.data();
       // console.log(userData);
       setUserDBData(userData);
+      console.log(userData);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {

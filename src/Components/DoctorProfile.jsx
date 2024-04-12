@@ -8,7 +8,6 @@ import { db, storage, ref, uploadBytes, getDownloadURL } from '../Firebase/fireb
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from '@fortawesome/free-solid-svg-icons'
 import * as faReg from '@fortawesome/free-regular-svg-icons'
-import shoes from '../images/shoes.jpg'
 import axios from 'axios'
 
 
@@ -55,11 +54,18 @@ export default function DoctorProfile() {
             About: event.target[2].value
         }
         const formData = new FormData();
+        for (let key in body) {
+            // Check if the property exists and is not inherited from prototype
+            if (body.hasOwnProperty(key)) {
+                // Append the property value to FormData with the corresponding key
+                formData.append(key, body[key]);
+            }
+        }
         if (image) {
             formData.append('file', image);
         }
-        console.log(body);
-        let res = await axios.put(`http://localhost:3000/user/${userObj.uid}`, formData, body, { headers: headers }).catch((err) => {
+        console.log(formData);
+        let res = await axios.put(`http://localhost:3000/user/${userObj.uid}`, formData, { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         // await updateDoc(usersRef, newUserInfo)
@@ -78,29 +84,6 @@ export default function DoctorProfile() {
             setPending(false)
         }
     };
-    const handleImageUpload = (image) => {
-        console.log("lol ya negm");
-        if (image) {
-            console.log(image);
-            const storageRef = ref(storage, `images/${image.name}`);
-            uploadBytes(storageRef, image)
-                .then((snapshot) => {
-                    // Image uploaded successfully, get download URL
-                    getDownloadURL(snapshot.ref).then((downloadURL) => {
-                        setImageUrl(downloadURL);
-                        console.log('File available at', downloadURL);
-                        setPending(false)
-
-                        // You can use downloadURL here or set it to state for later use
-                    });
-                })
-                .catch((error) => {
-                    setPending(false)
-                    // Handle any errors here
-                    console.error('Error uploading image: ', error);
-                });
-        }
-    }
     useEffect(() => {
         console.log("Doctor Profile updated");
         fetchClinicData();
@@ -112,23 +95,44 @@ export default function DoctorProfile() {
     // Function to handle the form submission and update the Clinic information
     const handleClinicUpdate = async (event) => {
         event.preventDefault();
-        const updatedClinicInfo = {
+        let body = {
             name: event.target[0].value,
             phone: event.target[1].value,
             location: event.target[2].value,
             price: event.target[3].value,
             availableFrom: event.target[4].value,
             availableTo: event.target[5].value
-        };
+        }
+        const formData = new FormData();
+        for (let key in body) {
+            // Check if the property exists and is not inherited from prototype
+            if (body.hasOwnProperty(key)) {
+                // Append the property value to FormData with the corresponding key
+                const value = body[key];
 
-        if (imageUrl) {
-            updatedClinicInfo.image = imageUrl
+                // Check if key has a value (not undefined, null, or empty string)
+                if (value !== undefined && value !== null && value !== '') {
+                    await formData.append(key, value);
+                }
+                // await formData.append(key, body[key]);
+            }
+        }
+        if (image) {
+            await formData.append('file', image);
         }
 
-        const ClinicRef = doc(db, 'Clinics', SelectedClinicID);
-        await updateDoc(ClinicRef, updatedClinicInfo);
-        console.log(`Clinic${SelectedClinicID} updated successfully.`);
-        setImageUrl(null)
+        console.log(body);
+        console.log(formData);
+        let res = await axios.put(`http://localhost:3000/clinic/${SelectedClinicID}`, formData).catch((err) => {
+            console.log(err.response);
+            return
+        })
+        console.log(res);
+        console.log(SelectedClinicID);
+        // const petRef = doc(db, 'Pets', editingPet.PetID);
+        // await updateDoc(petRef, updatedPetInfo);
+        // console.log(`Pet ${editingPet.PetID} updated successfully.`);
+        setImage(null)
         window.location.reload();
     };
 
@@ -154,7 +158,8 @@ export default function DoctorProfile() {
                             </div>
                             <div className='d-flex w-100 justify-content-center'>
                                 <label htmlFor="imgUpload">
-                                    <img src={imageUrl || UserDBData.userPFP} className='avatar-sm circle-round pointer' alt="" />
+                                {image ? <img className="avatar-sm circle-round pointer" src={URL.createObjectURL(image)} alt="" /> : <img className="avatar-sm circle-round pointer" src={UserDBData.userPFP} alt="" />}
+                                    {/* <img src={imageUrl || UserDBData.userPFP} className='avatar-sm circle-round pointer' alt="" /> */}
                                 </label>
                                 <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                             </div>
@@ -196,13 +201,13 @@ export default function DoctorProfile() {
                                 {/* Modal Header */}
                                 <div className="modal-header ">
                                     <h4 className="modal-title " style={{ color: '#71aef3' }}>Edit Clinic Info</h4>
-                                    <button type="button" onClick={() => setImageUrl(null)} className="btn-close" data-bs-dismiss="modal" />
+                                    <button type="button" onClick={() => setImage(null)} className="btn-close" data-bs-dismiss="modal" />
                                 </div>
                                 {/* Modal body */}
                                 <div className="modal-body">
                                     <div className='d-flex w-100 justify-content-center'>
                                         <label htmlFor="imgUpload">
-                                            <img src={imageUrl || clinicData[SelectedClinic]?.image} className='avatar-sm circle-round pointer' alt="" />
+                                            {image ? <img className="avatar-sm circle-round pointer" src={URL.createObjectURL(image)} alt="" /> : <img className="avatar-sm circle-round pointer" src={clinicData[SelectedClinic]?.image} alt="" />}
                                         </label>
                                         <input accept="image/*" id='imgUpload' className='d-none' type="file" onChange={handleImageChange} />
                                     </div>
@@ -210,170 +215,210 @@ export default function DoctorProfile() {
                                         <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial', color: '#71aef3' }}>
 
                                             <div className="row py-2 align-items-center">
-                                                <div className="col-sm-4"><label htmlFor="name">Name:</label></div>
-                                                <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.name} type="text" /></div>
+                                                <div className="col-sm-4"><label htmlFor="name">name:</label></div>
+                                                <div className="col-sm-8"><input className="form-control" placeholder={clinicData[SelectedClinic]?.clinicName} type="text" /></div>
                                             </div>
                                             <div className="row py-2 align-items-center">
                                                 <div className="col-sm-4"><label htmlFor="phone">phone:</label></div>
-                                                <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.phone} type="text" /></div>
+                                                <div className="col-sm-8"><input className="form-control" placeholder={clinicData[SelectedClinic]?.phoneNumber} type="text" /></div>
                                             </div>
                                             <div className="row py-2 align-items-center">
                                                 <div className="col-sm-4"><label htmlFor="location"> location:</label></div>
-                                                <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.location} type="text" /></div>
+                                                <div className="col-sm-8"><input className="form-control" placeholder={clinicData[SelectedClinic]?.address} type="text" /></div>
                                             </div>
                                             <div className="row py-2 align-items-center">
                                                 <div className="col-sm-4"><label htmlFor="price">price:</label></div>
-                                                <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.price} type="text" /></div>
+                                                <div className="col-sm-8"><input className="form-control" placeholder={clinicData[SelectedClinic]?.appointmentPrice} type="text" /></div>
                                             </div>
                                             <div className="row py-2 align-items-center">
-                                                <div className="col-sm-4"><label htmlFor="availableFrom">availableFrom:</label></div>
-                                                <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableFrom} type="time" /></div>
+                                                <div className="col-sm-4"><label htmlFor="schedule">schedule:</label></div>
+                                                <div className="col-sm-8">
+                                                    <div className="w-100">
+                                                         <span className=" me-3">from</span>
+                                                    <select >
+                                                        <option value="">select day</option>
+                                                        <option value="saturday">saturday</option>
+                                                        <option value="sunday">sunday</option>
+                                                        <option value="monday">monday</option>
+                                                        <option value="tuesday">tuesday</option>
+                                                        <option value="wednesday">wednesday</option>
+                                                        <option value="thursday">thursday</option>
+                                                        <option value="friday">friday</option>
+                                                    </select>
+                                                    </div>
+                                                   <div className="w-100">
+                                                    <span className=" me-3">to</span>
+                                                    <select defaultValue={null}>
+                                                        <option value="">select day</option>
+                                                        <option value="saturday">saturday</option>
+                                                        <option value="sunday">sunday</option>
+                                                        <option value="monday">monday</option>
+                                                        <option value="tuesday">tuesday</option>
+                                                        <option value="wednesday">wednesday</option>
+                                                        <option value="thursday">thursday</option>
+                                                        <option value="friday">friday</option>
+                                                    </select>
+                                                   </div>
+                                                    
+                                                </div>
                                             </div>
-                                            <div className="row py-2 align-items-center">
-                                                <div className="col-sm-4"><label htmlFor="availableTo"> availableTo:</label></div>
-                                                <div className="col-sm-8"><input className="form-control" defaultValue={clinicData[SelectedClinic]?.availableTo} type="time" /></div>
-                                            </div>
-
-                                            <div className='d-flex justify-content-center'>
-                                                <button type='submit' className="btn  w-25 py-3 m-3" style={{ background: '#1B85F3', color: 'white' }}>submit</button>
-                                            </div>
+                                        <div className="row py-2 align-items-center">
+                                            <div className="col-sm-4"><label htmlFor="availability"> availability:</label></div>
+                                            <div className="col-sm-8">
+                                                    <div className="w-100">
+                                                         <span className=" me-3">from</span>
+                                                         <input className="" placeholder={clinicData[SelectedClinic]?.availability} type="time" />
+                                                    </div>
+                                                   <div className="w-100">
+                                                    <span className=" me-3">to</span>
+                                                    <input className="" placeholder={clinicData[SelectedClinic]?.availability} type="time" />
+                                                   </div>
+                                                    
+                                                </div>
                                         </div>
-                                    </form>
-                                </div>
 
-                            </div>
+                                        <div className='d-flex justify-content-center'>
+                                            <button type='submit' className="btn  w-25 py-3 m-3" style={{ background: '#1B85F3', color: 'white' }}>submit</button>
+                                        </div>
+                                </div>
+                            </form>
                         </div>
+
                     </div>
-                </div>
-                {/**** *******/}
-
-
-
-
-                <div className='position-relative'>
-                    <button onClick={signOutUser} className="btn btn-outline-danger position-absolute mySignOut z-3">Sign Out</button>
-
-                    <div className='display row'>
-                        <div className="card text-center align-items-center w-100 bg-white py-4 rounded shadow">
-                            <div className="row"  >
-                                <div className=""><img src={UserDBData.userPFP} className="avatar circle-round" />
-                                    <h4>Dr.{UserDBData.name}</h4>
-                                    {/* <h4>{SelectedClinicID}</h4> */}
-                                    <div className="about-info d-flex justify-content-center">
-                                        {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
-                                        <div className='text-warning pe-2'>
-                                            <FontAwesomeIcon className='' icon={faReg.faStar} />
-                                            <FontAwesomeIcon className='' icon={faReg.faStar} />
-                                            <FontAwesomeIcon className='' icon={faReg.faStar} />
-                                            <FontAwesomeIcon className='' icon={faReg.faStar} />
-                                            <FontAwesomeIcon className='' icon={faReg.faStar} />
-                                        </div>
-                                        <p className='text-secondary'>4.5 (1500 reviews)</p>
-                                    </div>
-                                    <div id='about' className='w-100 text-center d-flex align-items-center flex-column'>
-                                        <p className='w-100 text-secondary'>{UserDBData.About}</p>
-                                        <p className='w-100 text-secondary'>{UserDBData.phoneNumber}</p>
-                                    </div>
-                                    <div className=" py-1">
-                                        <FontAwesomeIcon onClick={() => setIsOpen(true)} className='btn btn-outline-primary p-2 mb-2' icon={fa.faPenToSquare} />
-
-                                    </div>
-                                    <hr className='w-100' />
-                                    <div>
-                                        <h4>
-                                            Your Clinics
-                                        </h4>
-                                    </div>
-                                </div>
-
-                                <div className='row justify-content-center'>
-                                    {
-                                        clinicData.map((clinic, index) => (
-                                            <div key={index} onClick={() => setSelectedClinic(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
-                                                {
-                                                    clinic.image ? (
-                                                        <img src={clinic.image} className="profile-pic pointer" />
-                                                    ) : (
-                                                        <img src='https://ssniper.sirv.com/Images/clinic.jpg' className="profile-pic pointer" />
-                                                    )
-                                                }
-                                            </div>
-
-                                        ))
-                                    }
-
-                                    <div className='col-4 col-sm-4 col-md-4 col-lg-4'>
-                                        <Link className="" to="clinic">
-                                            <button className='btn btn-outline-primary pet-add'>
-                                                <FontAwesomeIcon className='' icon={fa.faAdd} />
-                                            </button>
-                                        </Link>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div className="card w-100 bg-white rounded shadow pt-3 my-3">
-                            <div className='text-center'><h3 >Clinic Profile</h3></div>
-                            <div className='d-flex justify-content-center'>
-                                {clinicData.length != 0 ? (
-                                    <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
-                                        <div className='col-md-5 align-items-center d-flex'>
-                                            <div className=''>
-                                                <img src={clinicData[SelectedClinic]?.image || 'https://ssniper.sirv.com/Images/clinic.jpg'} className="pet-pic2" />
-                                            </div>
-                                            <div className=' ps-3'>
-                                                <div className=" align-items-center d-flex" >
-                                                    <p className='mb-0 me-3'>{clinicData[SelectedClinic]?.clinicName}</p>
-                                                    <FontAwesomeIcon onClick={() => setSelectedClinicID(clinicData[SelectedClinic]?._id)} data-bs-toggle="modal" data-bs-target="#myModal" className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
-                                                </div>
-                                                {clinicData ? (
-                                                    <>
-                                                        {console.log(clinicData)}
-                                                        <p className='m-0'>Booking price: {clinicData[SelectedClinic]?.appointmentPrice} L.E</p>
-                                                        <p className='m-0'>Clinic phone number: {clinicData[SelectedClinic]?.phoneNumber}</p></>
-                                                ) : (<></>)
-                                                }
-                                            </div>
-                                        </div>
-                                        <div className='col-md-7 '>
-                                            <div className='w-100 MyLeftBorder'>
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <h6 className='mb-0 text-secondary'>Clinic Name</h6>
-                                                    <span className='me-5 title'>{clinicData[SelectedClinic]?.clinicName}</span>
-                                                </div>
-                                                <hr className='my-2' />
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <h6 className='mb-0 text-secondary'>Clinic phone number</h6>
-                                                    <span className='me-5 title'>{clinicData[SelectedClinic]?.phoneNumber}</span>
-                                                </div>
-                                                <hr className='my-2' />
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <h6 className='mb-0 text-secondary'>Booking price</h6>
-                                                    <span className='me-5 title'>{clinicData[SelectedClinic]?.appointmentPrice}</span>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-                                ) : (
-                                    <>no clinics? <Link className="ms-1" to="clinic">add one</Link></>
-
-                                )}
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
+                {/**** *******/ }
+
+
+
+
+    <div className='position-relative'>
+        <button onClick={signOutUser} className="btn btn-outline-danger position-absolute mySignOut z-3">Sign Out</button>
+
+        <div className='display row'>
+            <div className="card text-center align-items-center w-100 bg-white py-4 rounded shadow">
+                <div className="row"  >
+                    <div className=""><img src={UserDBData.userPFP} className="avatar circle-round" />
+                        <h4>Dr.{UserDBData.name}</h4>
+                        {/* <h4>{SelectedClinicID}</h4> */}
+                        <div className="about-info d-flex justify-content-center">
+                            {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
+                            <div className='text-warning pe-2'>
+                                <FontAwesomeIcon className='' icon={faReg.faStar} />
+                                <FontAwesomeIcon className='' icon={faReg.faStar} />
+                                <FontAwesomeIcon className='' icon={faReg.faStar} />
+                                <FontAwesomeIcon className='' icon={faReg.faStar} />
+                                <FontAwesomeIcon className='' icon={faReg.faStar} />
+                            </div>
+                            <p className='text-secondary'>4.5 (1500 reviews)</p>
+                        </div>
+                        <div id='about' className='w-100 text-center d-flex align-items-center flex-column'>
+                            <p className='w-100 text-secondary'>{UserDBData.About}</p>
+                            <p className='w-100 text-secondary'>{UserDBData.phoneNumber}</p>
+                        </div>
+                        <div className=" py-1">
+                            <FontAwesomeIcon onClick={() => setIsOpen(true)} className='btn btn-outline-primary p-2 mb-2' icon={fa.faPenToSquare} />
+
+                        </div>
+                        <hr className='w-100' />
+                        <div>
+                            <h4>
+                                Your Clinics
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div className='row justify-content-center'>
+                        {
+                            clinicData.map((clinic, index) => (
+                                <div key={index} onClick={() => setSelectedClinic(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                                    {
+                                        clinic.image ? (
+                                            <img src={clinic.image} className="profile-pic pointer" />
+                                        ) : (
+                                            <img src='https://ssniper.sirv.com/Images/clinic.jpg' className="profile-pic pointer" />
+                                        )
+                                    }
+                                </div>
+
+                            ))
+                        }
+
+                        <div className='col-4 col-sm-4 col-md-4 col-lg-4'>
+                            <Link className="" to="clinic">
+                                <button className='btn btn-outline-primary pet-add'>
+                                    <FontAwesomeIcon className='' icon={fa.faAdd} />
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div className="card w-100 bg-white rounded shadow pt-3 my-3">
+                <div className='text-center'><h3 >Clinic Profile</h3></div>
+                <div className='d-flex justify-content-center'>
+                    {clinicData.length != 0 ? (
+                        <div className='w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center'>
+                            <div className='col-md-5 align-items-center d-flex'>
+                                <div className=''>
+                                    <img src={clinicData[SelectedClinic]?.image || 'https://ssniper.sirv.com/Images/clinic.jpg'} className="pet-pic2" />
+                                </div>
+                                <div className=' ps-3'>
+                                    <div className=" align-items-center d-flex" >
+                                        <p className='mb-0 me-3'>{clinicData[SelectedClinic]?.clinicName}</p>
+                                        <FontAwesomeIcon onClick={() => setSelectedClinicID(clinicData[SelectedClinic]?._id)} data-bs-toggle="modal" data-bs-target="#myModal" className='btn btn-outline-primary p-2' icon={fa.faPenToSquare} />
+                                    </div>
+                                    {clinicData ? (
+                                        <>
+                                            {console.log(clinicData)}
+                                            <p className='m-0'>Booking price: {clinicData[SelectedClinic]?.appointmentPrice} L.E</p>
+                                            <p className='m-0'>schedule: {clinicData[SelectedClinic]?.schedule}</p>
+                                            <p className='m-0'>Available from: {clinicData[SelectedClinic]?.availability}</p>
+                                        </>
+                                    ) : (<></>)
+                                    }
+                                </div>
+                            </div>
+                            <div className='col-md-7 '>
+                                <div className='w-100 MyLeftBorder'>
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <h6 className='mb-0 text-secondary'>Clinic Name</h6>
+                                        <span className='me-5 title'>{clinicData[SelectedClinic]?.clinicName}</span>
+                                    </div>
+                                    <hr className='my-2' />
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <h6 className='mb-0 text-secondary'>Clinic phone number</h6>
+                                        <span className='me-5 title'>{clinicData[SelectedClinic]?.phoneNumber}</span>
+                                    </div>
+                                    <hr className='my-2' />
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <h6 className='mb-0 text-secondary'>Booking price</h6>
+                                        <span className='me-5 title'>{clinicData[SelectedClinic]?.appointmentPrice}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    ) : (
+                        <>no clinics? <Link className="ms-1" to="clinic">add one</Link></>
+
+                    )}
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+            </div >
+        </div >
     )
 }
 // samy was here

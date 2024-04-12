@@ -18,15 +18,31 @@ export default function SignUp() {
         'token': token,
     };
     const handleSubmit = async (e) => {
+        
+        e.preventDefault();
         const body = {
             name: e.target[0].value,
             email: e.target[1].value,
             password: e.target[2].value,
             repassword: e.target[3].value
         }
-        let res = await axios.post(`http://localhost:3000/signUp`, body, { headers: headers }).catch((err) => {
-            console.log(err.response);
-        })
+        try {
+            var res = await axios.post(`http://localhost:3000/signUp`, body, { headers: headers })
+        } catch (err) {
+            console.log(err);
+            toast.error(err.response.data.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return
+        }
+        
         toast.success(`Sign in!`, {
             position: "top-center",
             autoClose: 5000,
@@ -55,6 +71,7 @@ export default function SignUp() {
                                 type="text"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder='user name'
+                                required
                             />
                         </div>
                         <div className="input-group mb-2">
@@ -62,6 +79,7 @@ export default function SignUp() {
                                 type="email"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder='Your email'
+                                required
                             />
                         </div>
                         <div className="input-group mb-2">
@@ -69,6 +87,7 @@ export default function SignUp() {
                                 type="password"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder='password'
+                                required
                             />
                         </div>
                         <div className="input-group mb-2">
@@ -76,6 +95,7 @@ export default function SignUp() {
                                 type="password"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder='confirm password'
+                                required
                             />
                         </div>
 
