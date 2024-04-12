@@ -74,7 +74,7 @@ export default function UserProfile() {
             await formData.append('file', image);
         }
         console.log(formData);
-        let res = await axios.put(`http://localhost:3000/user/${userObj.uid}`, formData, { headers: headers }).catch((err) => {
+        let res = await axios.put(`https://vetro-server.onrender.com/user/${userObj.uid}`, formData, { headers: headers }).catch((err) => {
             console.log(err.response);
             return
         })
@@ -139,7 +139,7 @@ export default function UserProfile() {
 
         console.log(body);
         console.log(formData);
-        let res = await axios.put(`http://localhost:3000/pet/${SelectedPetID}`, formData).catch((err) => {
+        let res = await axios.put(`https://vetro-server.onrender.com/pet/${SelectedPetID}`, formData).catch((err) => {
             console.log(err.response);
             return
         })

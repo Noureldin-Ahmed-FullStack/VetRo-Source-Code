@@ -35,7 +35,7 @@ export default function MyContextProvider(props) {
   const fetchUserData = async (userId) => {
     console.log(userId);
     try {
-      await axios.get(`http://localhost:3000/getSingleUser/${userId}`)
+      await axios.get(`https://vetro-server.onrender.com/getSingleUser/${userId}`)
         .then(response => {
           console.log(response.data.message);
           setUserDBData(response.data.message)

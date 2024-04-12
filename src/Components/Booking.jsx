@@ -3,13 +3,15 @@ import { arrayUnion, collection, doc, getDocs, orderBy, query, runTransaction, u
 import { db } from '../Firebase/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import { toast } from 'react-toastify';
 /** */
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { MyContext } from './ContextProvider';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
+import { Tooltip } from 'react-tooltip'
 
 export default function Booking() {
     const { userObj, setUserObj } = useContext(MyContext);
@@ -56,24 +58,56 @@ export default function Booking() {
     }
     const BookingRef = collection(db, "Booking")
     const [bookings, setBooking] = useState([])
+    var token = localStorage.getItem('token');
+    const headers = {
+        'token': token,
+    };
     let navigate = useNavigate()
     const goToProfile = (Docid) => {
         navigate('/profile', { state: { id: Docid } });
     }
     const fetchCollection = async () => {
+        // try {
+        //     const querywithTime = query(BookingRef, orderBy('PostDate', 'desc'), where('Doctor', "==", userObj._id))
+        //     const querySnapshot = await getDocs(querywithTime);
+        //     const fetchedItems = querySnapshot.docs.map((doc) => ({
+        //         id: doc.id,
+        //         ...doc.data(),
+        //     }));
+        //     sessionStorage.setItem('UserBookingData', JSON.stringify(fetchedItems));
+        //     setBooking(fetchedItems);
+        //     console.log(fetchedItems);
+        // } catch (error) {
+        //     console.error('Error fetching collection:', error);
+        // }
+
         try {
-            const querywithTime = query(BookingRef, orderBy('PostDate', 'desc'), where('Doctor', "==", userObj.uid))
-            const querySnapshot = await getDocs(querywithTime);
-            const fetchedItems = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            sessionStorage.setItem('UserBookingData', JSON.stringify(fetchedItems));
-            setBooking(fetchedItems);
-            console.log(fetchedItems);
-        } catch (error) {
-            console.error('Error fetching collection:', error);
+            var res = await axios.get(`http://localhost:3000/doctorAppointment`, { headers: headers })
+        } catch (err) {
+            toast.error(err.response.data.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Throw the error to stop further execution
+
         }
+        if (res) {
+            for (let i = res.data.length - 1; i >= 0; i--) {
+                if (res.data[i].createdBy === null || res.data[i].Status == 'rejected') {
+                    res.data.splice(i, 1); // Remove item at index i
+                }
+            }
+            console.log(res.data);
+        }
+        sessionStorage.setItem('UserBookingData', JSON.stringify(res.data));
+        setBooking(res.data);
+
     }
     function convertTimeToAMPM(timeString) {
         // Split the time string into hours and minutes
@@ -107,91 +141,108 @@ export default function Booking() {
         }
     }, [])
     const updateBooking = async (condition, id, index) => {
-        const temporaryBooking = bookings
-        temporaryBooking[index].Status = condition
-        const documentRef = doc(db, 'Booking', id);
+        // const temporaryBooking = bookings
+        // temporaryBooking[index].Status = condition
+        // const documentRef = doc(db, 'Booking', id);
+        // try {
+        //     await updateDoc(documentRef, {
+        //         Status: condition
+        //     })
+
+        //     sessionStorage.setItem('UserBookingData', JSON.stringify(temporaryBooking));
+
+        //     const storedUserBookingData = sessionStorage.getItem('UserBookingData');
+        //     setBooking(JSON.parse(storedUserBookingData));
+        // } catch (error) {
+        //     console.error(error)
+        // }
+        const body= {
+            Status: condition
+        }
         try {
-            await updateDoc(documentRef, {
-                Status: condition
-            })
+            var res = await axios.put(`http://localhost:3000/appointment/${id}`, body)
+        } catch (err) {
+            console.log(err.response);
+            toast.error(err.response.data.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return; // Throw the error to stop further execution
 
-            sessionStorage.setItem('UserBookingData', JSON.stringify(temporaryBooking));
-
-            const storedUserBookingData = sessionStorage.getItem('UserBookingData');
-            setBooking(JSON.parse(storedUserBookingData));
-        } catch (error) {
-            console.error(error)
+        }
+        if (res) {
+            console.log(res);
         }
     }
 
-    const chatFunc = (userData) => {        
+    const chatFunc = (createdBy) => {
         let RID
-        if (userData?.isDoctor) {
-          RID = userObj.uid + " " + userData?.uid;
+        if (createdBy?.isDoctor) {
+            RID = userObj._id + " " + createdBy?._id;
         } else {
-          RID = userData?.uid + " " + userObj.uid;
+            RID = createdBy?._id + " " + userObj._id;
         }
         console.log(RID);
-        goToRoom(RID , userData);
-      };
-      const goToRoom = async (RID , userData) => {
-    
-        const userChatsRef = collection(db, "UserChats");
-        // updateDoc(userChatDoc, {
-        //   ChatRooms: arrayUnion({
-        //     ChatRoomID: RID,
-        //     OtherPersonName: userData?.userName,
-        //     otherPersonPic: userData?.userPFP
-        //   })
-        // })
-        try {
-          await runTransaction(db, async (transaction) => {
-            const userChatDoc = await doc(userChatsRef, userObj.uid);
-            const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
-            const userChatDocSnap = await transaction.get(userChatDoc);
-            const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
-    
-            if (userChatDocSnap.exists()) {
-              transaction.update(userChatDoc, {
-                ChatRooms: arrayUnion({
-                  ChatRoomID: RID,
-                  OtherPersonName: userData?.userName,
-                  otherPersonPic: userData?.userPFP
-                })
-              });
-            } else {
-              transaction.set(userChatDoc, {
-                ChatRooms: [{
-                  ChatRoomID: RID,
-                  OtherPersonName: userData?.userName,
-                  otherPersonPic: userData?.userPFP
-                }]
-              });
-            }
-    
-            if (OtherUserChatDocSnap.exists()) {
-              transaction.update(OtherUserChatDoc, {
-                ChatRooms: arrayUnion({
-                  ChatRoomID: RID,
-                  OtherPersonName: UserDBData.userName,
-                  otherPersonPic: UserDBData.userPFP
-                })
-              });
-            } else {
-              transaction.set(OtherUserChatDoc, {
-                ChatRooms: [{
-                  ChatRoomID: RID,
-                  OtherPersonName: UserDBData.userName,
-                  otherPersonPic: UserDBData.userPFP
-                }]
-              });
-            }
-          });
-        } catch (error) {
-          console.error("Error updating document: ", error);
-        }
-        navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
-      };
+        goToRoom(RID, createdBy);
+    };
+    const goToRoom = async (RID, createdBy) => {
+
+        // const userChatsRef = collection(db, "UserChats");
+
+        // try {
+        //   await runTransaction(db, async (transaction) => {
+        //     const userChatDoc = await doc(userChatsRef, userObj._id);
+        //     const OtherUserChatDoc = await doc(userChatsRef, userData?._id);
+        //     const userChatDocSnap = await transaction.get(userChatDoc);
+        //     const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
+
+        //     if (userChatDocSnap.exists()) {
+        //       transaction.update(userChatDoc, {
+        //         ChatRooms: arrayUnion({
+        //           ChatRoomID: RID,
+        //           OtherPersonName: userData?.userName,
+        //           otherPersonPic: userData?.userPFP
+        //         })
+        //       });
+        //     } else {
+        //       transaction.set(userChatDoc, {
+        //         ChatRooms: [{
+        //           ChatRoomID: RID,
+        //           OtherPersonName: userData?.userName,
+        //           otherPersonPic: userData?.userPFP
+        //         }]
+        //       });
+        //     }
+
+        //     if (OtherUserChatDocSnap.exists()) {
+        //       transaction.update(OtherUserChatDoc, {
+        //         ChatRooms: arrayUnion({
+        //           ChatRoomID: RID,
+        //           OtherPersonName: UserDBData.userName,
+        //           otherPersonPic: UserDBData.userPFP
+        //         })
+        //       });
+        //     } else {
+        //       transaction.set(OtherUserChatDoc, {
+        //         ChatRooms: [{
+        //           ChatRoomID: RID,
+        //           OtherPersonName: UserDBData.userName,
+        //           otherPersonPic: UserDBData.userPFP
+        //         }]
+        //       });
+        //     }
+        //   });
+        // } catch (error) {
+        //   console.error("Error updating document: ", error);
+        // }
+        // navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+    };
 
     const GetTime = (timestamp) => {
         const date = new Date(timestamp);
@@ -225,63 +276,88 @@ export default function Booking() {
                 <div className='row'>
                     {/* <OwlCarousel className='owl-theme' responsive={responsive} nav> */}
                     {bookings?.map((Appointment, index) => (
-                        <div className='col-md-6 mb-2 d-flex justify-content-center' key={Appointment.id}>
+                        <div className='col-md-6 mb-2 d-flex justify-content-center' key={Appointment._id}>
                             <div className='row justify-content-center w-100'>
                                 <div className="card cardsize ">
                                     <div className="card-body">
                                         <div className='row align-items-center d-flex'>
                                             <div className=' col-md-3 col-sm-3 col-12'>
-                                                <img onClick={() => goToProfile(Appointment.UserData?.uid)} src={Appointment.UserData?.userPFP} alt="nnn" className=" ProfImg" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
+                                                <img onClick={() => goToProfile(Appointment.createdBy?._id)} src={Appointment.createdBy?.userPFP} alt="nnn" className=" ProfImg" style={{ maxWidth: '100%', height: 'auto', maxHeight: '120px' }} />
                                             </div>
                                             <div className=' col-md-6 col-sm-6 col-10'>
                                                 <div className='row'>
-                                                    <div className="h4 mb-1 text-start ProfTitle" onClick={() => goToProfile(Appointment.UserData?.uid)}>{Appointment.UserData?.userName}</div>
+                                                    <div className="mb-1 text-start  ProfTitle" onClick={() => goToProfile(Appointment.createdBy?._id)}>{Appointment.createdBy?.name}</div>
                                                 </div>
                                                 <div className='row '>
-                                                    <div className="mb-1 COLorli text-start ProfTitle" onClick={() => goToProfile(Appointment.UserData?.uid)}>{Appointment.UserData?.email}</div>
+                                                    <div className="mb-1 COLorli text-start pointer" onClick={() => goToProfile(Appointment.createdBy?._id)}>{Appointment.createdBy?.email}</div>
                                                 </div>
                                                 <div className='row'>
                                                     <div className="mb-1 COLorli text-start">{Appointment?.phoneNumber}</div>
                                                 </div>
                                             </div>
-                                            <div onClick={()=> chatFunc(Appointment?.UserData)} className=' col-md-3 col-sm-3 col-2'><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
+                                            <div onClick={() => chatFunc(Appointment?.createdBy)} className=' col-md-3 col-sm-3 col-2'><FontAwesomeIcon className='mess' icon={fa.faCommentDots} /></div>
                                         </div>
                                         <hr />
-                                        <div className='d-flex justify-content-between COLorP'>
-                                            <p>Pet name: </p>
-                                            <h6>{Appointment?.PetName}</h6>
+                                        <div className='row'>
+                                            <div data-tooltip-id="my-tooltip" data-tooltip-variant="error" className="col-4">
+                                                <img src={Appointment?.pet.image} className='w-100' alt="" />
+                                                <Tooltip id="my-tooltip" >
+                                                    <div className='d-flex justify-content-between tooltip_width'>
+                                                        <span className=''>pet name:</span>
+                                                        <span>{Appointment?.pet.petName}</span>
+                                                    </div>
+                                                    <div className='d-flex justify-content-between tooltip_width'>
+                                                        <span className=''>age:</span>
+                                                        <span>{Appointment?.pet.age}</span>
+                                                    </div>
+                                                    <div className='d-flex justify-content-between tooltip_width'>
+                                                        <span className=''>breed:</span>
+                                                        <span>{Appointment?.pet.type + " || " + Appointment?.pet.breed + " || " + Appointment?.pet.gender}</span>
+                                                    </div>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="col-8">
+                                                <div className="w-100">
+                                                    <div className='d-flex justify-content-between COLorP'>
+                                                        <p>Pet name: </p>
+                                                        <h6>{Appointment?.pet.petName}</h6>
+                                                    </div>
+                                                    <div className='d-flex justify-content-between COLorP'>
+                                                        <p>breed: </p>
+                                                        <h6>{Appointment?.pet.breed}</h6>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className='d-flex justify-content-between COLorP'>
-                                            <p>breed: </p>
-                                            <h6>{Appointment?.PetBreed}</h6>
-                                        </div>
-                                        <div className='d-flex justify-content-between COLorP'>
-                                            <p>{Appointment?.Issue}</p>
+                                            <p>{Appointment?.issue}</p>
                                             <p >
                                                 <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCalendarAlt} />{GetTime(Appointment?.Appointment).Date} <FontAwesomeIcon className='pe-1 ps-2 fs-5 ' icon={fa.faClock} />{GetTime(Appointment?.Appointment).Time}</p>
                                         </div>
                                         <hr />
-                                        {Appointment?.Status == 'no response yet' ? (
-                                            <div className='justify-content-around row mt-2'>
-                                                <button className='btn btn-outline-success col-5 py-3 px-1' onClick={() => updateBooking(true, Appointment.id, index)}>
-                                                    <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
-                                                    <span>Accept Appointment</span>
-                                                </button>
-                                                <button className='btn btn-outline-danger col-5 py-3' onClick={() => updateBooking(false, Appointment.id, index)}>
-                                                    <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
-                                                    <span>Delete</span>
-                                                </button>
+                                        {Appointment?.Status == 'rejected' ? (
+                                            <div className='d-flex flex-column bg-danger-subtle justify-content-center align-items-center p-2 rounded-4 text-danger-emphasis'>
+                                                <h6>Appointment Rejected</h6>
                                             </div>
                                         ) : (
-                                            Appointment?.Status == true ? (
+                                            Appointment?.Status == "accepted" ? (
                                                 <div className='d-flex flex-column bg-success-subtle justify-content-center align-items-center p-2 rounded-4 text-success-emphasis'>
                                                     <h6>Appointment accepted</h6>
-                                                    <p>would you like to <span className='cancelSpan' onClick={() => updateBooking(false, Appointment.id, index)}>cancel</span>?</p>
+                                                    <p>would you like to <span className='cancelSpan' onClick={() => updateBooking('rejected', Appointment._id, index)}>cancel</span>?</p>
                                                 </div>
 
                                             ) : (
-                                                <div className='d-flex flex-column bg-danger-subtle justify-content-center align-items-center p-2 rounded-4 text-danger-emphasis'>
-                                                    <h6>Appointment Rejected</h6>
+
+                                                <div className='justify-content-around row mt-2'>
+                                                    <button className='btn btn-outline-success col-5 py-3 px-1' onClick={() => updateBooking('accepted', Appointment._id, index)}>
+                                                        <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
+                                                        <span>Accept Appointment</span>
+                                                    </button>
+                                                    <button className='btn btn-outline-danger col-5 py-3' onClick={() => updateBooking('rejected', Appointment._id, index)}>
+                                                        <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
+                                                        <span>Delete</span>
+                                                    </button>
                                                 </div>
                                             )
                                         )}

@@ -472,7 +472,9 @@
 .myBottomMargin {
   margin-bottom: 5rem;
 }
-
+.tooltip_width{
+  width: 200px;
+}
 #loading {
   display: flex;
   position: fixed;

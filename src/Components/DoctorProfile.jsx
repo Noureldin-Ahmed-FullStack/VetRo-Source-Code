@@ -65,7 +65,7 @@ export default function DoctorProfile() {
             formData.append('file', image);
         }
         console.log(formData);
-        let res = await axios.put(`http://localhost:3000/user/${userObj.uid}`, formData, { headers: headers }).catch((err) => {
+        let res = await axios.put(`https://vetro-server.onrender.com/user/${userObj.uid}`, formData, { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         // await updateDoc(usersRef, newUserInfo)
@@ -123,7 +123,7 @@ export default function DoctorProfile() {
 
         console.log(body);
         console.log(formData);
-        let res = await axios.put(`http://localhost:3000/clinic/${SelectedClinicID}`, formData).catch((err) => {
+        let res = await axios.put(`https://vetro-server.onrender.com/clinic/${SelectedClinicID}`, formData).catch((err) => {
             console.log(err.response);
             return
         })

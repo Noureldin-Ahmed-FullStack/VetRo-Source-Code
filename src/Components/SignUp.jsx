@@ -27,7 +27,7 @@ export default function SignUp() {
             repassword: e.target[3].value
         }
         try {
-            var res = await axios.post(`http://localhost:3000/signUp`, body, { headers: headers })
+            var res = await axios.post(`https://vetro-server.onrender.com/signUp`, body, { headers: headers })
         } catch (err) {
             console.log(err);
             toast.error(err.response.data.message, {

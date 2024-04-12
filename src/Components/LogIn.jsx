@@ -2,17 +2,9 @@
 import { MyContext } from './ContextProvider'
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import React, { useContext } from 'react'
-import ProfileComponent from './ProfileComponent';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as fa from '@fortawesome/free-solid-svg-icons'
 import '../MyCss/SignIn.css'
-import VetImg from '../images/vet.jpg'
-import UserImg from '../images/User.jpg'
-import logo from '../images/Blue Logo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../images/Blue Logo.svg'
-import Facebook from '../images/Facebook_logo.png'
-import Google from '../images/googlelogo.png'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
@@ -26,7 +18,7 @@ export default function Login() {
   const fetchUserData = async (userId) => {
     console.log(userId);
     try {
-      await axios.get(`http://localhost:3000/getSingleUser/${userId}`)
+      await axios.get(`https://vetro-server.onrender.com/getSingleUser/${userId}`)
         .then(response => {
           console.log(response.data.message);
           setUserDBData(response.data.message)
@@ -54,7 +46,7 @@ export default function Login() {
       password: e.target[1].value,
     }
     try {
-      var res = await axios.post(`http://localhost:3000/signIn`, body, { headers: headers })
+      var res = await axios.post(`https://vetro-server.onrender.com/signIn`, body, { headers: headers })
     } catch (err) {
       console.log(err.response);
       toast.error(err.response.data.message, {

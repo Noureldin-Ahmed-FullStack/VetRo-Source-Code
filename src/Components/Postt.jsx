@@ -83,6 +83,12 @@ export default function Postt() {
       const fetchedItems = await axios.get('https://vetro-server.onrender.com/post').catch(err => {
         console.log(err);
       })
+      for (let i = fetchedItems.data.length - 1; i >= 0; i--) {
+        if (fetchedItems.data[i].createdBy === null) {
+          fetchedItems.data.splice(i, 1); // Remove item at index i
+        }
+      }
+      console.log(fetchedItems);
       sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems.data));
       setPosts(fetchedItems.data);
       console.log(fetchedItems.data);

@@ -41,7 +41,7 @@ export default function Pets() {
         }
 
 
-        let res = await axios.post(`http://localhost:3000/pet`, formData, { headers: headers }).catch((err) => {
+        let res = await axios.post(`https://vetro-server.onrender.com/pet`, formData, { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         if (res) {

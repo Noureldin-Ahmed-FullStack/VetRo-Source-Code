@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { getFirestore, collection, addDoc, doc, updateDoc } from "firebase/firestore";
-import { async } from "@firebase/util";
 import { MyContext } from "./ContextProvider";
 import axios from 'axios'
 const db = getFirestore();
@@ -50,7 +49,7 @@ export default function AddClinic() {
         }
         console.log(formData);
         
-        let res = await axios.post(`http://localhost:3000/clinic`, formData,  { headers: headers }).catch((err) => {
+        let res = await axios.post(`https://vetro-server.onrender.com/clinic`, formData,  { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         if (res) {
