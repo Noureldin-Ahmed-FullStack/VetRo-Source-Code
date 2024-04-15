@@ -4,6 +4,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../Firebase/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faReg from "@fortawesome/free-regular-svg-icons";
+import axios from 'axios'
+
+import '../MyCss/MyCustomStylesheet.css'
+import '../MyCss/profile.css'
 import {
   Timestamp,
   addDoc,
@@ -21,7 +25,8 @@ export default function Profile(props) {
   const [ProfileData, setProfileData] = useState();
   const [PetsData, setPetsData] = useState([]);
   const [clinicData, setClinicData] = useState([]);
-  const [selectedClinicData, setSelectedClinicData] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(0);
+  const [selectedSubItem, setSelectedSubItem] = useState(0);
   const { userObj, setUserObj } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
 
@@ -30,7 +35,11 @@ export default function Profile(props) {
   const today = new Date();
   const currentDate = today.toISOString().slice(0, 16);
 
-  const handleBooking = async(event) => {
+  let token = localStorage.getItem('token');
+  const headers = {
+    'token': token,
+  };
+  const handleBooking = async (event) => {
     event.preventDefault()
     if (!userObj) {
       toast.error("Login First!", {
@@ -42,41 +51,39 @@ export default function Profile(props) {
         draggable: true,
         progress: undefined,
         theme: "light",
-      }); 
+      });
       return
     }
-    let BookingData = {
-      userID: userObj.uid,
-      Doctor: ProfileData.uid,
-      DoctorData: ProfileData,
-      ClinicID: selectedClinicData.id,
-      ClinicData: selectedClinicData,
-      UserData: UserDBData,
-      PetName: event.target[0].value,
-      PetBreed: event.target[1].value,
-      phoneNumber: event.target[2].value,
-      Appointment: event.target[3].value,
-      Issue: event.target[4].value,
-      PostDate: serverTimestamp(),
-      Status: "no response yet"
+    let body = {
+      createdBy: userObj.uid,
+      clinic: clinicData[selectedItem]._id,
+      doctor: ProfileData._id,
+      phoneNumber: event.target[0].value,
+      bookedTime: event.target[1].value,
+      issue: event.target[2].value,
+      pet: UserDBData.pets[selectedSubItem]._id
     }
-    console.log(BookingData);
+    console.log(body);
     try {
-      await addDoc(BookingRef,BookingData)
+      let res = await axios.post('http://localhost:3000/appointment', body, { headers: headers }).catch((err)=> console.log(err))
+
+      if (res) {
+        console.log(res);
+        toast.success("Appointment Booked successfully!", {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
       for (let i = 0; i < event.target.length; i++) {
         event.target[i].value = null
-        
+
       }
-      toast.success("Appointment Booked successfully!", {
-        position: "top-center",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }); 
     } catch (error) {
       toast.error("Something went wrong!", {
         position: "top-center",
@@ -88,9 +95,9 @@ export default function Profile(props) {
         progress: undefined,
         theme: "light",
       });
-         
+
     }
-    
+
   }
   const chatFunc = () => {
     if (!userObj) {
@@ -178,55 +185,71 @@ export default function Profile(props) {
 
   const fetchProfileData = async () => {
     try {
-      const documentRef = doc(db, "Users", location.state.id);
-      const docSnapshot = await getDoc(documentRef);
-      const userData = docSnapshot.data();
-      console.log(docSnapshot.data());
-      setProfileData(userData);
-      if (userData?.isDoctor) {
-        fetchClinicData();
-      } else {
-        fetchPetsData();
+      // const documentRef = doc(db, "Users", location.state.id);
+      // const docSnapshot = await getDoc(documentRef);
+      // const userData = docSnapshot.data();
+      // console.log(docSnapshot.data());
+      try {
+        var res = await axios.get(`https://vetro-server.onrender.com/getSingleUser/${location.state.id}`)
+        console.log(res);
+      } catch (err) {
+        console.log(err.response);
+        toast.error(err.response.data.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        return; // Throw the error to stop further execution
       }
+
+      setProfileData(res.data.message);
+      setPetsData(res.data.message.pets)
+      setClinicData(res.data.message.clinics)
       console.log(ProfileData);
     } catch (error) {
       console.error("Error fetching Profile data:", error);
     }
   };
-  const fetchClinicData = async () => {
-    try {
-      const response = collection(db, "Clinics");
-      const q = query(response, where("DoctorId", "==", location.state.id)); // Assuming userId property in Clinics collection
-      const data = await getDocs(q);
-      const clinicDataArray = data.docs.map((doc) => {
-        const clinicData = doc.data();
-        return {
-          ...clinicData,
-          id: doc.id  // Append the document ID to each clinic data object
-        };
-      });
-      setClinicData(clinicDataArray);
-      console.log(clinicDataArray);
-    } catch (error) {
-      console.error("Error fetching clinic data:", error);
-    }
-  };
-  const fetchPetsData = async () => {
-    try {
-      const response = collection(db, "Pets");
-      const q = query(response, where("userID", "==", location.state.id)); // Assuming userId property in Pets collection
-      const data = await getDocs(q);
-      console.log("pet data " + data);
-      const PetsDataArray = data.docs.map((doc) => {
-        const petData = doc.data();
-        petData.PetID = doc.id;
-        return petData;
-      });
-      setPetsData(PetsDataArray);
-    } catch (error) {
-      console.error("Error fetching PETS data:", error);
-    }
-  };
+  // const fetchClinicData = async () => {
+  //   try {
+  //     const response = collection(db, "Clinics");
+  //     const q = query(response, where("DoctorId", "==", location.state.id)); // Assuming userId property in Clinics collection
+  //     const data = await getDocs(q);
+  //     const clinicDataArray = data.docs.map((doc) => {
+  //       const clinicData = doc.data();
+  //       return {
+  //         ...clinicData,
+  //         id: doc.id  // Append the document ID to each clinic data object
+  //       };
+  //     });
+  //     setClinicData(clinicDataArray);
+  //     console.log(clinicDataArray);
+  //   } catch (error) {
+  //     console.error("Error fetching clinic data:", error);
+  //   }
+  // };
+  // const fetchPetsData = async () => {
+  //   try {
+  //     const response = collection(db, "Pets");
+  //     const q = query(response, where("userID", "==", location.state.id)); // Assuming userId property in Pets collection
+  //     const data = await getDocs(q);
+  //     console.log("pet data " + data);
+  //     const PetsDataArray = data.docs.map((doc) => {
+  //       const petData = doc.data();
+  //       petData.PetID = doc.id;
+  //       return petData;
+  //     });
+  //     setPetsData(PetsDataArray);
+  //   } catch (error) {
+  //     console.error("Error fetching PETS data:", error);
+  //   }
+  // };
 
   useEffect(() => {
     console.log("Profile Updated");
@@ -255,20 +278,50 @@ export default function Profile(props) {
                   </div>
                   <form onSubmit={handleBooking}>
                     <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial', color: '#71aef3' }}>
-                      <p>This clinic is available from: {selectedClinicData.availableFrom} to: {selectedClinicData.availableTo}</p>
+                      <p>This clinic is available from: {clinicData[selectedItem].schedule} , {clinicData[selectedItem].availability}</p>
                       <p style={{ fontSize: '0.9rem' }}>Make sure you pick an appointment date and time that fit this criteria</p>
+                      <div className="row ">
+                        <h3 className="text-center">Select your pet</h3>
+                        <div className="w-100  ">
+                          <div className="row">
+                            {
+                              UserDBData.pets?.map((pets, index) => (
+                                <div key={index} className="col-sm-3 col-4 g-3 ">
+                                  {
+                                    pets.image ? (
+                                      <img src={pets.image} onClick={()=> setSelectedSubItem(index)} className={`${selectedSubItem == index? 'petActive':''} secondPetAdd outlineOnHover pointer`}/>
+                                    ) : (
+                                      <img onClick={()=> setSelectedSubItem(index)} src='https://t4.ftcdn.net/jpg/01/18/91/73/360_F_118917333_uEdOfPd69Hiqi3q69KUWnU6YCpUgG1v1.jpg' className="profile-pic pointer" />
+                                    )
+                                  }
+                                </div>
 
+                              ))
+                            }
+                            <div className="col-sm-3 col-4 g-3 pointer">
+                              <div className="d-flex rounded-circle secondPetAdd myBorder w-100 justify-content-center align-items-center h-100">
+
+                                <FontAwesomeIcon className="big" icon={fa.faPlus} />
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
                       <div className="row py-2 align-items-center">
                         <div className="col-sm-4"><label htmlFor="name">Pet Name:</label></div>
-                        <div className="col-sm-8"><input className="form-control" placeholder="Max" type="text" /></div>
+                        {/* <div className="col-sm-8"><input className="form-control" placeholder="Max" type="text" /></div> */}
+                        <div className="col-sm-8"><h6>{UserDBData.pets[selectedSubItem]?.petName}</h6></div>
                       </div>
                       <div className="row py-2 align-items-center">
                         <div className="col-sm-4"><label htmlFor="Breed">Pet Breed:</label></div>
-                        <div className="col-sm-8"><input className="form-control" placeholder="Dog, German Shepard" type="text" /></div>
+                        {/* <div className="col-sm-8"><input className="form-control" placeholder="Dog, German Shepard" type="text" /></div> */}
+                        <div className="col-sm-8"><h6>{UserDBData.pets[selectedSubItem]?.type} / {UserDBData.pets[selectedSubItem]?.breed}</h6></div>
                       </div>
                       <div className="row py-2 align-items-center">
                         <div className="col-sm-4"><label htmlFor="phone">your phone:</label></div>
                         <div className="col-sm-8"><input className="form-control" placeholder="Phone number" type="tel" /></div>
+                        {/* <div className="col-sm-8"><h6>{UserDBData?.phoneNumber}</h6></div> */}
                       </div>
                       <div className="row py-2 align-items-center">
                         <div className="col-sm-4"><label htmlFor="Date">Appointment Date:</label></div>
@@ -279,7 +332,7 @@ export default function Profile(props) {
                         <div className="col-sm-8"><textarea className='form-control' placeholder="Explain what your appointment is for; Ex: Max needs his monthly check up" style={{ resize: 'none' }} rows='2' /></div>
                       </div>
                       <div className='d-flex justify-content-center'>
-                        <button type='submit' className="btn btn-primary" data-bs-dismiss="modal">submit</button>
+                        <button type='submit' className="btn btn-primary w-50 " data-bs-dismiss="modal">submit</button>
                       </div>
                     </div>
                   </form>
@@ -301,7 +354,7 @@ export default function Profile(props) {
                           src={ProfileData?.userPFP}
                           className="avatar circle-round"
                         />
-                        <h4>Dr.{ProfileData?.userName}</h4>
+                        <h4>Dr.{ProfileData?.name}</h4>
                         <div className="about-info d-flex justify-content-center">
                           {/* <div className="py-1 " ><a className='mail' href={`mailto: ${userObj.email}`}>{userObj.email}</a></div> */}
                           <div className="text-warning pe-2">
@@ -319,15 +372,13 @@ export default function Profile(props) {
                           className="w-100 text-center d-flex justify-content-center"
                         >
                           <p className="w-50 text-secondary">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Consectetur deleniti est, animi vero dolores
-                            temporibus sint cumque et quae alias.
+                            {ProfileData?.About}
                           </p>
                         </div>
                         <div className=" py-1"></div>
                         <hr className="w-100" />
                         <div>
-                          <h4>Dr.{ProfileData?.userName}'s Clinics</h4>
+                          <h4>Dr.{ProfileData?.name}'s Clinics</h4>
                         </div>
                       </div>
                       {/**chat  */}
@@ -340,7 +391,7 @@ export default function Profile(props) {
                         {clinicData.map((clinic, index) => (
                           <div
                             key={index}
-                            onClick={() => console.log(clinic)}
+                            onClick={() => setSelectedItem(index)}
                             className="col-4 col-sm-4 col-md-4 col-lg-4 "
                           >
                             {clinic.image ? (
@@ -368,9 +419,9 @@ export default function Profile(props) {
                         <div className="w-100 rounded-4 p-4 my-2 mb-4 row justify-content-center">
                           <div className="col-md-5 align-items-center d-flex">
                             <div className="">
-                              {clinicData[0]?.image ? (
+                              {clinicData[selectedItem]?.image ? (
                                 <img
-                                  src={clinicData[0]?.image}
+                                  src={clinicData[selectedItem]?.image}
                                   className="pet-pic2"
                                 />
                               ) : (
@@ -383,12 +434,12 @@ export default function Profile(props) {
                             <div className=" ps-3">
                               {clinicData ? (
                                 <>
-                                  <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onClick={() => setSelectedClinicData(clinicData[0])}>Book an appointment</button>
+                                  <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Book an appointment</button>
                                   <p className="m-0">
-                                    Booking price: {clinicData[0]?.price} L.E
+                                    Booking price: {clinicData[selectedItem]?.appointmentPrice} L.E
                                   </p>
                                   <p className="m-0">
-                                    Clinic phone number: {clinicData[0]?.phone}
+                                    Clinic phone number: {clinicData[selectedItem]?.phoneNumber}
                                   </p>
                                 </>
                               ) : (
@@ -401,7 +452,7 @@ export default function Profile(props) {
                               <div className="d-flex align-items-center justify-content-between">
                                 <h6 className="mb-0 text-secondary">Clinic Name</h6>
                                 <span className="me-5 title">
-                                  {clinicData[0]?.name}
+                                  {clinicData[selectedItem]?.clinicName}
                                 </span>
                               </div>
                               <hr className="my-2" />
@@ -410,7 +461,7 @@ export default function Profile(props) {
                                   Clinic phone number
                                 </h6>
                                 <span className="me-5 title">
-                                  {clinicData[0]?.phone}
+                                  {clinicData[selectedItem]?.phoneNumber}
                                 </span>
                               </div>
                               <hr className="my-2" />
@@ -419,7 +470,7 @@ export default function Profile(props) {
                                   Booking price
                                 </h6>
                                 <span className="me-5 title">
-                                  {clinicData[0]?.price}
+                                  {clinicData[selectedItem]?.appointmentPrice}
                                 </span>
                               </div>
                             </div>
@@ -453,7 +504,7 @@ export default function Profile(props) {
                         className="avatar circle-round"
                       />
                       <div className="about-info my-2">
-                        <h4 >{ProfileData?.userName}</h4>
+                        <h4 >{ProfileData?.name}</h4>
                         <div className="py-1 ">
                           <a
                             className="mail"
@@ -465,7 +516,7 @@ export default function Profile(props) {
                       </div>
                       <hr className="w-100" />
                       <div>
-                        <h4>{ProfileData?.userName}'s Pets</h4>
+                        <h4>{ProfileData?.name}'s Pets</h4>
                       </div>
                     </div>
                     {/**chat  */}

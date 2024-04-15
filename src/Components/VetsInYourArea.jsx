@@ -7,6 +7,7 @@ import { Timestamp, addDoc, arrayUnion, collection, doc, getDocs, query, runTran
 import { Link, useNavigate } from 'react-router-dom';
 import '../MyCss/userHome.css'
 import { toast } from 'react-toastify';
+import axios from 'axios'
 
 export default function VetsInYourArea() {
     const { userObj, setUserObj } = useContext(MyContext);
@@ -19,17 +20,36 @@ export default function VetsInYourArea() {
     }
     const fetchDoctorData = async () => {
         try {
-            const response = collection(db, 'Users');
-            const q = query(response, where("isDoctor", "==", true));
-            // const q = query(response, where("email", "!=", null));
-            const data = await getDocs(q);
-            const DoctorDataArray = data.docs.map(doc => {
-                const DoctorData = doc.data();
-                DoctorData.DoctorID = doc.id;
-                return DoctorData
-            });
-            setDoctorData(DoctorDataArray);
-            sessionStorage.setItem('storedDoctorsData', JSON.stringify(DoctorDataArray));
+            // const response = collection(db, 'Users');
+            // const q = query(response, where("isDoctor", "==", true));
+            // // const q = query(response, where("email", "!=", null));
+            // const data = await getDocs(q);
+            // const DoctorDataArray = data.docs.map(doc => {
+            //     const DoctorData = doc.data();
+            //     DoctorData.DoctorID = doc.id;
+            //     return DoctorData
+            // });
+            try {
+                var res = await axios.get(`http://localhost:3000/doctors`)
+                console.log(res);
+              } catch (err) {
+                console.log(err.response);
+                toast.error(err.response.data.message, {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
+                
+              return; // Throw the error to stop further execution
+              }
+              
+            setDoctorData(res.data);
+            sessionStorage.setItem('storedDoctorsData', JSON.stringify(res.data));
             // console.log(DoctorDataArray);
         } catch (error) {
             console.error("Error fetching Doctor data:", error);
@@ -144,14 +164,14 @@ export default function VetsInYourArea() {
 
                         {
                             doctorData.map((doctors, index) => (
-                                <div key={doctors.DoctorID} className='col-lg-6 d-flex justify-content-center '>
+                                <div key={doctors._id} className='col-lg-6 d-flex justify-content-center '>
                                     <div className="bg-light myCard p-3 rounded-3 w-100 row bordcard " >
                                         <div className='col-4 col-lg-3 col-md-3 '>
                                             <img className="circle-round-profile" src={doctors.userPFP} alt="Card image" />
                                         </div>
                                         <div className='sm-left-padd col-8'>
                                             <div className="card-body">
-                                                <h4 className="card-title">Dr.{doctors.userName}</h4>
+                                                <h4 className="card-title">Dr.{doctors.name}</h4>
                                                 <div className='starRatepp8'>
                                                     <p>
                                                         <FontAwesomeIcon className='str' icon={fa.faStar} style={{ color: 'gold' }} />
@@ -162,7 +182,7 @@ export default function VetsInYourArea() {
                                                     <p className='pp9'>4.5</p>
                                                 </div>
                                                 <div className='starRatepp7 justify-content-between align-items-center'>
-                                                    <button onClick={() => goToProfile(doctors.DoctorID)} className="btn btn-primary pp5">Details</button>
+                                                    <button onClick={() => goToProfile(doctors._id)} className="btn btn-primary pp5">Details</button>
                                                     <div className='' onClick={() => chatFunc(doctors)}>
                                                         <FontAwesomeIcon className='mess' icon={fa.faCommentDots} />
                                                     </div>

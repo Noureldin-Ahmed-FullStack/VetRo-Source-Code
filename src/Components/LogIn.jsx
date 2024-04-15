@@ -13,6 +13,9 @@ export default function Login() {
   const { UserDBData, setUserDBData } = useContext(MyContext);
   const { signInWithGoogle } = UseFirebaseAuth();
   var token = localStorage.getItem('token');
+  const headers = {
+    'token': token,
+  };
 
 
   const fetchUserData = async (userId) => {
@@ -36,9 +39,6 @@ export default function Login() {
   };
   }
   let navigate = useNavigate()
-  const headers = {
-    'token': token,
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const body = {
