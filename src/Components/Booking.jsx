@@ -63,8 +63,8 @@ export default function Booking() {
         'token': token,
     };
     let navigate = useNavigate()
-    const goToProfile = (Docid) => {
-        navigate('/profile', { state: { id: Docid } });
+    const goToProfile = (userID) => {
+        navigate('/profile', { state: { id: userID } });
     }
     const fetchCollection = async () => {
         // try {

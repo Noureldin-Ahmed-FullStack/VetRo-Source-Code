@@ -529,7 +529,7 @@ export default function Profile(props) {
                       {PetsData.map((Pet, index) => (
                         <div
                           key={Pet.PetID}
-                          onClick={() => console.log(Pet)}
+                          onClick={() => setSelectedItem(index)}
                           className="col-4 col-sm-4 col-md-4 col-lg-4 "
                         >
                           {Pet.image ? (
@@ -557,17 +557,17 @@ export default function Profile(props) {
                           <div className="col-md-5 align-items-center d-flex">
                             <div className="">
                               <img
-                                src={PetsData[0]?.image}
+                                src={PetsData[selectedItem]?.image}
                                 className="pet-pic2"
                               />
                             </div>
                             <div className=" ps-3">
                               <div className=" align-items-center d-flex">
-                                <p className="mb-0 me-3">{PetsData[0]?.Name}</p>
+                                <p className="mb-0 me-3">{PetsData[selectedItem]?.petName}</p>
                               </div>
                               {PetsData ? (
                                 <p>
-                                  {PetsData[0]?.Type}: {PetsData[0]?.Breed}
+                                  Species: {PetsData[selectedItem]?.type} / {PetsData[selectedItem]?.breed}
                                 </p>
                               ) : (
                                 <></>
@@ -579,21 +579,21 @@ export default function Profile(props) {
                               <div className="d-flex align-items-center justify-content-between">
                                 <h6 className="mb-0 text-secondary">gender</h6>
                                 <span className="me-5 title">
-                                  {PetsData[0]?.Gender}
+                                  {PetsData[selectedItem]?.gender}
                                 </span>
                               </div>
                               <hr className="my-2" />
                               <div className="d-flex align-items-center justify-content-between">
                                 <h6 className="mb-0 text-secondary">age</h6>
                                 <span className="me-5 title">
-                                  {PetsData[0]?.Age}
+                                  {PetsData[selectedItem]?.age}
                                 </span>
                               </div>
                               <hr className="my-2" />
                               <div className="d-flex align-items-center justify-content-between">
                                 <h6 className="mb-0 text-secondary">breed</h6>
                                 <span className="me-5 title">
-                                  {PetsData[0]?.Breed}
+                                  {PetsData[selectedItem]?.breed}
                                 </span>
                               </div>
                             </div>
