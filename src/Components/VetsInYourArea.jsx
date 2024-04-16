@@ -30,7 +30,7 @@ export default function VetsInYourArea() {
             //     return DoctorData
             // });
             try {
-                var res = await axios.get(`http://localhost:3000/doctors`)
+                var res = await axios.get(`https://vetro-server.onrender.com/doctors`)
                 console.log(res);
               } catch (err) {
                 console.log(err.response);

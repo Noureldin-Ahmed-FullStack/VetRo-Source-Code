@@ -82,7 +82,7 @@ export default function Booking() {
         // }
 
         try {
-            var res = await axios.get(`http://localhost:3000/doctorAppointment`, { headers: headers })
+            var res = await axios.get(`https://vetro-server.onrender.com/doctorAppointment`, { headers: headers })
         } catch (err) {
             toast.error(err.response.data.message, {
                 position: "top-center",
@@ -160,7 +160,7 @@ export default function Booking() {
             Status: condition
         }
         try {
-            var res = await axios.put(`http://localhost:3000/appointment/${id}`, body)
+            var res = await axios.put(`https://vetro-server.onrender.com/appointment/${id}`, body)
         } catch (err) {
             console.log(err.response);
             toast.error(err.response.data.message, {
