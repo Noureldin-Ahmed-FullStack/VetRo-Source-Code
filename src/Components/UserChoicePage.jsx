@@ -45,7 +45,7 @@ export default function UserChoicePage() {
         const body ={
             isDoctor: Choice
         }
-            await axios.post('http://localhost:3000/userRole', body, { headers: headers })
+            await axios.post('https://vetro-server.onrender.com/userRole', body, { headers: headers })
             // setTimeout(() => {
                 window.location.reload();
             // }, 1000); 
