@@ -12,6 +12,7 @@ import { MyContext } from './ContextProvider';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Tooltip } from 'react-tooltip'
+import { GlobalFunctions } from './GlobalFunctions';
 
 export default function Booking() {
     const { userObj, setUserObj } = useContext(MyContext);
@@ -63,9 +64,14 @@ export default function Booking() {
         'token': token,
     };
     let navigate = useNavigate()
-    const goToProfile = (userID) => {
-        navigate('/profile', { state: { id: userID } });
+    
+  const goToProfile = (Docid) => {
+    if (Docid == userObj.uid) {
+      navigate('/SignIn');      
+    }else{
+      navigate('/profile', { state: { id: Docid } });
     }
+  }
     const fetchCollection = async () => {
         // try {
         //     const querywithTime = query(BookingRef, orderBy('PostDate', 'desc'), where('Doctor', "==", userObj._id))
@@ -181,68 +187,8 @@ export default function Booking() {
         }
     }
 
-    const chatFunc = (createdBy) => {
-        let RID
-        if (createdBy?.isDoctor) {
-            RID = userObj._id + " " + createdBy?._id;
-        } else {
-            RID = createdBy?._id + " " + userObj._id;
-        }
-        console.log(RID);
-        goToRoom(RID, createdBy);
-    };
-    const goToRoom = async (RID, createdBy) => {
 
-        // const userChatsRef = collection(db, "UserChats");
-
-        // try {
-        //   await runTransaction(db, async (transaction) => {
-        //     const userChatDoc = await doc(userChatsRef, userObj._id);
-        //     const OtherUserChatDoc = await doc(userChatsRef, userData?._id);
-        //     const userChatDocSnap = await transaction.get(userChatDoc);
-        //     const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
-
-        //     if (userChatDocSnap.exists()) {
-        //       transaction.update(userChatDoc, {
-        //         ChatRooms: arrayUnion({
-        //           ChatRoomID: RID,
-        //           OtherPersonName: userData?.userName,
-        //           otherPersonPic: userData?.userPFP
-        //         })
-        //       });
-        //     } else {
-        //       transaction.set(userChatDoc, {
-        //         ChatRooms: [{
-        //           ChatRoomID: RID,
-        //           OtherPersonName: userData?.userName,
-        //           otherPersonPic: userData?.userPFP
-        //         }]
-        //       });
-        //     }
-
-        //     if (OtherUserChatDocSnap.exists()) {
-        //       transaction.update(OtherUserChatDoc, {
-        //         ChatRooms: arrayUnion({
-        //           ChatRoomID: RID,
-        //           OtherPersonName: UserDBData.userName,
-        //           otherPersonPic: UserDBData.userPFP
-        //         })
-        //       });
-        //     } else {
-        //       transaction.set(OtherUserChatDoc, {
-        //         ChatRooms: [{
-        //           ChatRoomID: RID,
-        //           OtherPersonName: UserDBData.userName,
-        //           otherPersonPic: UserDBData.userPFP
-        //         }]
-        //       });
-        //     }
-        //   });
-        // } catch (error) {
-        //   console.error("Error updating document: ", error);
-        // }
-        // navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
-    };
+    const { chatFunc } = GlobalFunctions();
 
     const GetTime = (timestamp) => {
         const date = new Date(timestamp);

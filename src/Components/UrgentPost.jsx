@@ -64,8 +64,13 @@ export default function UrgentPost() {
 
 
   let navigate = useNavigate()
+
   const goToProfile = (Docid) => {
-    navigate('/profile', { state: { id: Docid } });
+    if (Docid == userObj.uid) {
+      navigate('/SignIn');      
+    }else{
+      navigate('/profile', { state: { id: Docid } });
+    }
   }
   useEffect(() => {
     const fetchCollection = async () => {
@@ -127,14 +132,14 @@ export default function UrgentPost() {
     // updateDoc(userChatDoc, {
     //   ChatRooms: arrayUnion({
     //     ChatRoomID: RID,
-    //     OtherPersonName: userData?.userName,
+    //     OtherPersonName: userData?.name,
     //     otherPersonPic: userData?.userPFP
     //   })
     // })
     try {
       await runTransaction(db, async (transaction) => {
         const userChatDoc = await doc(userChatsRef, userObj.uid);
-        const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
+        const OtherUserChatDoc = await doc(userChatsRef, userData?._id);
         const userChatDocSnap = await transaction.get(userChatDoc);
         const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
 
@@ -142,7 +147,7 @@ export default function UrgentPost() {
           transaction.update(userChatDoc, {
             ChatRooms: arrayUnion({
               ChatRoomID: RID,
-              OtherPersonName: userData?.userName,
+              OtherPersonName: userData?.name,
               otherPersonPic: userData?.userPFP
             })
           });
@@ -150,7 +155,7 @@ export default function UrgentPost() {
           transaction.set(userChatDoc, {
             ChatRooms: [{
               ChatRoomID: RID,
-              OtherPersonName: userData?.userName,
+              OtherPersonName: userData?.name,
               otherPersonPic: userData?.userPFP
             }]
           });
@@ -160,7 +165,7 @@ export default function UrgentPost() {
           transaction.update(OtherUserChatDoc, {
             ChatRooms: arrayUnion({
               ChatRoomID: RID,
-              OtherPersonName: UserDBData.userName,
+              OtherPersonName: UserDBData.name,
               otherPersonPic: UserDBData.userPFP
             })
           });
@@ -168,7 +173,7 @@ export default function UrgentPost() {
           transaction.set(OtherUserChatDoc, {
             ChatRooms: [{
               ChatRoomID: RID,
-              OtherPersonName: UserDBData.userName,
+              OtherPersonName: UserDBData.name,
               otherPersonPic: UserDBData.userPFP
             }]
           });
@@ -177,7 +182,7 @@ export default function UrgentPost() {
     } catch (error) {
       console.error("Error updating document: ", error);
     }
-    navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+    navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.name } });
   };
   return (
     <>

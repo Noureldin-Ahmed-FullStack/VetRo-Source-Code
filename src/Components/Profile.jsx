@@ -2,6 +2,7 @@ import { arrayUnion, doc, getDoc, runTransaction, serverTimestamp, setDoc, updat
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../Firebase/firebase";
+import { GlobalFunctions } from "../Components/GlobalFunctions.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faReg from "@fortawesome/free-regular-svg-icons";
 import axios from 'axios'
@@ -29,7 +30,9 @@ export default function Profile(props) {
   const [selectedSubItem, setSelectedSubItem] = useState(0);
   const { userObj, setUserObj } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
+  const userChatsRef = collection(db, "UserChats");
 
+  const { chatFunc } = GlobalFunctions();
   const BookingRef = collection(db, "Booking")
 
   const today = new Date();
@@ -65,7 +68,7 @@ export default function Profile(props) {
     }
     console.log(body);
     try {
-      let res = await axios.post('http://localhost:3000/appointment', body, { headers: headers }).catch((err)=> console.log(err))
+      let res = await axios.post('https://vetro-server.onrender.com/appointment', body, { headers: headers }).catch((err)=> console.log(err))
 
       if (res) {
         console.log(res);
@@ -99,89 +102,7 @@ export default function Profile(props) {
     }
 
   }
-  const chatFunc = () => {
-    if (!userObj) {
-      toast.error("you need to log in to use this feature", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
 
-      return
-    }
-    let RID
-    if (ProfileData?.isDoctor) {
-      RID = userObj.uid + " " + ProfileData?.uid;
-    } else {
-      RID = ProfileData?.uid + " " + userObj.uid;
-    }
-    console.log(RID);
-    goToRoom(RID);
-  };
-  let navigate = useNavigate();
-  const goToRoom = async (RID) => {
-
-    const userChatsRef = collection(db, "UserChats");
-    // updateDoc(userChatDoc, {
-    //   ChatRooms: arrayUnion({
-    //     ChatRoomID: RID,
-    //     OtherPersonName: ProfileData?.userName,
-    //     otherPersonPic: ProfileData?.userPFP
-    //   })
-    // })
-    try {
-      await runTransaction(db, async (transaction) => {
-        const userChatDoc = await doc(userChatsRef, userObj.uid);
-        const OtherUserChatDoc = await doc(userChatsRef, ProfileData?.uid);
-        const userChatDocSnap = await transaction.get(userChatDoc);
-        const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
-
-        if (userChatDocSnap.exists()) {
-          transaction.update(userChatDoc, {
-            ChatRooms: arrayUnion({
-              ChatRoomID: RID,
-              OtherPersonName: ProfileData?.userName,
-              otherPersonPic: ProfileData?.userPFP
-            })
-          });
-        } else {
-          transaction.set(userChatDoc, {
-            ChatRooms: [{
-              ChatRoomID: RID,
-              OtherPersonName: ProfileData?.userName,
-              otherPersonPic: ProfileData?.userPFP
-            }]
-          });
-        }
-
-        if (OtherUserChatDocSnap.exists()) {
-          transaction.update(OtherUserChatDoc, {
-            ChatRooms: arrayUnion({
-              ChatRoomID: RID,
-              OtherPersonName: UserDBData.userName,
-              otherPersonPic: UserDBData.userPFP
-            })
-          });
-        } else {
-          transaction.set(OtherUserChatDoc, {
-            ChatRooms: [{
-              ChatRoomID: RID,
-              OtherPersonName: UserDBData.userName,
-              otherPersonPic: UserDBData.userPFP
-            }]
-          });
-        }
-      });
-    } catch (error) {
-      console.error("Error updating document: ", error);
-    }
-    navigate("/room", { state: { RID: RID, reciverPFP: ProfileData?.userPFP, reciverName: ProfileData?.userName } });
-  };
 
   const fetchProfileData = async () => {
     try {
@@ -211,7 +132,7 @@ export default function Profile(props) {
       setProfileData(res.data.message);
       setPetsData(res.data.message.pets)
       setClinicData(res.data.message.clinics)
-      console.log(ProfileData);
+      console.log(res.data.message);
     } catch (error) {
       console.error("Error fetching Profile data:", error);
     }
@@ -383,7 +304,7 @@ export default function Profile(props) {
                       </div>
                       {/**chat  */}
                       <div>
-                        <button className="btn btn-dark" onClick={chatFunc}>
+                        <button className="btn btn-dark" onClick={()=>chatFunc(ProfileData)}>
                           chat
                         </button>
                       </div>
@@ -521,14 +442,14 @@ export default function Profile(props) {
                     </div>
                     {/**chat  */}
                     <div>
-                      <button className="btn btn-dark" onClick={chatFunc}>
+                      <button className="btn btn-dark" onClick={()=>chatFunc(ProfileData)}>
                         chat
                       </button>
                     </div>
                     <div className="row justify-content-center">
                       {PetsData.map((Pet, index) => (
                         <div
-                          key={Pet.PetID}
+                          key={Pet._id}
                           onClick={() => setSelectedItem(index)}
                           className="col-4 col-sm-4 col-md-4 col-lg-4 "
                         >

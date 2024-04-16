@@ -15,9 +15,14 @@ export default function VetsInYourArea() {
     const [doctorData, setDoctorData] = useState(false)
 
     let navigate = useNavigate()
-    const goToProfile = (Docid) => {
+   
+  const goToProfile = (Docid) => {
+    if (Docid == userObj.uid) {
+      navigate('/SignIn');      
+    }else{
       navigate('/profile', { state: { id: Docid } });
     }
+  }
     const fetchDoctorData = async () => {
         try {
             // const response = collection(db, 'Users');
@@ -87,10 +92,10 @@ export default function VetsInYourArea() {
             return
         }
         let RID
-        if (userData?.isDoctor) {
-            RID = userObj?.uid + " " + userData?.uid;
+        if (userData?._id > userObj.uid) {
+            RID = userObj?.uid + " " + userData?._id;
         } else {
-            RID = userData?.uid + " " + userObj?.uid;
+            RID = userData?._id + " " + userObj?.uid;
         }
         console.log(RID);
         goToRoom(RID, userData);
@@ -101,14 +106,14 @@ export default function VetsInYourArea() {
         // updateDoc(userChatDoc, {
         //   ChatRooms: arrayUnion({
         //     ChatRoomID: RID,
-        //     OtherPersonName: userData?.userName,
+        //     OtherPersonName: userData?.name,
         //     otherPersonPic: userData?.userPFP
         //   })
         // })
         try {
             await runTransaction(db, async (transaction) => {
                 const userChatDoc = await doc(userChatsRef, userObj.uid);
-                const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
+                const OtherUserChatDoc = await doc(userChatsRef, userData?._id);
                 const userChatDocSnap = await transaction.get(userChatDoc);
                 const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
 
@@ -116,7 +121,7 @@ export default function VetsInYourArea() {
                     transaction.update(userChatDoc, {
                         ChatRooms: arrayUnion({
                             ChatRoomID: RID,
-                            OtherPersonName: userData?.userName,
+                            OtherPersonName: userData?.name,
                             otherPersonPic: userData?.userPFP
                         })
                     });
@@ -124,7 +129,7 @@ export default function VetsInYourArea() {
                     transaction.set(userChatDoc, {
                         ChatRooms: [{
                             ChatRoomID: RID,
-                            OtherPersonName: userData?.userName,
+                            OtherPersonName: userData?.name,
                             otherPersonPic: userData?.userPFP
                         }]
                     });
@@ -134,7 +139,7 @@ export default function VetsInYourArea() {
                     transaction.update(OtherUserChatDoc, {
                         ChatRooms: arrayUnion({
                             ChatRoomID: RID,
-                            OtherPersonName: UserDBData.userName,
+                            OtherPersonName: UserDBData.name,
                             otherPersonPic: UserDBData.userPFP
                         })
                     });
@@ -142,7 +147,7 @@ export default function VetsInYourArea() {
                     transaction.set(OtherUserChatDoc, {
                         ChatRooms: [{
                             ChatRoomID: RID,
-                            OtherPersonName: UserDBData.userName,
+                            OtherPersonName: UserDBData.name,
                             otherPersonPic: UserDBData.userPFP
                         }]
                     });
@@ -151,7 +156,7 @@ export default function VetsInYourArea() {
         } catch (error) {
             console.error("Error updating document: ", error);
         }
-        navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+        navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.name } });
     };
     return (
         <div className='container mt-3'>

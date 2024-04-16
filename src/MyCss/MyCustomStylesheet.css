@@ -195,7 +195,12 @@
   height: 4px;
   width: 85px;
 }
-
+.PFP{
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    aspect-ratio: 1;
+}
 .MainSection {
   color: #fff;
 }
@@ -431,6 +436,14 @@
   border-radius: 2rem;
   border-bottom-left-radius: 0;
   background-color: rgb(159, 159, 159);
+
+}
+.comment {
+  width: 100%;
+  padding: 8px;
+  border-radius: 2rem;
+  border-top-left-radius: 0;
+  background-color: rgba(159, 159, 159, 0.452);
 
 }
 .f-size-1{

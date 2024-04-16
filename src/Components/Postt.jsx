@@ -20,6 +20,9 @@ export default function Postt() {
   const PostsRef = collection(db, "Posts")
   const { userObj, setUserObj } = useContext(MyContext);
   const { UserDBData, setUserDBData } = useContext(MyContext);
+  const headers = {
+    'token': localStorage.getItem('token'),
+  };
   const getTimeSince = (time) => {
     // Create a new Date object with the desired date and time
     var customDate = new Date(time);
@@ -62,37 +65,41 @@ export default function Postt() {
   }
   let navigate = useNavigate()
   const goToProfile = (Docid) => {
-    navigate('/profile', { state: { id: Docid } });
+    if (Docid == userObj.uid) {
+      navigate('/SignIn');
+    } else {
+      navigate('/profile', { state: { id: Docid } });
+    }
+  }
+  const fetchCollection = async () => {
+    // try {
+    //     const querywithTime = query(PostsRef, orderBy('createdAt', 'desc'))
+    //     const querySnapshot = await getDocs(querywithTime);
+    //     const fetchedItems = querySnapshot.docs.map((doc) => ({
+    //         id: doc.id,
+    //         ...doc.data(),
+    //     }));
+    //     sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems));
+    //     setPosts(fetchedItems);
+    //     console.log(fetchedItems);
+    // } catch (error) {
+    //     console.error('Error fetching collection:', error);
+    // }
+
+    const fetchedItems = await axios.get('https://vetro-server.onrender.com/post').catch(err => {
+      console.log(err);
+    })
+    for (let i = fetchedItems.data.length - 1; i >= 0; i--) {
+      if (fetchedItems.data[i].createdBy === null) {
+        fetchedItems.data.splice(i, 1); // Remove item at index i
+      }
+    }
+    console.log(fetchedItems);
+    sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems.data));
+    setPosts(fetchedItems.data);
+    console.log(fetchedItems.data);
   }
   useEffect(() => {
-    const fetchCollection = async () => {
-      // try {
-      //     const querywithTime = query(PostsRef, orderBy('createdAt', 'desc'))
-      //     const querySnapshot = await getDocs(querywithTime);
-      //     const fetchedItems = querySnapshot.docs.map((doc) => ({
-      //         id: doc.id,
-      //         ...doc.data(),
-      //     }));
-      //     sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems));
-      //     setPosts(fetchedItems);
-      //     console.log(fetchedItems);
-      // } catch (error) {
-      //     console.error('Error fetching collection:', error);
-      // }
-
-      const fetchedItems = await axios.get('https://vetro-server.onrender.com/post').catch(err => {
-        console.log(err);
-      })
-      for (let i = fetchedItems.data.length - 1; i >= 0; i--) {
-        if (fetchedItems.data[i].createdBy === null) {
-          fetchedItems.data.splice(i, 1); // Remove item at index i
-        }
-      }
-      console.log(fetchedItems);
-      sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems.data));
-      setPosts(fetchedItems.data);
-      console.log(fetchedItems.data);
-    }
     const storedUserPostsData = sessionStorage.getItem('userPostsData');
     if (storedUserPostsData) {
       console.log("no Fetch");
@@ -105,6 +112,58 @@ export default function Postt() {
     }
   }, [])
 
+  const handleCommentSubmit = async (postID, e) => {
+    e.preventDefault();
+    console.log(postID);
+    let PostText = e.target[0].value
+    if (!userObj) {
+      toast.error(`You need to Login First!`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+    if (PostText === "") return;
+
+    const body = {
+      content: e.target[0].value,
+      post: postID
+    }
+    console.log(body, headers);
+    let res = await axios.post(`https://vetro-server.onrender.com/comment`, body, { headers: headers }).catch((err) => {
+      toast.error(err, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    })
+    if (res) {
+      console.log(res);
+      toast.success("Posted!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    e.target[0].value = ""
+    fetchCollection()
+  }
 
 
   const chatFunc = (userData) => {
@@ -136,7 +195,7 @@ export default function Postt() {
     // updateDoc(userChatDoc, {
     //   ChatRooms: arrayUnion({
     //     ChatRoomID: RID,
-    //     OtherPersonName: userData?.userName,
+    //     OtherPersonName: userData?.name,
     //     otherPersonPic: userData?.userPFP
     //   })
     // })
@@ -220,15 +279,44 @@ export default function Postt() {
               </div>
               <div className="card-body">
                 <h3>{post.title}</h3>
-                <hr className='m-0'/>
+                <hr className='m-0' />
                 <p className="card-text h5">
                   {post.content}
                 </p>
                 <div className="text-muted  mb-4 mt-4" style={{ fontSize: '12px' }}>
                   <i className="fa fa-clock-o pe-1" />{getTimeSince(post.createdAt.toString())}
                 </div>
+                <hr />
+                <form onSubmit={(e) => handleCommentSubmit(post._id, e)}>
+                  <div className="row">
+                    <div className="col-10">
+                      <input type="text" className='form-control' placeholder='add comment' />
 
+                    </div>
+                    <div className="col-2">
+                      <button className='btn btn-primary w-100'>send</button>
+                    </div>
+                  </div>
 
+                </form>
+                <hr />
+                <p className='text-center m-0'>comments</p>
+                <div id='comments' className='d-flex justify-content-center'>
+                  {post.comments?.map((comment) => (
+                    <div key={comment._id} className='w-100  row'>
+                      <div className="col-2 gx-3 p-0">
+                        <img src={comment.createdBy?.userPFP} className='PFP' alt="" />
+                      </div>
+                      <div className="col-10 gx-3 d-flex align-items-center">
+                        <div className=' comment'>
+                          <h5>{comment.content}</h5>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
             </div>

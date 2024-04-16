@@ -95,7 +95,7 @@ export default function Chat(props) {
         await addDoc(messagesRef, {
             text: newMessage,
             createdAt: serverTimestamp(),
-            senderName: userObj.displayName,
+            senderName: UserDBData.name,
             senderId: userObj.uid,
             SenderPFP: UserDBData.userPFP,
             IsImage: false,
@@ -192,7 +192,7 @@ export default function Chat(props) {
         await addDoc(messagesRef, {
             text: img,
             createdAt: serverTimestamp(),
-            senderName: userObj.displayName,
+            senderName: UserDBData.name,
             senderId: userObj.uid,
             SenderPFP: UserDBData.userPFP,
             IsImage: true,

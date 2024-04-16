@@ -24,8 +24,13 @@ export default function UserHome() {
 
 
   let navigate = useNavigate()
+ 
   const goToProfile = (Docid) => {
-    navigate('/profile', { state: { id: Docid } });
+    if (Docid == userObj.uid) {
+      navigate('/SignIn');      
+    }else{
+      navigate('/profile', { state: { id: Docid } });
+    }
   }
 
 
@@ -61,7 +66,7 @@ export default function UserHome() {
     await addDoc(collectionRef, {
       text: PostText,
       createdAt: dateTimeVar.slice(0, 21),
-      senderName: UserDBData.userName,
+      senderName: UserDBData.name,
       senderId: UserDBData.uid,
       SenderPFP: UserDBData.userPFP,
       UserData: UserDBData,
@@ -89,10 +94,10 @@ export default function UserHome() {
       return
     }
     let RID
-    if (userData?.isDoctor) {
-      RID = userObj?.uid + " " + userData?.uid;
+    if (userData?._id > userObj?.uid) {
+      RID = userObj?.uid + " " + userData?._id;
     } else {
-      RID = userData?.uid + " " + userObj?.uid;
+      RID = userData?._id + " " + userObj?.uid;
     }
     console.log(RID);
     goToRoom(RID, userData);
@@ -103,14 +108,14 @@ export default function UserHome() {
     // updateDoc(userChatDoc, {
     //   ChatRooms: arrayUnion({
     //     ChatRoomID: RID,
-    //     OtherPersonName: userData?.userName,
+    //     OtherPersonName: userData?.name,
     //     otherPersonPic: userData?.userPFP
     //   })
     // })
     try {
       await runTransaction(db, async (transaction) => {
         const userChatDoc = await doc(userChatsRef, userObj.uid);
-        const OtherUserChatDoc = await doc(userChatsRef, userData?.uid);
+        const OtherUserChatDoc = await doc(userChatsRef, userData?._id);
         const userChatDocSnap = await transaction.get(userChatDoc);
         const OtherUserChatDocSnap = await transaction.get(OtherUserChatDoc);
 
@@ -118,7 +123,7 @@ export default function UserHome() {
           transaction.update(userChatDoc, {
             ChatRooms: arrayUnion({
               ChatRoomID: RID,
-              OtherPersonName: userData?.userName,
+              OtherPersonName: userData?.name,
               otherPersonPic: userData?.userPFP
             })
           });
@@ -126,7 +131,7 @@ export default function UserHome() {
           transaction.set(userChatDoc, {
             ChatRooms: [{
               ChatRoomID: RID,
-              OtherPersonName: userData?.userName,
+              OtherPersonName: userData?.name,
               otherPersonPic: userData?.userPFP
             }]
           });
@@ -136,7 +141,7 @@ export default function UserHome() {
           transaction.update(OtherUserChatDoc, {
             ChatRooms: arrayUnion({
               ChatRoomID: RID,
-              OtherPersonName: UserDBData.userName,
+              OtherPersonName: UserDBData.name,
               otherPersonPic: UserDBData.userPFP
             })
           });
@@ -144,7 +149,7 @@ export default function UserHome() {
           transaction.set(OtherUserChatDoc, {
             ChatRooms: [{
               ChatRoomID: RID,
-              OtherPersonName: UserDBData.userName,
+              OtherPersonName: UserDBData.name,
               otherPersonPic: UserDBData.userPFP
             }]
           });
@@ -153,7 +158,7 @@ export default function UserHome() {
     } catch (error) {
       console.error("Error updating document: ", error);
     }
-    navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.userName } });
+    navigate("/room", { state: { RID: RID, reciverPFP: userData?.userPFP, reciverName: userData?.name } });
   };
 
   const [Condition, setCondition] = useState(0)
@@ -172,7 +177,7 @@ export default function UserHome() {
       <div className='w-100 p1 '>
         <div className=''>
           <div className=''>
-            <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.userName} </span></h3>
+            <h3 className='container text-light pt-5'>Welcome Back, <span style={{ fontSize: '35px' }}> {UserDBData?.name} </span></h3>
             <div className='pt-4 container pb-2'>
               <input className='form-control mb-2' placeholder="search here" />
             </div>
@@ -257,7 +262,7 @@ export default function UserHome() {
                       </div>
                       <div className='sm-left-padd col-8'>
                         <div className="card-body">
-                          <h4 className="card-title">Dr.{doctors.userName}</h4>
+                          <h4 className="card-title">Dr.{doctors.name}</h4>
                           <div className='starRatepp8'>
                             <p>
                               <FontAwesomeIcon className='str' icon={fa.faStar} style={{ color: 'gold' }} />
