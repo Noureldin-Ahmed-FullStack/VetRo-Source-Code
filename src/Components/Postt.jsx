@@ -301,9 +301,9 @@ export default function Postt() {
                 </form>
                 <hr />
                 <p className='text-center m-0'>comments</p>
-                <div id='comments' className='d-flex justify-content-center'>
+                <div id='comments' className='d-flex flex-column align-items-center commentScroll'>
                   {post.comments?.map((comment) => (
-                    <div key={comment._id} className='w-100  row'>
+                    <div key={comment._id} className='w-100 my-1 row'>
                       <div className="col-2 gx-3 p-0">
                         <img src={comment.createdBy?.userPFP} className='PFP' alt="" />
                       </div>

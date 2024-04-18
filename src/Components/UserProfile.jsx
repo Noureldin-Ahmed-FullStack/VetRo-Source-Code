@@ -57,6 +57,7 @@ export default function UserProfile() {
 
 
     const HandleInfoUpdate = async (event) => {
+        event.preventDefault();
         let body = {
             name: event.target[0].value,
             phoneNumber: event.target[1].value,

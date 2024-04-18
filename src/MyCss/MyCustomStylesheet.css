@@ -441,9 +441,9 @@
 .comment {
   width: 100%;
   padding: 8px;
-  border-radius: 2rem;
+  border-radius: 1rem;
   border-top-left-radius: 0;
-  background-color: rgba(159, 159, 159, 0.452);
+  background-color: rgba(159, 159, 159, 0.445);
 
 }
 .f-size-1{

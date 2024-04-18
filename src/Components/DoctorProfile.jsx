@@ -48,6 +48,7 @@ export default function DoctorProfile() {
     };
 
     const HandleInfoUpdate = async (event) => {
+        event.preventDefault();
         var body = {
             name: event.target[0].value,
             phoneNumber: event.target[1].value,

@@ -199,7 +199,7 @@ export default function Profile(props) {
                   </div>
                   <form onSubmit={handleBooking}>
                     <div className="" style={{ fontSize: '1.25rem', fontStyle: 'italic', fontFamily: 'arial', color: '#71aef3' }}>
-                      <p>This clinic is available from: {clinicData[selectedItem].schedule} , {clinicData[selectedItem].availability}</p>
+                      <p>This clinic is available from: {clinicData[selectedItem]?.schedule} , {clinicData[selectedItem]?.availability}</p>
                       <p style={{ fontSize: '0.9rem' }}>Make sure you pick an appointment date and time that fit this criteria</p>
                       <div className="row ">
                         <h3 className="text-center">Select your pet</h3>
@@ -309,7 +309,7 @@ export default function Profile(props) {
                         </button>
                       </div>
                       <div className="row justify-content-center">
-                        {clinicData.map((clinic, index) => (
+                        {clinicData?.map((clinic, index) => (
                           <div
                             key={index}
                             onClick={() => setSelectedItem(index)}
