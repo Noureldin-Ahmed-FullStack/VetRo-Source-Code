@@ -1,7 +1,7 @@
 {
   "name": "vetro",
   "version": "1.0.0",
-  "homepage": "http://Noureldin-Ahmed-FullStack.github.io/VetRo-Source-Code/",
+  "homepage": "https://vetro.netlify.app/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
