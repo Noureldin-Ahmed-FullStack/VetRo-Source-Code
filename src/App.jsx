@@ -25,14 +25,7 @@ import UserChoicePage from './Components/UserChoicePage';
 import Login from './Components/LogIn';
 
 
-const useLogging = (componentName) => {
-  useEffect(() => {
-    console.log('Updated: ', componentName);
-  });
-};
-
 function App() {
-  useLogging('App');
   let Routes = createHashRouter([
     {
       path: '/', element: <Layout />, children: [
