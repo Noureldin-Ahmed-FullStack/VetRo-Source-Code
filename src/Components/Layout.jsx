@@ -3,6 +3,7 @@ import NavbarComponent from './NavbarComponent'
 // import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
 import { MyContext } from './ContextProvider'
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import Loading from './Loading';
 import Sidebar from './Sidebar';
 // import { useAuthState } from 'react-firebase-hooks/auth';

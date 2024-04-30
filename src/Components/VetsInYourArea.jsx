@@ -172,7 +172,7 @@ export default function VetsInYourArea() {
                                 <div key={doctors._id} className='col-lg-6 d-flex justify-content-center '>
                                     <div className="bg-light myCard p-3 rounded-3 w-100 row bordcard " >
                                         <div className='col-4 col-lg-3 col-md-3 '>
-                                            <img className="circle-round-profile" src={doctors.userPFP} alt="Card image" />
+                                            <img className="rounded-2 PFP" src={doctors.userPFP} alt="Card image" />
                                         </div>
                                         <div className='sm-left-padd col-8'>
                                             <div className="card-body">
