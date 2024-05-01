@@ -288,13 +288,13 @@ export default function Postt() {
                 </div>
                 <hr />
                 <form onSubmit={(e) => handleCommentSubmit(post._id, e)}>
-                  <div className="row">
-                    <div className="col-10">
-                      <input type="text" className='form-control' placeholder='add comment' />
+                  <div className="row w-100">
+                    <div className="col-8 col-md-10 ">
+                      <input type="text" className='form-control' placeholder='comment' />
 
                     </div>
-                    <div className="col-2">
-                      <button className='btn btn-primary w-100'>send</button>
+                    <div className="col-4 col-md-2 p-0">
+                      <button className='btn btn-primary w-100'><i className="fa-regular fa-paper-plane"></i></button>
                     </div>
                   </div>
 
@@ -304,13 +304,16 @@ export default function Postt() {
                 <div id='comments' className='d-flex flex-column align-items-center commentScroll'>
                   {post.comments?.map((comment) => (
                     <div key={comment._id} className='w-100 my-1 row'>
-                      <div className="col-2 gx-3 p-0">
+                      <div className="col-2 col-md-1 gx-3 p-0">
                         <img src={comment.createdBy?.userPFP} className='PFP' alt="" />
                       </div>
-                      <div className="col-10 gx-3 d-flex align-items-center">
+                      <div className="col-10 col-md-11 gx-3 d-flex align-items-center">
                         <div className=' comment'>
                           <h5>{comment.content}</h5>
 
+                          <div className="text-muted text-end" style={{ fontSize: '12px' , opacity:'75%' }}>
+                            <i className="fa fa-clock-o pe-1" />{getTimeSince(comment.createdAt.toString())}
+                          </div>
                         </div>
 
                       </div>

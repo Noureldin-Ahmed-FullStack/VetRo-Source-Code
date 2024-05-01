@@ -159,8 +159,9 @@ export default function MakeAPost() {
             <div className='d-flex mt-4 justify-content-center container'>
                 <div className=' w-100 bg-light MyShadow rounded-4'>
                     <div className="form-group p-3  ">
-                        <h5 className='text-center'>Create a post</h5>
-                        <input type="email" onClick={() => (modalOpen ? close() : open())} className="form-control inpo" placeholder='write here' />
+                        <h5 className='text-center pb-2'>Create a post</h5>
+                        <div onClick={() => (modalOpen ? close() : open())} className='form-control postInputCss'><span className='text-secondary '>What's on your mind?</span></div>
+                        {/* <input type="text" onClick={() => (modalOpen ? close() : open())} className="form-control " placeholder="What's on your mind?" /> */}
                         <div>
                             {/* <motion.button
                                 whileHover={{ scale: 1.1 }}

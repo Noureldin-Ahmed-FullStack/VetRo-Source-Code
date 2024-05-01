@@ -201,6 +201,12 @@
     border-radius: 50%;
     aspect-ratio: 1;
 }
+.CommentPFP{
+    max-width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    aspect-ratio: 1;
+}
 .MainSection {
   color: #fff;
 }
@@ -438,11 +444,19 @@
   background-color: rgb(159, 159, 159);
 
 }
+.MotionComment{
+  overflow: hidden;
+  height: 3rem;
+  background-color: red;
+}
 .comment {
-  width: 100%;
-  padding: 8px;
+  text-align: justify;
+  margin-left: 1.5rem;
+  /* width: 100%; */
+  padding: 10px 16px;
   border-radius: 1rem;
   border-top-left-radius: 0;
+  overflow: hidden;
   background-color: rgba(159, 159, 159, 0.445);
 
 }
@@ -681,7 +695,9 @@
 /* margin-top: 8px; */
 /* cursor: pointer; */
 /* } */
-
+.postInputCss{
+  cursor: text;
+}
 .action-buttons button.add-photo-button {
   background-color: #42b72a;
   /* Change color for different actions */

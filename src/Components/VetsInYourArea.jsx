@@ -163,7 +163,7 @@ export default function VetsInYourArea() {
             {doctorData ? (
                 <div className='w-100 '>
                     <div className='pp4' >
-                        Veterinarian in Your Area:
+                        Veterinarians:
                     </div>
                     <div className='row gx-3 gy-1'>
 
