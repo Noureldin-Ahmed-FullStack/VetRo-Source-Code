@@ -69,14 +69,14 @@ export default function YourPosts() {
                     id: doc.id,
                     ...doc.data(),
                 }));
-                sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems));
+                sessionStorage.setItem('userYourPostsData', JSON.stringify(fetchedItems));
                 setPosts(fetchedItems);
                 console.log(fetchedItems);
             } catch (error) {
                 console.error('Error fetching collection:', error);
             }
         }
-        const storedUserPostsData = sessionStorage.getItem('userPostsData');
+        const storedUserPostsData = sessionStorage.getItem('userYourPostsData');
         if (storedUserPostsData) {
             console.log("no Fetch");
             // If user data is already stored, set it in the state

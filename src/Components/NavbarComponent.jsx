@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import '../MyCss/Navbar.css'
 import VetRoBot from './VetRoBot'
+import IconnedButton from './IconnedButton'
 
 
 export default function NavbarComponent() {
@@ -24,8 +25,8 @@ export default function NavbarComponent() {
 
           <div className='px-3'> <VetRoBot /> </div>
           <NavLink className="nav-link" to="contacts" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
-          <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link>
-
+          {/* <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link> */}
+          <IconnedButton userPFP={UserDBData?.userPFP}/>
         </div>
       </nav>)
 
@@ -62,8 +63,11 @@ export default function NavbarComponent() {
                 <div className="position-relative">
                   {/* <FontAwesomeIcon className='cartIcon' icon={fa.faCartShopping} /> */}
                   {userObj ? (
-                    <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><img src={UserDBData?.userPFP || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRLRMXynnc7D6-xfdpeaoEUeon2FaU0XtPg&usqp=CAU"} className='Nav-PFP' alt="" /></Link>
-                  ) : (
+                    <>
+                      <IconnedButton userPFP={UserDBData?.userPFP}/>
+                      {/* <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><img src={UserDBData?.userPFP || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRLRMXynnc7D6-xfdpeaoEUeon2FaU0XtPg&usqp=CAU"} className='Nav-PFP' alt="" /></Link> */}
+                    </>
+                    ) : (
                     <>
                       <NavLink className="nav-link  my-3" to="signin">Sign in</NavLink>
                     </>

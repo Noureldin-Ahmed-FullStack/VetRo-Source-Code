@@ -57,21 +57,21 @@ export default function Booking() {
 
 
     }
-    const BookingRef = collection(db, "Booking")
+    // const BookingRef = collection(db, "Booking")
     const [bookings, setBooking] = useState([])
     var token = localStorage.getItem('token');
     const headers = {
         'token': token,
     };
     let navigate = useNavigate()
-    
-  const goToProfile = (Docid) => {
-    if (Docid == userObj.uid) {
-      navigate('/SignIn');      
-    }else{
-      navigate('/profile', { state: { id: Docid } });
+
+    const goToProfile = (Docid) => {
+        if (Docid == userObj.uid) {
+            navigate('/SignIn');
+        } else {
+            navigate('/profile', { state: { id: Docid } });
+        }
     }
-  }
     const fetchCollection = async () => {
         // try {
         //     const querywithTime = query(BookingRef, orderBy('PostDate', 'desc'), where('Doctor', "==", userObj._id))
@@ -88,7 +88,11 @@ export default function Booking() {
         // }
 
         try {
-            var res = await axios.get(`https://vetro-server.onrender.com/doctorAppointment`, { headers: headers })
+            if (UserDBData.isDoctor) {
+                var res = await axios.get(`https://vetro-server.onrender.com/doctorAppointment`, { headers: headers })
+            } else {
+                var res = await axios.get(`https://vetro-server.onrender.com/userAppointment`, { headers: headers })
+            }
         } catch (err) {
             toast.error(err.response.data.message, {
                 position: "top-center",
@@ -162,7 +166,7 @@ export default function Booking() {
         // } catch (error) {
         //     console.error(error)
         // }
-        const body= {
+        const body = {
             Status: condition
         }
         try {
@@ -283,27 +287,51 @@ export default function Booking() {
                                         </div>
                                         <hr />
                                         {Appointment?.Status == 'rejected' ? (
-                                            <div className='d-flex flex-column bg-danger-subtle justify-content-center align-items-center p-2 rounded-4 text-danger-emphasis'>
-                                                <h6>Appointment Rejected</h6>
-                                            </div>
+
+                                            Appointment.isDoctor ? (
+                                                <div className='d-flex flex-column bg-danger-subtle justify-content-center align-items-center p-2 rounded-4 text-danger-emphasis'>
+                                                    <h6>Appointment Rejected</h6>
+                                                </div>
+                                            ) :
+                                                (
+                                                    <div className='alert alert-danger'>
+                                                        <h4>Appointment Rejected</h4>
+                                                    </div>
+                                                )
+
+
                                         ) : (
                                             Appointment?.Status == "accepted" ? (
-                                                <div className='d-flex flex-column bg-success-subtle justify-content-center align-items-center p-2 rounded-4 text-success-emphasis'>
-                                                    <h6>Appointment accepted</h6>
-                                                    <p>would you like to <span className='cancelSpan' onClick={() => updateBooking('rejected', Appointment._id, index)}>cancel</span>?</p>
-                                                </div>
+                                                Appointment.isDoctor ? (
+                                                    <div className='d-flex flex-column bg-success-subtle justify-content-center align-items-center p-2 rounded-4 text-success-emphasis'>
+                                                        <h6>Appointment accepted</h6>
+                                                    </div>
+                                                ) :
+                                                    (
+                                                        <div className='alert alert-success'>
+                                                            <h4>Appointment accepted</h4>
+                                                        </div>
+                                                    )
+
 
                                             ) : (
 
                                                 <div className='justify-content-around row mt-2'>
-                                                    <button className='btn btn-outline-success col-5 py-3 px-1' onClick={() => updateBooking('accepted', Appointment._id, index)}>
-                                                        <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
-                                                        <span>Accept Appointment</span>
-                                                    </button>
-                                                    <button className='btn btn-outline-danger col-5 py-3' onClick={() => updateBooking('rejected', Appointment._id, index)}>
-                                                        <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
-                                                        <span>Delete</span>
-                                                    </button>
+                                                    {Appointment.isDoctor ? (<>
+                                                        <button className='btn btn-outline-success col-5 py-3 px-1' onClick={() => updateBooking('accepted', Appointment._id, index)}>
+                                                            <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
+                                                            <span>Accept Appointment</span>
+                                                        </button>
+                                                        <button className='btn btn-outline-danger col-5 py-3' onClick={() => updateBooking('rejected', Appointment._id, index)}>
+                                                            <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faXmark} />
+                                                            <span>Delete</span>
+                                                        </button>
+                                                    </>)
+                                                        : (
+                                                            <div className='alert alert-secondary'>
+                                                                <h4>Pending response from doctor</h4>
+                                                            </div>
+                                                        )}
                                                 </div>
                                             )
                                         )}

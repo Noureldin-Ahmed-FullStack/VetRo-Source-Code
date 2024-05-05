@@ -23,6 +23,8 @@ import Contacts from './Components/ChatComponents/Contacts';
 import ChatContainer from './Components/ChatComponents/ChatContainer';
 import UserChoicePage from './Components/UserChoicePage';
 import Login from './Components/LogIn';
+import UserAppointments from './Components/UserAppointments';
+import Loading from './Components/Loading';
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
         { path: "room", element: <Room /> },
         { path: "about", element: <About /> },
         { path: "Contacts", element: <ChatContainer /> },
+        { path: "loadingTest", element: <Loading /> },
+        { path: "userAppointments", element: <UserAppointments /> },
         { path: "contact", element: <Contact /> },
         { path: "choice", element: <UserChoicePage /> },
         { path: "SignIn/pets", element: <Pets /> },
