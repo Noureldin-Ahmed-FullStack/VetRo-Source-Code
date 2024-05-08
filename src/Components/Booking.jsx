@@ -139,6 +139,19 @@ export default function Booking() {
         return hours + ':' + minutes + ' ' + period;
     }
     useEffect(() => {
+        if (!userObj) {
+            toast.error('Login First!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return
+        }
         const storedUserBookingData = sessionStorage.getItem('UserBookingData');
         if (storedUserBookingData) {
             console.log("no Fetch");
@@ -317,7 +330,7 @@ export default function Booking() {
                                             ) : (
 
                                                 <div className='justify-content-around row mt-2'>
-                                                    {Appointment.isDoctor ? (<>
+                                                    {UserDBData.isDoctor ? (<>
                                                         <button className='btn btn-outline-success col-5 py-3 px-1' onClick={() => updateBooking('accepted', Appointment._id, index)}>
                                                             <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCheck} />
                                                             <span>Accept Appointment</span>

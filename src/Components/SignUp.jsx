@@ -119,10 +119,10 @@ export default function SignUp() {
                                 Continue With Facebook
                             </button>
                         </div> */}
-                        <div id="emailHelp" className="form-text text-center ">
+                        <div id="emailHelp" className="form-text text-center my-3">
                             Already have an account ?
                             <small className='ps-1'>
-                                <Link to="/login"> Sign in</Link>
+                                <Link to="/login">Log in</Link>
                             </small>
                         </div>
                     </form>

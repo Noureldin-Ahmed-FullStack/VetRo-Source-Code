@@ -1,9 +1,10 @@
-.Nav-Image{
+.Nav-Image {
     width: 2rem;
     height: 2rem;
     object-fit: cover;
 }
-.Nav-PFP{
+
+.Nav-PFP {
     width: 2.6rem;
     height: 2.6rem;
     object-fit: cover;
@@ -12,11 +13,17 @@
     transition: all 0.3s;
     /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.193); */
 }
-.Nav-PFP:hover{
+
+.Nav-PFP:hover {
     box-shadow: 0 0 60px rgb(84, 146, 227);
     border: 5px #1f71ecdc solid;
     outline: 6px #4a88e599 solid;
 }
-.myPaddingTop{
+
+.myPaddingTop {
     padding-top: 4rem;
+}
+
+.navLogo {
+    width: 32px;
 }
