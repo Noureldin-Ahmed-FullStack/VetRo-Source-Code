@@ -73,14 +73,14 @@ export default function MyContextProvider(props) {
     const device = detectDevice();
     setCurrentDevice(device)
     console.log("context update");
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser !== null) {
-        setUserObj(currentUser);
-        fetchUserData(currentUser.uid)
-        setMyAuth(true);
-        setPending(false)
-        // console.log(currentUser);
-      } else if (currentUser === null) {
+    // const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    //   if (currentUser !== null) {
+    //     setUserObj(currentUser);
+    //     fetchUserData(currentUser.uid)
+    //     setMyAuth(true);
+    //     setPending(false)
+    //     // console.log(currentUser);
+    //   } else if (currentUser === null) {
 
         const locStor = localStorage.getItem('token')
         if (locStor) {
@@ -96,13 +96,12 @@ export default function MyContextProvider(props) {
           setPending(false)
           return
         }
-        setPending(false)
-      }
-    });
+      // }
+    // });
 
     // Cleanup function for useEffect
-    return () => unsubscribe();
-  }, [auth, setMyAuth, setPending]);
+    // return () => unsubscribe();
+  }, [userObj,UserDBData]);
 
   const contextValue = {
     userObj,

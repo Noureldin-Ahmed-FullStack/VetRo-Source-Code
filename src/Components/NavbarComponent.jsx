@@ -100,6 +100,7 @@ export default function NavbarComponent() {
     //   </nav>
     // </>
     <>
+    <VetRoBot /> 
     <NavDesktop userPFP={UserDBData?.userPFP} userName={UserDBData?.name}/>
     </>
   )

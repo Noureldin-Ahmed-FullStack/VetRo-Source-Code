@@ -6,7 +6,6 @@ import * as fa from '@fortawesome/free-solid-svg-icons'
 // import * as fab from '@fortawesome/free-brands-svg-icons';
 import CameraComponent from './CameraComponent'
 import Shake from './Shake'
-import VetRoBot from './VetRoBot'
 import { MyContext } from './ContextProvider'
 import Pets from './Pets'
 import Loading from './Loading'
