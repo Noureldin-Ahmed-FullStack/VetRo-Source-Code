@@ -194,7 +194,7 @@ export default function NavDesktop(props) {
                             >
                                 {/* menu items */}
                                 {userObj ? (
-                                    <>
+                                    <div>
                                         <MenuItem onClick={handleCloseUserMenu} sx={{ color: 'inherit', textDecoration: 'none' }} component={Link} to={'/SignIn'}>
                                             <Typography variant='overline'>Profile</Typography>
                                         </MenuItem>
@@ -208,11 +208,11 @@ export default function NavDesktop(props) {
                                             <Typography variant='overline'>Settings</Typography>
                                         </MenuItem>
                                         <MenuItem onClick={signOut}>
-                                            <Typography variant='overline' sx={{ color: 'inherit', textDecoration: 'none' }} >Login</Typography>
+                                            <Typography variant='overline' sx={{ color: 'inherit', textDecoration: 'none' }} >Log out</Typography>
                                         </MenuItem>
-                                    </>
+                                    </div>
                                 ) : (
-                                    <>
+                                    <div>
                                         {/* <MenuItem onClick={handleCloseUserMenu} sx={{ color: 'inherit', textDecoration: 'none' }} component={Link} to={'/'}>
                                             <Typography variant='overline' >Contact us</Typography>
                                         </MenuItem>
@@ -222,10 +222,10 @@ export default function NavDesktop(props) {
                                         <MenuItem onClick={handleCloseUserMenu} sx={{ color: 'inherit', textDecoration: 'none' }} component={Link} to={'/'}>
                                             <Typography variant='overline'>Settings</Typography>
                                         </MenuItem>
-                                        <MenuItem onClick={signOut}>
+                                        <MenuItem component={Link} to={'/login'}>
                                             <Typography variant='overline' sx={{ color: 'inherit', textDecoration: 'none' }} >Login</Typography>
                                         </MenuItem>
-                                    </>
+                                    </div>
                                 )
                                 }
 
