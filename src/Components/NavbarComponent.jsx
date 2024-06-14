@@ -4,6 +4,9 @@ import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MyContext } from './ContextProvider'
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import ImageSearchRoundedIcon from '@mui/icons-material/ImageSearchRounded';
+import HomeIcon from '@mui/icons-material/Home';
+import ChatIcon from '@mui/icons-material/Chat';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import '../MyCss/Navbar.css'
@@ -18,14 +21,14 @@ export default function NavbarComponent() {
   const { userObj, setUserObj } = useContext(MyContext);
   if (currentDevice != 'Other') {
     return (
-      <nav className="navbar bold-text tealBG navbar-expand-lg navbar-dark py-2 fixed-bottom">
-        <div className="container d-flex navbar-nav justify-content-around flex-row px-0">
+      <nav className="navbar bold-text tealBG navbar-expand-lg navbar-dark py-0 fixed-bottom">
+        <div className="container d-flex navbar-nav py-0 justify-content-around flex-row px-0">
 
-          <NavLink className="nav-link" to=""><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faHouse} /></NavLink>
-          <NavLink className="nav-link" to="speciesidentifier"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faMapLocationDot} /></NavLink>
+          <NavLink className="nav-link py-0" to=""><HomeIcon sx={{fontSize:"2.2rem"}} className='BigIcon navIcon'/></NavLink>
+          <NavLink className="nav-link py-0" to="speciesidentifier"><ImageSearchRoundedIcon sx={{fontSize:"2.2rem"}} className='BigIcon navIcon' /></NavLink>
 
           <div className='px-3'> <VetRoBot /> </div>
-          <NavLink className="nav-link" to="contacts" ><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faComments} /></NavLink>
+          <NavLink className="nav-link py-0" to="contacts" ><ChatIcon sx={{fontSize:"2.2rem"}} className='BigIcon navIcon' /></NavLink>
           {/* <Link className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#demo1"><FontAwesomeIcon className='BigIcon navIcon px-2' icon={fa.faBars} /></Link> */}
           <IconnedButton userPFP={UserDBData?.userPFP}/>
         </div>
