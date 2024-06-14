@@ -3,6 +3,8 @@ import { UseFirebaseAuth } from './UseFirebaseAuth'
 import { getFirestore, collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import { MyContext } from "./ContextProvider";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const db = getFirestore();
 
 export default function AddClinic() {
@@ -11,6 +13,7 @@ export default function AddClinic() {
     const [image, setImage] = useState(null);
 
     const token = localStorage.getItem('token');
+    let navigate = useNavigate()
 
     const headers = {
         'token': token,
@@ -48,12 +51,23 @@ export default function AddClinic() {
             await formData.append('file', image);
         }
         console.log(formData);
-        
-        let res = await axios.post(`https://vetro-server.onrender.com/clinic`, formData,  { headers: headers }).catch((err) => {
+
+        let res = await axios.post(`https://vetro-server.onrender.com/clinic`, formData, { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         if (res) {
             console.log(res);
+            toast.success(`${e.target[1].value} added`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            navigate('/SignIn');
         }
 
         // try {
@@ -86,9 +100,9 @@ export default function AddClinic() {
 
                             <div className="mb-3 d-flex justify-content-center ">
                                 <div className="w-25">
-                                <label htmlFor="img" className="pointer"> 
-                                {image? <img className="w-100" src={URL.createObjectURL(image)} alt="" /> : <img className="w-100" src={'https://ssniper.sirv.com/Images/clinic.jpg'} alt="" />}
-                                </label>
+                                    <label htmlFor="img" className="pointer">
+                                        {image ? <img className="w-100" src={URL.createObjectURL(image)} alt="" /> : <img className="w-100" src={'https://ssniper.sirv.com/Images/clinic.jpg'} alt="" />}
+                                    </label>
                                     <input className="d-none" type="file" onChange={handleImageChange} id="img" />
                                 </div>
                             </div>
@@ -155,7 +169,7 @@ export default function AddClinic() {
                                 </div>
                             </div>
 
-                         
+
 
                             <div className='d-grid sub' onSubmit={handleSubmit}>
                                 <button className='btn sub' >Submit</button>

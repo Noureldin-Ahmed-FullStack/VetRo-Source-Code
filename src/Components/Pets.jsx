@@ -2,10 +2,13 @@ import React, { useContext, useState } from "react";
 import { MyContext } from "./ContextProvider";
 import axios from 'axios'
 import '../MyCss/addPetsForm.css'
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function Pets() {
 
     const { userObj, setUserObj } = useContext(MyContext);
     const [image, setImage] = useState(null);
+    let navigate = useNavigate()
 
     const token = localStorage.getItem('token');
 
@@ -46,6 +49,17 @@ export default function Pets() {
         })
         if (res) {
             console.log(res);
+            toast.success(`${e.target[1].value} added`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            navigate('/SignIn');
         }
 
         // try {

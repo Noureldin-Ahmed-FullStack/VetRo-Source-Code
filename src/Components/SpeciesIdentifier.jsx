@@ -132,7 +132,7 @@ export default function SpeciesIdentifier() {
                     </div>
                     <div className='mt-3'>
                         <label htmlFor='fileInput' className='btn btn-outline-orange'>  Upload photo  </label>
-                        <input accept="image/*" id='fileInput' capture="environment" className='d-none' type="file" onChange={handleImageChange} />
+                        <input accept="image/*" id='fileInput' className='d-none' type="file" onChange={handleImageChange} />
                     </div>
                     {/* <h2><i>{pending.toString()}</i></h2> */}
                 </div>
