@@ -73,10 +73,16 @@ export default function MyContextProvider(props) {
     const device = detectDevice();
     setCurrentDevice(device)
     const locStor = localStorage.getItem('token')
-    const decoded = jwtDecode(locStor)
+    if (locStor) {
+      const decoded = jwtDecode(locStor)
     setUserObj(decoded)
     console.log(decoded);
     fetchUserData(decoded.uid)
+    }else{
+      console.log("no token");
+      localStorage.clear()
+    }
+    setPending(false)
   }, []);
 
   const contextValue = {
