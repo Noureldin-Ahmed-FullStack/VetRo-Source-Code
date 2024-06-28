@@ -124,8 +124,11 @@ export default function NavDesktop(props) {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <MenuItem key={page.page} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{page.page}</Typography>
+                                    <MenuItem
+                                        component={NavLink}
+                                        to={page.path} key={page.page} onClick={handleCloseNavMenu}>
+                                        <Typography
+                                            textAlign="center">{page.page}</Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>
@@ -204,9 +207,9 @@ export default function NavDesktop(props) {
                                         <MenuItem onClick={handleCloseUserMenu} sx={{ color: 'inherit', textDecoration: 'none' }} component={Link} to={'/'}>
                                             <Typography variant='overline'>About us</Typography>
                                         </MenuItem> */}
-                                        <MenuItem onClick={handleCloseUserMenu} sx={{ color: 'inherit', textDecoration: 'none' }} component={Link} to={'/'}>
+                                        {/* <MenuItem onClick={handleCloseUserMenu} sx={{ color: 'inherit', textDecoration: 'none' }} component={Link} to={'/'}>
                                             <Typography variant='overline'>Settings</Typography>
-                                        </MenuItem>
+                                        </MenuItem> */}
                                         <MenuItem onClick={signOut}>
                                             <Typography variant='overline' sx={{ color: 'inherit', textDecoration: 'none' }} >Log out</Typography>
                                         </MenuItem>
