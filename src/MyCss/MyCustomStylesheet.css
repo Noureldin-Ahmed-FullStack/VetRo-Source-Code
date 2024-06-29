@@ -1,4 +1,7 @@
 /* Extra small devices (phones) */
+.MuiPaper-root {
+  z-index: 1031 !important;
+}
 @media only screen and (max-width: 575.98px) {
   .sm-left-padd {
     padding-left: 2rem !important;
