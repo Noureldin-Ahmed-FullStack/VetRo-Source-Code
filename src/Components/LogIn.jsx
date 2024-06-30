@@ -91,9 +91,9 @@ export default function Login() {
     navigate('/signIn');
   }
   return (
-    <div className='w-100 d-flex justify-content-center Log-vh-100'>
+    <div className='w-100 align-items-center d-flex justify-content-center flex-grow-1 Log-vh-100'>
       <div className="container justify-content-center align-items-center">
-        <div className='row featured-image mt-2 mx-auto ' style={{ width: "150px" }}>
+        <div className='row featured-image mx-auto ' style={{ width: "150px" }}>
           <img src={Logo} className="img-fluid " alt="" />
 
         </div>

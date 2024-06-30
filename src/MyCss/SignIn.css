@@ -110,7 +110,7 @@
 }
 
 .Log-vh-100 {
-    height: calc(100vh);
+    /* height: calc(100vh); */
 
 }
 
