@@ -93,7 +93,7 @@ export default function Pets() {
                             <div className="mb-3 d-flex justify-content-center ">
                                 <div className="w-25">
                                     <label htmlFor="img" className="pointer">
-                                        {image ? <img className="w-100" src={URL.createObjectURL(image)} alt="" /> : <img className="w-100" src={'https://ssniper.sirv.com/Images/clinic.jpg'} alt="" />}
+                                        {image ? <img className="w-100" src={URL.createObjectURL(image)} alt="" /> : <img className="w-100" src={'https://ssniper.sirv.com/Images/dog.jpg'} alt="" />}
                                     </label>
                                     <input className="d-none" type="file" onChange={handleImageChange} id="img" />
                                 </div>

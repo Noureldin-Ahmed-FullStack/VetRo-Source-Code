@@ -311,10 +311,10 @@ export default function UserProfile() {
 
                                 {/* {console.log(UserDBData.pets[0].petRef._key.path.segments[6])} */}
                                 {/* {console.log(UserDBData.pets[0])} */}
-                                <div className='row gy-3 justify-content-center'>
+                                <div className='row w-100 g-3 justify-content-center'>
                                     {
                                         PetsData.map((pets, index) => (
-                                            <div key={index} onClick={() => setSelectedPet(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                                            <div key={index} onClick={() => setSelectedPet(index)} className="col-4 ">
                                                 {
                                                     pets.image ? (
                                                         <img src={pets.image} className="profile-pic pointer" />
@@ -327,7 +327,7 @@ export default function UserProfile() {
                                         ))
                                     }
 
-                                    <div className='col-4 col-sm-4 col-md-4 col-lg-4'>
+                                    <div className='col-4'>
                                         <Link className="" to="Pets">
                                             <button className='btn btn-outline-primary pet-add'>
                                                 <FontAwesomeIcon className='' icon={fa.faAdd} />
@@ -337,7 +337,7 @@ export default function UserProfile() {
                                 </div>
 
                             </div>
-                            <div className="card w-100 bg-white rounded shadow pt-3 mt-3">
+                            <div className="card w-100 bg-white rounded shadow pt-3 my-3 mb-5">
                                 <div className='text-center'><h3 >Pet Profile</h3></div>
                                 <div className='d-flex justify-content-center'>
                                     {PetsData.length != 0 ? (

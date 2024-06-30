@@ -330,7 +330,7 @@ export default function DoctorProfile() {
                         </div>
                     </div>
 
-                    <div className='row justify-content-center'>
+                    <div className='row w-100 g-3 justify-content-center'>
                         {
                             clinicData.map((clinic, index) => (
                                 <div key={index} onClick={() => setSelectedClinic(index)} className="col-4 col-sm-4 col-md-4 col-lg-4 ">
@@ -358,7 +358,7 @@ export default function DoctorProfile() {
                 </div>
 
             </div>
-            <div className="card w-100 bg-white rounded shadow pt-3 my-3">
+            <div className="card w-100 bg-white rounded shadow pt-3 my-3 mb-5">
                 <div className='text-center'><h3 >Clinic Profile</h3></div>
                 <div className='d-flex justify-content-center'>
                     {clinicData.length != 0 ? (
