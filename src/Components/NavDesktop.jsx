@@ -28,6 +28,7 @@ export default function NavDesktop(props) {
     const currentPath = location.pathname;
     // const pages = ['Products', 'Pricing', 'Blog'];
     const pages = [
+        { page: 'home', path: '/' },
         { page: 'Profile', path: '/SignIn' },
         { page: 'Your Chats', path: '/contacts' },
         { page: 'Species identifier', path: '/speciesidentifier' },
@@ -141,9 +142,9 @@ export default function NavDesktop(props) {
                         </Box>
                         <Typography
                             variant="h5"
+                            component={Link}
                             noWrap
-                            component="a"
-                            to="/home"
+                            to="/"
                             sx={{
                                 mr: 2,
                                 display: { xs: 'flex', md: 'none' },

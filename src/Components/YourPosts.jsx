@@ -8,6 +8,7 @@ import { MyContext } from './ContextProvider';
 // import { Timestamp, addDoc, arrayUnion, collection, doc, getDocs, query, runTransaction, where } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import * as fa from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 /** */
 
 
@@ -19,6 +20,11 @@ export default function YourPosts() {
     const PostsRef = collection(db, "Posts")
     const { userObj, setUserObj } = useContext(MyContext);
     const { UserDBData, setUserDBData } = useContext(MyContext);
+    const token = localStorage.getItem('token');
+
+    const headers = {
+        'token': token,
+    };
     const getTimeSince = (time) => {
         // Create a new Date object with the desired date and time
         var customDate = new Date(time);
@@ -59,19 +65,39 @@ export default function YourPosts() {
 
 
     }
-    
+
     useEffect(() => {
+        if (!UserDBData) {
+
+            toast.error(`You need to Login First!`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return
+        }
         const fetchCollection = async () => {
             try {
-                const querywithTime = query(PostsRef,where('senderId', '==', userObj.uid), orderBy('createdAt', 'desc'))
-                const querySnapshot = await getDocs(querywithTime);
-                const fetchedItems = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                sessionStorage.setItem('userYourPostsData', JSON.stringify(fetchedItems));
-                setPosts(fetchedItems);
-                console.log(fetchedItems);
+                // const querywithTime = query(PostsRef,where('senderId', '==', userObj.uid), orderBy('createdAt', 'desc'))
+                // const querySnapshot = await getDocs(querywithTime);
+                // const fetchedItems = querySnapshot.docs.map((doc) => ({
+                //     id: doc.id,
+                //     ...doc.data(),
+                // }));
+                const fetchedItems = await axios.get(`https://vetro-server.onrender.com/userPost`, { headers: headers }).catch(err => {
+                    console.log(err);
+                })
+                if (fetchedItems) {
+                    sessionStorage.setItem('userYourPostsData', JSON.stringify(fetchedItems.data));
+                    setPosts(fetchedItems.data);
+                    console.log(fetchedItems.data);
+                }
+
             } catch (error) {
                 console.error('Error fetching collection:', error);
             }
@@ -96,37 +122,52 @@ export default function YourPosts() {
 
                 <div className='container'>
 
-                    <h2 className='postss'> <b> Regular Posts</b> </h2>
-                    {posts.map((post) => (
-                        <div key={post.id} className="card1 bg-light my-4 text-start gedf-card py-2 px-3">
+                    <h2 className='postss'> <b> your Posts</b> </h2>
+                    {posts?.map((post) => (
+
+                        <div key={post._id} className="card1 bg-light my-4 text-start gedf-card py-2 px-3">
                             <div className="card-header cardbag">
                                 <div className="d-flex justify-content-between align-items-center">
-                                    <div  className="d-flex pointer justify-content-between align-items-center">
+                                    <div className="d-flex pointer justify-content-between align-items-center">
                                         <div className="me-2">
-                                            <img className="rounded-circle postPfp" width={45} src={post.SenderPFP} />
+                                            <img className="rounded-circle postPfp" width={45} src={post.createdBy.userPFP} />
                                         </div>
                                         <div className="ms-2">
-                                            <div className="h5 m-0 namecolor">{post.senderName}</div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className='starRatepp7 justify-content-between align-items-center'>
-                                            <div className='' >
-                                                <FontAwesomeIcon className='HorizontalDots' icon={fa.faEllipsis} />
-                                            </div>
+                                            <div className="h5 m-0 namecolor">{post.createdBy.name}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="card-body">
+                                <h3>{post.title}</h3>
+                                <hr className='m-0' />
                                 <p className="card-text h5">
-                                    {post.text}
+                                    {post.content}
                                 </p>
                                 <div className="text-muted  mb-4 mt-4" style={{ fontSize: '12px' }}>
                                     <i className="fa fa-clock-o pe-1" />{getTimeSince(post.createdAt.toString())}
                                 </div>
+                                <hr />
+                                <p className='text-center m-0'>comments</p>
+                                <div id='comments' className='d-flex flex-column align-items-center commentScroll'>
+                                    {post.comments?.map((comment) => (
+                                        <div key={comment._id} className='w-100 my-1 row'>
+                                            <div className="col-2 col-md-1 gx-3 p-0">
+                                                <img src={comment.createdBy?.userPFP} className='PFP' alt="" />
+                                            </div>
+                                            <div className="col-10 col-md-11 gx-3 d-flex align-items-center">
+                                                <div className=' comment'>
+                                                    <h5>{comment.content}</h5>
 
+                                                    <div className="text-muted text-end" style={{ fontSize: '12px', opacity: '75%' }}>
+                                                        <i className="fa fa-clock-o pe-1" />{getTimeSince(comment.createdAt.toString())}
+                                                    </div>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
                         </div>
