@@ -250,9 +250,10 @@
 
 .COLorP {
   color: #808B9A;
-font-size: 13px;
 }
-
+.f-18{
+  font-size: 18px;
+}
 .COLorli {
   color: #606873;
 }

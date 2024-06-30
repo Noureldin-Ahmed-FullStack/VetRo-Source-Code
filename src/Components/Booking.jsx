@@ -196,10 +196,23 @@ export default function Booking() {
                 progress: undefined,
                 theme: "light",
             });
+            
+
             return; // Throw the error to stop further execution
 
         }
         if (res) {
+            toast.success("updated", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            fetchCollection();
             console.log(res);
         }
     }
@@ -230,7 +243,14 @@ export default function Booking() {
             items: 2, // Adjust this value based on your preference for larger screens
         },
     };
-
+    function convertDateTime(dateTimeString ,isDate) {
+        if (!dateTimeString) return '';
+        const [date, time] = dateTimeString.split('T');
+        if (isDate) {
+            return `${date}`;
+        }
+        return `${time}`;
+    }
     return (
         <>
             <div className='pp4'>Incoming Pet Owner Reservations</div>
@@ -262,7 +282,7 @@ export default function Booking() {
                                         </div>
                                         <hr />
                                         <div className='row'>
-                                            <div data-tooltip-id="my-tooltip" data-tooltip-variant="error" className="col-4">
+                                            <div data-tooltip-id="my-tooltip" data-tooltip-variant="error" className="col-4 pointer">
                                                 <img src={Appointment?.pet.image} className='w-100' alt="" />
                                                 <Tooltip id="my-tooltip" >
                                                     <div className='d-flex justify-content-between tooltip_width'>
@@ -289,14 +309,15 @@ export default function Booking() {
                                                         <p>breed: </p>
                                                         <h6>{Appointment?.pet.breed}</h6>
                                                     </div>
+                                                        
 
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='d-flex justify-content-between COLorP'>
-                                            <p>{Appointment?.issue}</p>
-                                            <p >
-                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCalendarAlt} />{GetTime(Appointment?.Appointment).Date} <FontAwesomeIcon className='pe-1 ps-2 fs-5 ' icon={fa.faClock} />{GetTime(Appointment?.Appointment).Time}</p>
+                                        <div className='row justify-content-between COLorP'>
+                                            <p className='col-6 text-start f-18'>{Appointment?.issue}</p>
+                                            <p className='col-6 text-end'>
+                                                <FontAwesomeIcon className='pe-2 fs-5 fs-sm-5' icon={fa.faCalendarAlt} />{convertDateTime(Appointment?.bookedTime ,true)} <FontAwesomeIcon className='pe-1 ps-2 fs-5 ' icon={fa.faClock} />{convertDateTime(Appointment?.bookedTime ,false)}</p>
                                         </div>
                                         <hr />
                                         {Appointment?.Status == 'rejected' ? (
