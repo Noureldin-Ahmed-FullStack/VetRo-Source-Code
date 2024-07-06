@@ -85,11 +85,11 @@ export default function UrgentPost() {
         }
       }
       console.log(fetchedItems);
-      sessionStorage.setItem('userPostsData', JSON.stringify(fetchedItems.data));
+      sessionStorage.setItem('urgentPostsData', JSON.stringify(fetchedItems.data));
       setPosts(fetchedItems.data);
       console.log(fetchedItems.data);
     }
-    const storedUserPostsData = sessionStorage.getItem('userPostsData');
+    const storedUserPostsData = sessionStorage.getItem('urgentPostsData');
     if (storedUserPostsData) {
       console.log("no Fetch");
       // If user data is already stored, set it in the state
