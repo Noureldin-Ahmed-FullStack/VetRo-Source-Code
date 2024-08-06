@@ -68,7 +68,7 @@ export default function Profile(props) {
     }
     console.log(body);
     try {
-      let res = await axios.post('https://vetro-server.onrender.com/appointment', body, { headers: headers }).catch((err)=> console.log(err))
+      let res = await axios.post('https://vet-ro-server.vercel.app/appointment', body, { headers: headers }).catch((err)=> console.log(err))
 
       if (res) {
         console.log(res);
@@ -111,7 +111,7 @@ export default function Profile(props) {
       // const userData = docSnapshot.data();
       // console.log(docSnapshot.data());
       try {
-        var res = await axios.get(`https://vetro-server.onrender.com/getSingleUser/${location.state.id}`)
+        var res = await axios.get(`https://vet-ro-server.vercel.app/getSingleUser/${location.state.id}`)
         console.log(res);
       } catch (err) {
         console.log(err.response);

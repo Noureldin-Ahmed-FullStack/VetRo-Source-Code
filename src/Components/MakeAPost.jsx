@@ -74,7 +74,7 @@ export default function MakeAPost() {
             urgent: e.target[0].value
         }
         console.log(body, headers);
-        let res = await axios.post(`https://vetro-server.onrender.com/post`, body, { headers: headers }).catch((err) => {
+        let res = await axios.post(`https://vet-ro-server.vercel.app/post`, body, { headers: headers }).catch((err) => {
             toast.error(err, {
                 position: "top-center",
                 autoClose: 5000,

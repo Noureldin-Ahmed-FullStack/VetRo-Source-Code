@@ -89,7 +89,7 @@ export default function YourPosts() {
                 //     id: doc.id,
                 //     ...doc.data(),
                 // }));
-                const fetchedItems = await axios.get(`https://vetro-server.onrender.com/userPost`, { headers: headers }).catch(err => {
+                const fetchedItems = await axios.get(`https://vet-ro-server.vercel.app/userPost`, { headers: headers }).catch(err => {
                     console.log(err);
                 })
                 if (fetchedItems) {

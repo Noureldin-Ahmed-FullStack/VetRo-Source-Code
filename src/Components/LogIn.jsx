@@ -21,7 +21,7 @@ export default function Login() {
   const fetchUserData = async (userId) => {
     console.log(userId);
     try {
-      await axios.get(`https://vetro-server.onrender.com/getSingleUser/${userId}`)
+      await axios.get(`https://vet-ro-server.vercel.app/getSingleUser/${userId}`)
         .then(response => {
           console.log(response.data.message);
           setUserDBData(response.data.message)
@@ -46,7 +46,7 @@ export default function Login() {
       password: e.target[1].value,
     }
     try {
-      var res = await axios.post(`https://vetro-server.onrender.com/signIn`, body, { headers: headers })
+      var res = await axios.post(`https://vet-ro-server.vercel.app/signIn`, body, { headers: headers })
     } catch (err) {
       console.log(err.response);
       toast.error(err.response.data.message, {

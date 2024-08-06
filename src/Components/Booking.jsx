@@ -89,9 +89,9 @@ export default function Booking() {
 
         try {
             if (UserDBData.isDoctor) {
-                var res = await axios.get(`https://vetro-server.onrender.com/doctorAppointment`, { headers: headers })
+                var res = await axios.get(`https://vet-ro-server.vercel.app/doctorAppointment`, { headers: headers })
             } else {
-                var res = await axios.get(`https://vetro-server.onrender.com/userAppointment`, { headers: headers })
+                var res = await axios.get(`https://vet-ro-server.vercel.app/userAppointment`, { headers: headers })
             }
         } catch (err) {
             toast.error(err.response.data.message, {
@@ -183,7 +183,7 @@ export default function Booking() {
             Status: condition
         }
         try {
-            var res = await axios.put(`https://vetro-server.onrender.com/appointment/${id}`, body)
+            var res = await axios.put(`https://vet-ro-server.vercel.app/appointment/${id}`, body)
         } catch (err) {
             console.log(err.response);
             toast.error(err.response.data.message, {

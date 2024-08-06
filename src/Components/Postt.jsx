@@ -86,7 +86,7 @@ export default function Postt() {
     //     console.error('Error fetching collection:', error);
     // }
 
-    const fetchedItems = await axios.get('https://vetro-server.onrender.com/post').catch(err => {
+    const fetchedItems = await axios.get('https://vet-ro-server.vercel.app/post').catch(err => {
       console.log(err);
     })
     for (let i = fetchedItems.data.length - 1; i >= 0; i--) {
@@ -136,7 +136,7 @@ export default function Postt() {
       post: postID
     }
     console.log(body, headers);
-    let res = await axios.post(`https://vetro-server.onrender.com/comment`, body, { headers: headers }).catch((err) => {
+    let res = await axios.post(`https://vet-ro-server.vercel.app/comment`, body, { headers: headers }).catch((err) => {
       toast.error(err, {
         position: "top-center",
         autoClose: 5000,

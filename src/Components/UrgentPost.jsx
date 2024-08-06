@@ -76,7 +76,7 @@ export default function UrgentPost() {
     const fetchCollection = async () => {
 
 
-      const fetchedItems = await axios.get('https://vetro-server.onrender.com/urgentPost').catch(err => {
+      const fetchedItems = await axios.get('https://vet-ro-server.vercel.app/urgentPost').catch(err => {
         console.log(err);
       })
       for (let i = fetchedItems.data.length - 1; i >= 0; i--) {

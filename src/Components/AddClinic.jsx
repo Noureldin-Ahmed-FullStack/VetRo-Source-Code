@@ -52,7 +52,7 @@ export default function AddClinic() {
         }
         console.log(formData);
 
-        let res = await axios.post(`https://vetro-server.onrender.com/clinic`, formData, { headers: headers }).catch((err) => {
+        let res = await axios.post(`https://vet-ro-server.vercel.app/clinic`, formData, { headers: headers }).catch((err) => {
             console.log(err.response);
         })
         if (res) {

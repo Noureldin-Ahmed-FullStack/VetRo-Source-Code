@@ -28,7 +28,7 @@ export default function SpeciesIdentifier() {
             await formData.append('file', e.target.files[0])
             try {
 
-                var res = await axios.post('https://vetro-server.onrender.com/speciesIdentifier', formData)
+                var res = await axios.post('https://vet-ro-server.vercel.app/speciesIdentifier', formData)
                 if (res) {
                     console.log(res);
                     toast.success(res.data.identification, {
